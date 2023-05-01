@@ -1,22 +1,25 @@
-<form [formGroup]= "signupForm" (ngSubmit)= "signup()" novalidate>
-    <label> Signup </label><br><br>
-    <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input matInput placeholder="Ex. Jeff" formControlName="name">
-    </mat-form-field>
+<div class ="forms-container">
+    <label> Signup </label><br><br><br><br>
+    
+    <form [formGroup]= "signupForm" (ngSubmit)= "signup()" novalidate>
 
-    <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Ex. Jeff@gmail.com" formControlName="email">
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input matInput type="password"placeholder="Ex. Jon" formControlName="password">
-    </mat-form-field>
-
-    <button mat-raised-button type="submit" [disabled]="!signupForm.valid">
-        <span>Signup</span>
-    </button>
-
-</form>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Ex. Jeff" formControlName="name">
+        </mat-form-field>
+        <br><br>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Ex. Jeff@gmail.com" formControlName="email">
+        </mat-form-field>
+        <br><br>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password"placeholder="Ex. Jon" formControlName="password">
+        </mat-form-field>
+        <br><br>
+        <button mat-raised-button type="submit" [disabled]="!signupForm.valid">
+            <span>Sign up</span>
+        </button>
+    </form>
+</div>

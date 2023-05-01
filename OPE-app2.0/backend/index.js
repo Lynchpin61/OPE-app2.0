@@ -13,14 +13,14 @@ const ports = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    res.setHeader('Acces-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
-        'Acces-Control-Allow-Methods',
+        'Access-Control-Allow-Methods',
          'GET, POST, PUT, DELETE'
     );
 
     res.setHeader(
-        'Acces-Control-Allow-Headers',
+        'Access-Control-Allow-Headers',
          'Content-Type, Authorization'
     );
     next();

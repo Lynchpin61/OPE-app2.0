@@ -1,0 +1,19 @@
+mat-form-field {
+    width: 75%;
+}
+
+label {
+    font-size: 40px;
+    font-family: "Georgia, serif";
+
+}
+
+button {
+    width: 200px;
+    text-align: center;
+}
+
+div.forms-container{
+    padding: 50px 40px;
+}
+
