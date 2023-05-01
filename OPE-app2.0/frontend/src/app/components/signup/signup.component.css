@@ -1,0 +1,15 @@
+mat-form-field {
+    width: 100%;
+}
+
+label {
+    font-size: 40px;
+    font-family: "Georgia, serif";
+
+}
+
+button {
+    float: right;
+    width: 200px;
+}
+
