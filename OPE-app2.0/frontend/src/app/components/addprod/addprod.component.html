@@ -1,1 +1,37 @@
-<p>addprod works!</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add New Product Eval</title>
+  <!-- Angular Material styles -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@angular/material/prebuilt-themes/indigo-pink.css">
+  <!-- Angular scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@angular/material@13.0.0/bundles/material.umd.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+  <form (ngSubmit)="submitReview()" class="mat-elevation-z8" style="padding: 20px;">
+    <mat-form-field>
+      <textarea matInput [(ngModel)]="reviewText" placeholder="Product Review"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Evaluate</button>
+  </form>
+  <div *ngIf="showResult" class="mat-elevation-z8" style="padding: 20px;">
+    <h3>Evaluated Text:</h3>
+    <p>{{ evaluatedText }}</p>
+  </div>
+  <script>
+    var app = angular.module('myApp', ['ngMaterial']);
+    app.controller('myCtrl', function($scope) {
+      $scope.submitReview = function() {
+        // Perform evaluation logic here
+        $scope.evaluatedText = $scope.reviewText + " has been evaluated!";
+        $scope.showResult = true;
+      }
+    });
+  </script>
+</body>
+</html>
