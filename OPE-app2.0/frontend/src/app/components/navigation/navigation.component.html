@@ -6,17 +6,22 @@
     </span>
     <span class="flexExpand"></span>
     <span>
-        <a routerLinkActive="active-link" routerLink="addprod"> 
+        <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/addprod"> 
             <span>Add New Product Eval</span>
         </a>
     </span>
     <span>
-        <a routerLinkActive="active-link" routerLink="login"> 
+        <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/login"> 
             <span>Login</span>
         </a>
     </span>
     <span>
-        <a routerLinkActive="active-link" routerLink="signup"> 
+        <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/login"> 
+            <span>Logout</span>
+        </a>
+    </span>
+    <span>
+        <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/signup"> 
             <span>Signup</span>
         </a>
     </span>
