@@ -1,0 +1,30 @@
+# Ignore build output
+/dist
+/tmp
+/out-tsc
+
+# Ignore Node modules, except for the root level
+OPE-app2.0/*/node_modules/*
+OPE-app2.0/*/.angular/*
+!/OPE-app2.0/*/node_modules/@your-username/
+
+# Ignore environment files
+/src/environments/*.js
+
+# Ignore compiled TypeScript files
+*.js
+*.js.map
+
+# Ignore editor files
+*.swp
+*~
+.DS_Store
+
+# Ignore Angular CLI configuration files
+OPE-app2.0/package-lock.json
+
+# Ignore backend configuration files
+OPE-app2.0/backend/package-lock.json
+
+# Ignore frontend configuration files
+OPE-app2.0/frontend/package-lock.json
