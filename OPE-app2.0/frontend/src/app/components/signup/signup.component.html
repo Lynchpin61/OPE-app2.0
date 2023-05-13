@@ -19,10 +19,9 @@
           <input matInput type="password" placeholder="Ex. Jon2002" formControlName="password">
         </mat-form-field>
     
-        <button mat-raised-button type="submit" [disabled]="!signupForm.valid">
-          <span>Sign up</span>
+        <button mat-raised-button type="submit" (click)="addShakeEffect()" [ngClass]="{ shake: signupForm.invalid }">
+          <span>Sign Up</span>
         </button>
       </form>
     </div>
   </body>
-  
