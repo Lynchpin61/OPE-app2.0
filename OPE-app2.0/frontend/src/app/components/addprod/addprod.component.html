@@ -23,6 +23,23 @@
     <h3>Evaluated Text:</h3>
     <p>{{ evaluatedText }}</p>
   </div>
+
+  <mat-card>
+    <mat-card-content>Sentiment Classification</mat-card-content>
+    <mat-card-content>
+      <form (ngSubmit)="submitForm2()" class="mat-elevation-z8" style="padding: 20px;">
+        <mat-form-field>
+          <input matInput [(ngModel)]="input2" [ngModelOptions]="{ standalone: true }" placeholder="Enter input 2">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </form>
+    </mat-card-content>
+    <mat-card *ngIf="showResult2" class="mat-elevation-z8" style="padding: 20px;">
+      <h3>Evaluated Text:</h3>
+      <p>{{ sentimentText }}</p>
+      <p>{{ sentimentClass }}</p>
+    </mat-card>
+  </mat-card>
   <script>
     var app = angular.module('myApp', ['ngMaterial']);
     app.controller('myCtrl', function($scope) {
@@ -30,6 +47,12 @@
         // Perform evaluation logic here
         $scope.evaluatedText = $scope.reviewText + " has been evaluated!";
         $scope.showResult = true;
+      }
+      $scope.submitForm2 = function() {
+        // Perform evaluation logic here
+        $scope.sentimentText = $scope.input2 + " has been evaluated!";
+        $scope.sentimentClass = $scope.input2 + " has been evaluated!";
+        $scope.showResult2 = true;
       }
     });
   </script>
