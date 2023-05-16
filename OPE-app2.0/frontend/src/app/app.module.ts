@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ChartModule } from 'angular-highcharts';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -25,6 +26,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { AddprodComponent } from './components/addprod/addprod.component';
 import { SavedevalComponent } from './components/savedeval/savedeval.component';
+import { ProdevalComponent } from './components/prodeval/prodeval.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { SavedevalComponent } from './components/savedeval/savedeval.component';
     HomepageComponent,
     AddprodComponent,
     SavedevalComponent,
+    ProdevalComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +54,8 @@ import { SavedevalComponent } from './components/savedeval/savedeval.component';
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

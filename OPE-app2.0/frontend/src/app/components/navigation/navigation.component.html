@@ -7,6 +7,11 @@
   <span class="flexExpand"></span>
   <div class="nav-links">
     <span>
+      <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/savedeval"> 
+        <span>Saved Product Evaluation</span>
+      </a>
+    </span>
+    <span>
       <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/addprod"> 
         <span>Add New Product Eval</span>
       </a>
