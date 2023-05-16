@@ -1,0 +1,32 @@
+mat-toolbar {
+    background-color: #90c1d7;
+    color: #000000;
+  }
+  
+  #ope {
+    font-weight: bold;
+    font-size: 24px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  span.flexExpand {
+    flex: 1;
+  }
+  
+  a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    line-height: 56px;
+    height: 56px;
+    min-width: 120px;
+  }
+  
+  a:hover, a.active-link {
+    border-bottom: 3px solid #ffffff;
+  }
