@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addprod',
@@ -11,7 +10,7 @@ export class AddprodComponent implements OnInit{
   evaluatedText: string = "";
   showResult: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
 
@@ -21,6 +20,5 @@ export class AddprodComponent implements OnInit{
     // Perform evaluation logic here
     this.evaluatedText = this.reviewText + " has been evaluated!";
     this.showResult = true;
-    this.router.navigate(["prodeval"]);
   }
 }

@@ -1,27 +1,38 @@
-<div class="dashboard-container">
-  <div class="dashboard-content">
-    <div class="dashboard-card">
-      <h2>Review Analysis</h2>
-      <form>
-        <label for="review-input">Input review:</label>
-        <textarea id="review-input" name="review-input"></textarea>
-        <button type="submit" (click)="submitReview()">Analyze</button>
-      </form>
-    </div>
-    <div class="dashboard-card">
-      <h2>Analysis Results</h2>
-      <div class="analysis-results">
-        <div class="aspect-accuracy-chart chart"></div>
-        <div class="positive-negative-chart chart"></div>
-        <div class="strengths-weaknesses">
-          <h3>Strengths:</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu risus auctor, eleifend est vel, vestibulum velit.</p>
-          <h3>Weaknesses:</h3>
-          <p>Sed sit amet libero vel velit pretium dignissim vel ac libero. Vivamus ultricies, turpis at posuere volutpat, nunc lacus tincidunt sem, at malesuada erat magna id justo.</p>
-          <h3>Suggestions:</h3>
-          <p>Etiam aliquet urna nec felis finibus, eget hendrerit elit auctor. Donec vitae neque quis dolor tincidunt varius.</p>
-        </div>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Home Page</title>
+</head>
+<body>
+  <header>
+    <h1>Online Product Evaluator</h1>
+  </header>
+  <main>
+    <h2>Welcome to Online Product Evaluator!</h2>
+    <p>Evaluate and share your opinions with others. Use our evaluator and start evaluating products today!</p>
+    <div class="product-grid">
+      <div class="product">
+        <img src="https://media1.giphy.com/media/LgbzRlRvPndn5uSs0v/giphy.gif?cid=ecf05e47oz88eow6bxibytn7h736sl68zgq8of5fvci2slxc&ep=v1_gifs_related&rid=giphy.gif&ct=s" alt="Product 1">
+        <h3>Product 1</h3>
+        <form>
+          <label for="review1">Write a review:</label><br>
+          <textarea id="review1" name="review" maxlength="100"></textarea><br><br>
+          <input type="submit" value="Evaluate">
+        </form>
+      </div>
+      <div class="product">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmFhZTU3NDViYWI4MDI3NGVjMjE0MDU2OTA5MTRlZDJjNGI5MzdhYSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/Uv7ZVb5EKtFZFOMZtC/giphy.gif" alt="Product 2">
+        <h3>Product 2</h3>
+        <form>
+          <label for="review2">Write a review:</label><br>
+          <textarea id="review2" name="review" maxlength="100"></textarea><br><br>
+          <input type="submit" value="Evaluate">
+        </form>
       </div>
     </div>
-  </div>
-</div>
+  </main>
+  <footer>
+    <p>&copy; 2023 Online Product Evaluator</p>
+  </footer>
+</body>
+</html>
