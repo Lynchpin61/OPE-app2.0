@@ -1,60 +1,38 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <title>Add New Product Eval</title>
-  <!-- Angular Material styles -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@angular/material/prebuilt-themes/indigo-pink.css">
-  <!-- Angular scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@angular/material@13.0.0/bundles/material.umd.js"></script>
+  <meta charset="UTF-8">
+  <title>Home Page</title>
 </head>
-<body ng-app="myApp" ng-controller="myCtrl">
-  <form (ngSubmit)="submitReview()" class="mat-elevation-z8" style="padding: 20px;">
-    <mat-form-field>
-      <textarea matInput [(ngModel)]="reviewText" [ngModelOptions]="{ standalone: true }" placeholder="Product Review"></textarea>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Evaluate</button>
-  </form>
-  <div *ngIf="showResult" class="mat-elevation-z8" style="padding: 20px;">
-    <h3>Evaluated Text:</h3>
-    <p>{{ evaluatedText }}</p>
-  </div>
-
-  <mat-card>
-    <mat-card-content>Sentiment Classification</mat-card-content>
-    <mat-card-content>
-      <form (ngSubmit)="submitForm2()" class="mat-elevation-z8" style="padding: 20px;">
-        <mat-form-field>
-          <input matInput [(ngModel)]="input2" [ngModelOptions]="{ standalone: true }" placeholder="Enter input 2">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Submit</button>
-      </form>
-    </mat-card-content>
-    <mat-card *ngIf="showResult2" class="mat-elevation-z8" style="padding: 20px;">
-      <h3>Evaluated Text:</h3>
-      <p>{{ sentimentText }}</p>
-      <p>{{ sentimentClass }}</p>
-    </mat-card>
-  </mat-card>
-  <script>
-    var app = angular.module('myApp', ['ngMaterial']);
-    app.controller('myCtrl', function($scope) {
-      $scope.submitReview = function() {
-        // Perform evaluation logic here
-        $scope.evaluatedText = $scope.reviewText + " has been evaluated!";
-        $scope.showResult = true;
-      }
-      $scope.submitForm2 = function() {
-        // Perform evaluation logic here
-        $scope.sentimentText = $scope.input2 + " has been evaluated!";
-        $scope.sentimentClass = $scope.input2 + " has been evaluated!";
-        $scope.showResult2 = true;
-      }
-    });
-  </script>
+<body>
+  <header>
+    <h1>Online Product Evaluator</h1>
+  </header>
+  <main>
+    <h2>Welcome to Online Product Evaluator!</h2>
+    <p>Evaluate and share your opinions with others. Use our evaluator and start evaluating products today!</p>
+    <div class="product-grid">
+      <div class="product">
+        <img src="https://media1.giphy.com/media/LgbzRlRvPndn5uSs0v/giphy.gif?cid=ecf05e47oz88eow6bxibytn7h736sl68zgq8of5fvci2slxc&ep=v1_gifs_related&rid=giphy.gif&ct=s" alt="Product 1">
+        <h3>Product 1</h3>
+        <form>
+          <label for="review1">Write a review:</label><br>
+          <textarea id="review1" name="review" maxlength="100"></textarea><br><br>
+          <input type="submit" value="Evaluate">
+        </form>
+      </div>
+      <div class="product">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmFhZTU3NDViYWI4MDI3NGVjMjE0MDU2OTA5MTRlZDJjNGI5MzdhYSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/Uv7ZVb5EKtFZFOMZtC/giphy.gif" alt="Product 2">
+        <h3>Product 2</h3>
+        <form>
+          <label for="review2">Write a review:</label><br>
+          <textarea id="review2" name="review" maxlength="100"></textarea><br><br>
+          <input type="submit" value="Evaluate">
+        </form>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2023 Online Product Evaluator</p>
+  </footer>
 </body>
 </html>

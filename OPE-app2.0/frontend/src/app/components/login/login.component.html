@@ -1,25 +1,27 @@
 <body>
-    <div class="background"></div>
-    <div class="form-container">
+  <div class="background"></div>
+  <div class="form-container">
+    <form [formGroup]= "loginForm" (ngSubmit)= "login()" novalidate>
+      <label>Login</label>
 
-      <form [formGroup]= "loginForm" (ngSubmit)= "login()" novalidate>
-        
-        <label>Login</label>
-  
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Ex. Jeff@gmail.com" formControlName="email">
-        </mat-form-field>
-    
-        <mat-form-field>
-          <mat-label>Password</mat-label>
-          <input matInput type="password" placeholder="Ex. Jon2002" formControlName="password">
-        </mat-form-field>
-    
-        <button mat-raised-button type="submit" [disabled]="!loginForm.valid">
-          <span>Login</span>
-        </button>
-      </form>
-    </div>
-  </body>
-  
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Ex. Jeff@gmail.com" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Ex. Jon2002" formControlName="password">
+      </mat-form-field>    
+
+      <div class="form-links">
+        <p>Don't have an account? <a routerLink="/signup">Signup now!</a></p>
+      </div>
+
+      <button mat-raised-button type="submit" (click)="addShakeEffect()" [ngClass]="{ shake: loginForm.invalid }">
+        <span>Login</span>
+      </button>   
+      
+    </form>
+  </div>
+</body>
