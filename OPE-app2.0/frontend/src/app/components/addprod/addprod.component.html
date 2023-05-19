@@ -10,25 +10,17 @@
   <main>
     <h2>Welcome to Online Product Evaluator!</h2>
     <p>Evaluate and share your opinions with others. Use our evaluator and start evaluating products today!</p>
-      <div class="product">
-        <img src="https://media1.giphy.com/media/LgbzRlRvPndn5uSs0v/giphy.gif?cid=ecf05e47oz88eow6bxibytn7h736sl68zgq8of5fvci2slxc&ep=v1_gifs_related&rid=giphy.gif&ct=s" alt="Product 1">
-        <h3>Product 1</h3>
-        <form>
-          <label for="review1">Write a review:</label><br>
-          <textarea id="review1" name="review" maxlength="100"></textarea><br><br>
-          <input type="submit" value="Evaluate" (click)="submitReview()">
-        </form>
+      <div>
+        <div class="container product">
+          <img src="https://media3.giphy.com/avatars/lazadaid/KNGgeM8aoXs6.gif" alt="Product 1">
+          <h3>Product 1</h3>
+          <form>
+            <label for="review1">Product Link:</label><br>
+            <textarea id="review1" name="review" maxlength="100" placeholder="Enter product link"></textarea><br><br>
+            <input type="submit" value="Evaluate" (click)="submitReview()">
+          </form>
+        </div>
       </div>
-      <div class="product">
-        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmFhZTU3NDViYWI4MDI3NGVjMjE0MDU2OTA5MTRlZDJjNGI5MzdhYSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/Uv7ZVb5EKtFZFOMZtC/giphy.gif" alt="Product 2">
-        <h3>Product 2</h3>
-        <form>
-          <label for="review2">Write a review:</label><br>
-          <textarea id="review2" name="review" maxlength="100"></textarea><br><br>
-          <input type="submit" value="Evaluate" (click)="submitReview()">
-        </form>
-      </div>
-    </div>
   </main>
   <footer>
     <p>&copy; 2023 Online Product Evaluator</p>
