@@ -63,7 +63,7 @@ export class ProdevalComponent implements OnInit {
   
           const chart = new Chart({...aspectScoreChart, 
             title: {
-              text: aspect,
+              text: aspect.toUpperCase(),
               style: {
                 color: '#1B9C85',
                 fontWeight: 'bold',

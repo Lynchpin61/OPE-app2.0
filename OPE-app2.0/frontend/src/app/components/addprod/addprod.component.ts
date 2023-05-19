@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "src/app/services/auth.service";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -13,7 +12,7 @@ export class AddprodComponent implements OnInit{
   evaluatedText: string = "";
   showResult: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     
