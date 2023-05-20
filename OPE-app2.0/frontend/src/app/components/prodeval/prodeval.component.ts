@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { oneLineBar } from 'src/app/helpers/oneLineBar';
 import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
@@ -8,10 +8,16 @@ import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
   templateUrl: './prodeval.component.html',
   styleUrls: ['./prodeval.component.css']
 })
+
+
+
 export class ProdevalComponent implements OnInit {
 
   aspects: string[] = [];
   aspectCharts: { [key: string]: Chart } = {};
+  aspect_labels: string[] = [];
+  sentences: any;
+  
 
 
   constructor() {}
@@ -108,8 +114,11 @@ export class ProdevalComponent implements OnInit {
         console.error(error);
       });
 
-      // console.log(this.aspectCharts);
-
+    // console.log(this.aspectCharts);
+    fetch('http://localhost:5000/listsentences', options)
+      .then(response => response.json())
+      .then(data => {
+          this.sentences = data;
+          console.log(this.sentences);});
   }
-
 }
