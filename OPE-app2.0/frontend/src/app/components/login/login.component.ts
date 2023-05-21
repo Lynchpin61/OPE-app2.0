@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit{
   }
 
   goToSignup() {
-    this.router.navigateByUrl('/signup');
+    this.router.navigate(["signup"]);
   }
   
   addShakeEffect() {

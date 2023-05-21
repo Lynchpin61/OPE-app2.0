@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,8 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { AddprodComponent } from './components/addprod/addprod.component';
 import { SavedevalComponent } from './components/savedeval/savedeval.component';
 import { ProdevalComponent } from './components/prodeval/prodeval.component';
+
+import { AuthInterceptorService } from "./services/auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -57,7 +59,11 @@ import { ProdevalComponent } from './components/prodeval/prodeval.component';
     MatToolbarModule,
     ChartModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true,
+  },],
   bootstrap: [AppComponent]
 })
 
