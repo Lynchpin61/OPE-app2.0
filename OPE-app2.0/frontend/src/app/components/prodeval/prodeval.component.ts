@@ -16,8 +16,12 @@ export class ProdevalComponent implements OnInit {
   aspects: string[] = [];
   aspectCharts: { [key: string]: Chart } = {};
   aspect_labels: string[] = [];
-  sentences: any;
-  
+  sentence_list: {
+    [aspectLabel: string]: {
+      positive: string[],
+      negative: string[]
+    }
+  } = {};
 
 
   constructor() {}
@@ -116,9 +120,17 @@ export class ProdevalComponent implements OnInit {
 
     // console.log(this.aspectCharts);
     fetch('http://localhost:5000/listsentences', options)
-      .then(response => response.json())
-      .then(data => {
-          this.sentences = data;
-          console.log(this.sentences);});
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response data
+      console.log(data);
+  
+      // Assign sentences for each aspect label
+      this.sentence_list = data;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
   }
 }
