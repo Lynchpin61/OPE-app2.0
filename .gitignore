@@ -6,6 +6,7 @@ package.json
 OPE-app2.0/backend/package-lock.json
 OPE-app2.0/backend/package.json
 OPE-app2.0/backend/config/config.json
+OPE-app2.0/frontend/.angular/*
 OPE-app2.0/frontend/.angular/cache/15.2.7/angular-webpack/73848673edfe9c4f7bd696edca6d29f8bebcf38d/0.pack
 OPE-app2.0/frontend/.angular/cache/15.2.7/angular-webpack/73848673edfe9c4f7bd696edca6d29f8bebcf38d/1.pack
 OPE-app2.0/frontend/.angular/cache/15.2.7/angular-webpack/73848673edfe9c4f7bd696edca6d29f8bebcf38d/2.pack
