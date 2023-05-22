@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 node_modules
 package-lock.json
 package.json
@@ -331,3 +333,40 @@ OPE-app2.0/frontend/.angular/cache/15.2.7/babel-webpack/fb30416ccee69db6557f8da1
 OPE-app2.0/frontend/.angular/cache/15.2.7/babel-webpack/fde83af13ebb3e31ffe1a747c02bd4e3c9439dde1a6fb407194e797c13f90653.json
 OPE-app2.0/frontend/.angular/cache/15.2.7/babel-webpack/fe81d1ce5f5e5c01fedd667e83cb0a8d3065d8da241be01df66553c80579fa87.json
 OPE-app2.0/backend/package-lock.json
+=======
+=======
+>>>>>>> a49712c0fa47dba2510ae2f147b25df99472d297
+# Ignore build output
+/dist
+/tmp
+/out-tsc
+
+# Ignore Node modules, except for the root level
+OPE-app2.0/*/node_modules/*
+OPE-app2.0/*/.angular/*
+!/OPE-app2.0/*/node_modules/@your-username/
+
+# Ignore environment files
+/src/environments/*.js
+
+# Ignore compiled TypeScript files
+*.js
+*.js.map
+
+# Ignore editor files
+*.swp
+*~
+.DS_Store
+
+# Ignore Angular CLI configuration files
+OPE-app2.0/package-lock.json
+
+# Ignore backend configuration files
+OPE-app2.0/backend/package-lock.json
+
+# Ignore frontend configuration files
+OPE-app2.0/frontend/package-lock.json
+<<<<<<< HEAD
+>>>>>>> 716992756e7b4a36c0e4ac0e00adacc498affef1
+=======
+>>>>>>> a49712c0fa47dba2510ae2f147b25df99472d297

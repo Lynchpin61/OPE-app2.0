@@ -1,0 +1,13 @@
+<div class="container">
+
+    <div class="container">
+      <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
+    </div>
+    <div *ngIf="sentences">
+      <h2>Sentences</h2>
+      <ul>
+        <li *ngFor="let sentence of sentences">{{ sentence }}</li>
+      </ul>
+    </div>
+
+  </div>

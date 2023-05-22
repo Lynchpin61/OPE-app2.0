@@ -1,28 +1,35 @@
 <mat-toolbar>
+  <span>
+    <a routerLink="/" id="ope"> 
+      <span> OPE </span>
+    </a>
+  </span>
+  <span class="flexExpand"></span>
+  <div class="nav-links">
     <span>
-        <a routerLink="/" id="ope"> 
-            <span> OPE </span>
-        </a>
-    </span>
-    <span class="flexExpand"></span>
-    <span>
-        <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/addprod"> 
-            <span>Add New Product Eval</span>
-        </a>
-    </span>
-    <span>
-        <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/login"> 
-            <span>Login</span>
-        </a>
+      <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/savedeval"> 
+        <span>Saved Product Evaluation</span>
+      </a>
     </span>
     <span>
-        <a *ngIf="isAuthenticated" (click)= "logout()" routerLinkActive="active-link" routerLink="/login"> 
-            <span>Logout</span>
-        </a>
+      <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/addprod"> 
+        <span>Add New Product Eval</span>
+      </a>
     </span>
     <span>
-        <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/signup"> 
-            <span>Signup</span>
-        </a>
+      <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/login"> 
+        <span>Login</span>
+      </a>
     </span>
+    <span>
+      <a *ngIf="isAuthenticated" (click)="logout()" routerLinkActive="active-link" routerLink="/login"> 
+        <span>Logout</span>
+      </a>
+    </span>
+    <span>
+      <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/signup"> 
+        <span>Signup</span>
+      </a>
+    </span>
+  </div>
 </mat-toolbar>
