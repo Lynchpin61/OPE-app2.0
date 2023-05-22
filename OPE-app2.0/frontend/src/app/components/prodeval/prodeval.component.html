@@ -6,7 +6,7 @@
     <div *ngIf="sentences">
       <h2>Sentences</h2>
       <ul>
-        <li *ngFor="let sentence of sentences">{{ sentence }}</li>
+        <li *ngFor="let item of sentences | keyvalue">{{ item.key }}: {{ item.value | json }}</li>
       </ul>
     </div>
 
