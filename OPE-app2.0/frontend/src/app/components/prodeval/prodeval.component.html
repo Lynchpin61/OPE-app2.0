@@ -1,13 +1,26 @@
 <div class="container">
 
+    
+    <div class="container" *ngIf="aspect_list">
+      <div class="container" *ngFor="let item of aspect_list | keyvalue">
+        <h2>{{ item?.key }}</h2>
+        <ul>
+          <li><pre>{{ item.value | json }}</pre></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="container">
       <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
     </div>
-    <div *ngIf="sentences">
-      <h2>Sentences</h2>
-      <ul>
-        <li *ngFor="let item of sentences | keyvalue">{{ item.key }}: {{ item.value | json }}</li>
-      </ul>
+
+    <div class="container" *ngIf="list_sentences">
+      <div class="container" *ngFor="let item of list_sentences | keyvalue">
+        <h2>{{ item?.key }}</h2>
+        <ul>
+          <li><pre>{{ item.value | json }}</pre></li>
+        </ul>
+      </div>
     </div>
 
   </div>
