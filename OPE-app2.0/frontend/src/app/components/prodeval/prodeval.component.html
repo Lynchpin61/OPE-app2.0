@@ -3,10 +3,10 @@
     <div class="container">
       <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
     </div>
-    <div *ngIf="sentences">
+    <div *ngIf="sentence_list">
       <h2>Sentences</h2>
       <ul>
-        <li *ngFor="let item of sentences | keyvalue">{{ item.key }}: {{ item.value | json }}</li>
+        <li *ngFor="let item of sentence_list | keyvalue">{{ item.key }}: {{ item.value | json }}</li>
       </ul>
     </div>
     
