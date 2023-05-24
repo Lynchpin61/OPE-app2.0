@@ -7,10 +7,15 @@
     margin-top: 30px;
   
     & > * {
-      border-radius: 20px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
   }
-
-
   
+pre {
+  white-space: pre-wrap;
+}
+
+.container h2 {
+  text-transform: uppercase;
+  color: rgb(27, 156, 133);
+}

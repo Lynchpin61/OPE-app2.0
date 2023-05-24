@@ -5,7 +5,7 @@ export const aspectScoreChart: Options = {
   chart: {
 
     type: 'bar',
-    height: 100,
+    height: 150,
   },
   xAxis: {
     visible: false,
@@ -26,6 +26,7 @@ export const aspectScoreChart: Options = {
   plotOptions: {
     series: {
       stacking: 'percent',
+      borderRadius: 5,
     } as any,
   },
 

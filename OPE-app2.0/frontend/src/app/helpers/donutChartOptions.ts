@@ -12,7 +12,7 @@ export const donutChartOptions: Options = {
     pie: {
       innerSize: '99%',
       borderWidth: 40,
-      borderColor: null,
+      borderColor: undefined,
       slicedOffset: 20,
       dataLabels: {
         connectorWidth: 0,
