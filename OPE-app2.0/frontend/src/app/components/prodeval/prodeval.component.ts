@@ -2,6 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
 import { donutChartOptions } from 'src/app/helpers/donutChartOptions';
+import { pieChartOptions } from 'src/app/helpers/pieChartOptions';
+
 
 @Component({
   selector: 'app-prodeval',
@@ -16,6 +18,8 @@ export class ProdevalComponent implements OnInit {
   aspects: string[] = [];
   aspectCharts: { [key: string]: Chart } = {};
   aspect_labels: string[] = [];
+
+  onePieChart: Chart = {} as Chart;
   
   sentences: any;
 
@@ -79,7 +83,7 @@ export class ProdevalComponent implements OnInit {
         this.list_sentences = data.get_count_sentiments;
         console.log(this.list_sentences);
 
-        //CHART
+        //ASPECTS CHART
         console.log(this.list_sentences);
         for (const aspect in this.list_sentences) {
           this.aspects.push(aspect);
@@ -115,10 +119,30 @@ export class ProdevalComponent implements OnInit {
           console.log(`BEFORE `)
           this.aspectCharts[aspect] = chart;
         }
+
+        // OVERALL SENTIMENT CHART
+        let totalPositive = 0;
+        let totalNegative = 0;
+        for (const aspect in this.list_sentences) {
+          totalPositive += this.list_sentences[aspect]['pos-count'];
+          totalNegative += this.list_sentences[aspect]['neg-count'];
+        }
+
+        this.onePieChart = new Chart(
+          {...pieChartOptions,
+            series: [{
+              name: 'Sentiment',
+              type: 'pie',
+              data: [
+                { name: 'Positive', y: totalPositive, color: '#00FF00' },
+                { name: 'Negative', y: totalNegative, color: '#ff0000' },
+              ],
+            }]
+          }
+        );
+
       });
 
-
-      
 
 
 
