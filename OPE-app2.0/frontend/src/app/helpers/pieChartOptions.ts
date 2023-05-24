@@ -4,10 +4,6 @@ export const pieChartOptions: Options = {
   chart: {
     type: 'pie',
   },
-  title: {
-    text: 'Overall Sentiment',
-    align: 'center'
-  },
   tooltip: {
     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
   },

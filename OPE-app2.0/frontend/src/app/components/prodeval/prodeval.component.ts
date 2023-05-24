@@ -20,12 +20,14 @@ export class ProdevalComponent implements OnInit {
   aspect_labels: string[] = [];
 
   onePieChart: Chart = {} as Chart;
+  aspectBreakdownPieChart: Chart = {} as Chart;
   
   sentences: any;
 
   aspect_list: any;
   list_sentences: any;
   absa_score: any;
+  get_absa: any;
   
 
 
@@ -82,6 +84,8 @@ export class ProdevalComponent implements OnInit {
         console.log(this.aspect_list);
         this.list_sentences = data.get_count_sentiments;
         console.log(this.list_sentences);
+        this.get_absa = data.get_absa;
+        console.log(this.get_absa);
 
         //ASPECTS CHART
         console.log(this.list_sentences);
@@ -130,6 +134,10 @@ export class ProdevalComponent implements OnInit {
 
         this.onePieChart = new Chart(
           {...pieChartOptions,
+            title: {
+              text: 'Overall Sentiment',
+              align: 'center'
+            },
             series: [{
               name: 'Sentiment',
               type: 'pie',
@@ -141,9 +149,38 @@ export class ProdevalComponent implements OnInit {
           }
         );
 
+        // ASPECT BREAKDOWN CHART
+        let aspectBreakdown: {[key: string]: { name: string; y: any; color: string; }} = {};
+        for (const aspect in this.list_sentences) {
+          const totalCount = this.list_sentences[aspect]['pos-count'] + this.list_sentences[aspect]['neg-count'];
+          const sentiment_label = this.get_absa[aspect]["sentiment_label"];
+          let color;
+          if (sentiment_label === 'Positive') {
+            color = '#00FF00';
+          } else if (sentiment_label === "Neutral") {
+            color = '#FFFF00';
+          } else {
+            color = '#ff0000';
+          }
+          aspectBreakdown[aspect] = { name: aspect, y: totalCount, color: color };
+        }
+
+        this.aspectBreakdownPieChart = new Chart(
+          {...pieChartOptions,
+            title: {
+              text: 'Aspect Breakdown',
+              align: 'center'
+            },
+            series: [{
+              name: 'Aspect',
+              type: 'pie',
+              data: Object.values(aspectBreakdown),
+            }]
+          }
+        );
+
+
       });
-
-
 
 
   }
