@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@angular/platform-browser": "^16.0.0",
+    "@angular/platform-browser-dynamic": "^16.0.0"
+  }
+}
