@@ -1,12 +1,19 @@
 <div class="container">
 
-    
-    <div class="container" *ngIf="aspect_list">
-      <div class="container" *ngFor="let item of aspect_list | keyvalue">
-        <h2>{{ item?.key }}</h2>
-        <pre class="container">{{ item.value | json }}</pre>
+      
+  <div class="container" *ngIf="aspect_list">
+    <div *ngFor="let item of items">
+      <h2>{{ item[0] }}</h2>
+      <h3>Positive Reviews:</h3>
+      <div *ngFor="let value of item[1].Positive">
+        <p>{{ value + '\n' }}</p>
+      </div>
+      <h3>Negative Reviews:</h3>
+      <div *ngFor="let value of item[1].Negative">
+        <p>{{ value + '\n' }}</p>
       </div>
     </div>
+  </div>
 
     <div class="container">
       <div class="bar" [chart]="onePieChart"></div>
@@ -20,5 +27,6 @@
         <pre class="container">{{ item.value | json }}</pre>
       </div>
     </div>
+    
 
   </div>
