@@ -26,8 +26,10 @@ export class ProdevalComponent implements OnInit {
   aspect_list: any;
   list_sentences: any;
   absa_score: any;
-  
-
+  items: [string, { Positive: string[], Negative: string[] }][] = [];
+  // aspect_list: { [key: string]: string[] } = { Positive: [], Negative: [] };
+  // positive_sens: string[] = [];
+  // negative_sens: string[] = [];
 
   constructor() {}
 
@@ -80,6 +82,26 @@ export class ProdevalComponent implements OnInit {
         console.log(this.absa_score);
         this.aspect_list = data.get_list_sentences;
         console.log(this.aspect_list);
+        console.log(Object.values(this.aspect_list));
+        this.items = Object.entries(this.aspect_list);
+        // const posArray: string[] = [];
+        // const negArray: string[] = [];
+        for (const [key, value] of this.items) {
+          console.log(key); // Output: The key
+          console.log(value); // Output: The value
+
+          const typedValue = value as { Positive: string[], Negative: string[] };
+
+          console.log(typedValue.Positive);
+            // Populate posArray with elements from the Positive array
+            // The (...) part is a spread operator used to push the elements of the array 
+            // rather than the whole array itself
+          // posArray.push(...typedValue.Positive);
+          // negArray.push(...typedValue.Negative);
+          // console.log(posArray);
+          // console.log(negArray);
+        }
+        console.log(this.items)
         this.list_sentences = data.get_count_sentiments;
         console.log(this.list_sentences);
 
