@@ -69,3 +69,33 @@ td.center {
   padding: 10px;
   text-align: center;
 }
+
+
+.positive {
+  color: rgb(27, 156, 133);
+}
+
+.negative {
+  color: rgb(255, 99, 132);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #295A70;
+  color: #ffffff;
+}
+
+tr:nth-child(even) {
+  background-color: #f3f3f3;
+}

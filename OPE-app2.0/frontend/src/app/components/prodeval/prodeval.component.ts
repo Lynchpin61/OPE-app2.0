@@ -30,6 +30,7 @@ export class ProdevalComponent implements OnInit {
   absa_score: any;
   get_absa: any;
   aspect_groups: any;
+  sentence_attributes: any;
 
   items: [string, { Positive: string[], Negative: string[] }][] = [];
   counts: [string, { 'pos-count': number, 'neg-count': number, 'pos-percent': number, 'neg-percent': number}][] = [];
@@ -87,6 +88,9 @@ export class ProdevalComponent implements OnInit {
     .then(data => {
         this.absa_score = data.get_absa;
         console.log(this.absa_score);
+
+        this.sentence_attributes = data.sentence_attributes;
+        console.log(this.sentence_attributes);
 
         //Aspect Labels and Aspects (keywords)
         this.aspect_groups = data.get_aspect_groups;
@@ -230,6 +234,14 @@ export class ProdevalComponent implements OnInit {
 
 
       });
+
+
+      // fetch('http://localhost:5000/sentence-attributes', options)
+      // .then(response => response.json())
+      // .then(data => {
+      //   this.sentence_attributes = data;
+      //   console.log(this.sentence_attributes);
+      // });
 
 
   }

@@ -50,59 +50,23 @@
       </div>
     </div>
 
-    <!-- <div class="container" id="counts_bar">
-      <div class="container">
-        <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
-      </div> -->
-      <!-- <div class="container">
-        <div class="container">
-          <div *ngIf="list_sentences">
-            <table id="counts-table">
-              <thead>
-                <tr>
-                  <th>Aspect</th>
-                  <th>Positive Count</th>
-                  <th>Negative Count</th>
-                  <th>Positive Percent</th>
-                  <th>Negative Percent</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let count of counts">
-                  <td>{{ count[0] }}</td>
-                  <td class="center">{{ count[1]['pos-count'] }}</td>
-                  <td class="center">{{ count[1]['neg-count'] }}</td>
-                  <td class="center">{{ count[1]['pos-percent'] }}</td>
-                  <td class="center">{{ count[1]['neg-percent'] }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="container" *ngIf="list_sentences">
+    <div class="container" *ngIf="sentence_attributes">
       <table>
         <thead>
           <tr>
-            <th>Aspect</th>
-            <th>Positive Count</th>
-            <th>Negative Count</th>
-            <th>Positive Percent</th>
-            <th>Negative Percent</th>
+            <th>Review</th>
+            <th>Keywords</th>
+            <th>Sentiment</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let count of counts">
-            <td>{{ count[0] }}</td>
-            <td class="center">{{ count[1]['pos-count'] }}</td>
-            <td class="center">{{ count[1]['neg-count'] }}</td>
-            <td class="center">{{ count[1]['pos-percent'] }}</td>
-            <td class="center">{{ count[1]['neg-percent'] }}</td>
+          <tr *ngFor="let review of sentence_attributes">
+            <td>{{review['sentence']}}</td>
+            <td class="center">{{review['aspect_group']}}</td>
+            <td class="center">{{review['sentiment']['classification']}}</td>
           </tr>
         </tbody>
       </table>
     </div>
-     -->
 
   </div>
