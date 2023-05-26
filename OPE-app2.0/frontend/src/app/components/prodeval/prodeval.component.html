@@ -21,10 +21,26 @@
     </div>
 
     <div class="container" *ngIf="list_sentences">
-      <div class="container" *ngFor="let item of list_sentences | keyvalue">
-        <h2>{{ item?.key }}</h2>
-        <pre class="container">{{ item.value | json }}</pre>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Positive Count</th>
+            <th>Negative Count</th>
+            <th>Positive Percent</th>
+            <th>Negative Percent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let count of counts">
+            <td>{{ count[0] }}</td>
+            <td class="center">{{ count[1]['pos-count'] }}</td>
+            <td class="center">{{ count[1]['neg-count'] }}</td>
+            <td class="center">{{ count[1]['pos-percent'] }}</td>
+            <td class="center">{{ count[1]['neg-percent'] }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     
 

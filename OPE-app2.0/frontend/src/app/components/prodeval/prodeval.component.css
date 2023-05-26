@@ -19,3 +19,8 @@ pre {
   text-transform: uppercase;
   color: rgb(27, 156, 133);
 }
+
+td.center {
+  padding: 10px;
+  text-align: center;
+}

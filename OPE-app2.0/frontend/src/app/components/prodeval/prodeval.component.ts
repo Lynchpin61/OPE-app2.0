@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Chart } from 'angular-highcharts';
+import { count } from 'rxjs';
 import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
 import { donutChartOptions } from 'src/app/helpers/donutChartOptions';
 import { pieChartOptions } from 'src/app/helpers/pieChartOptions';
@@ -27,6 +28,7 @@ export class ProdevalComponent implements OnInit {
   list_sentences: any;
   absa_score: any;
   items: [string, { Positive: string[], Negative: string[] }][] = [];
+  counts: [string, { 'pos-count': number, 'neg-count': number, 'pos-percent': number, 'neg-percent': number}][] = [];
   // aspect_list: { [key: string]: string[] } = { Positive: [], Negative: [] };
   // positive_sens: string[] = [];
   // negative_sens: string[] = [];
@@ -104,6 +106,13 @@ export class ProdevalComponent implements OnInit {
         console.log(this.items)
         this.list_sentences = data.get_count_sentiments;
         console.log(this.list_sentences);
+        this.counts = Object.entries(this.list_sentences);
+        for (const [key, value] of this.counts) {
+          console.log(key); // Output: The key
+          console.log(value); // Output: The value
+
+          const countValue = value as { 'pos-count': number, 'neg-count': number, 'pos-percent': number, 'neg-percent': number };
+        }
 
         //ASPECTS CHART
         console.log(this.list_sentences);
