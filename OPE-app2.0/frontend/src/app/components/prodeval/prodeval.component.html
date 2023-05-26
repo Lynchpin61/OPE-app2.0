@@ -1,31 +1,103 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
 
-      
-  <div class="container" *ngIf="aspect_list">
-    <div *ngFor="let item of items">
-      <h2>{{ item[0] }}</h2>
-      <h3>Positive Reviews:</h3>
-      <div *ngFor="let value of item[1].Positive">
-        <p>{{ value + '\n' }}</p>
-      </div>
-      <h3>Negative Reviews:</h3>
-      <div *ngFor="let value of item[1].Negative">
-        <p>{{ value + '\n' }}</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Beautiful Project</title>
+  
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="aspect-list">
+      <div class="item" *ngFor="let item of items">
+        <h2>{{ item[0] }}</h2>
+        <div class="review-section">
+          <h3>Positive Reviews:</h3>
+          <div *ngFor="let value of item[1].Positive">
+            <p class="positive">{{ value }}</p>
+          </div>
+        </div>
+        <div class="review-section">
+          <h3>Negative Reviews:</h3>
+          <div *ngFor="let value of item[1].Negative">
+            <p class="negative">{{ value }}</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-    <div class="container">
-      <div class="bar" [chart]="onePieChart"></div>
-      <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
+    <div class="chart-section">
+      <div class="bar-chart" [chart]="onePieChart"></div>
+      <div *ngFor="let aspect of aspects" class="bar-chart" [chart]="aspectCharts[aspect]"></div>
     </div>
 
-    <div class="container" *ngIf="list_sentences">
-      <div class="container" *ngFor="let item of list_sentences | keyvalue">
+    <div class="list-section" *ngIf="list_sentences">
+      <div class="item" *ngFor="let item of list_sentences | keyvalue">
         <h2>{{ item?.key }}</h2>
-        <pre class="container">{{ item.value | json }}</pre>
+        <pre class="data-container">{{ item.value | json }}</pre>
       </div>
     </div>
-    
 
   </div>
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Beautiful Project</title>
+  
+</head>
+
+<body>
+  <div class="container">
+
+    <table class="aspect-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Positive Reviews</th>
+          <th>Negative Reviews</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>{{ item[0] }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let value of item[1].Positive" class="positive">{{ value }}</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let value of item[1].Negative" class="negative">{{ value }}</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chart-section">
+      <div class="bar-chart" [chart]="onePieChart"></div>
+      <div *ngFor="let aspect of aspects" class="bar-chart" [chart]="aspectCharts[aspect]"></div>
+    </div>
+
+    <div class="list-section" *ngIf="list_sentences">
+      <div class="item" *ngFor="let item of list_sentences | keyvalue">
+        <h2>{{ item?.key }}</h2>
+        <pre class="data-container">{{ item.value | json }}</pre>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html> -->
