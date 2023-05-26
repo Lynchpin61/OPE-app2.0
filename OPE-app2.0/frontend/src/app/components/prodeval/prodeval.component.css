@@ -1,11 +1,11 @@
 .container {
-    /* display: grid;
+    /* display: grid; */
     padding: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 500px));
-    grid-gap: 20px;
-    place-content: center;
-    margin-top: 30px;
-     */
+    /* grid-template-columns: repeat(auto-fit, minmax(350px, 500px)); */
+    /* grid-gap: 20px; */
+    /* place-content: center; */
+    /* margin-top: 30px; */
+    
     display: flex;
     flex-direction: column;
     align-items: center;
