@@ -27,16 +27,33 @@
       </div>
     </div>
 
-    <div class="chart-section">
-      <div class="bar-chart" [chart]="onePieChart"></div>
-      <div *ngFor="let aspect of aspects" class="bar-chart" [chart]="aspectCharts[aspect]"></div>
+    <div class="chart-section container">
+      <div class="bar" [chart]="onePieChart"></div>
+      <div class="bar" [chart]="aspectBreakdownPieChart"></div>
+      <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
     </div>
 
-    <div class="list-section" *ngIf="list_sentences">
-      <div class="item" *ngFor="let item of list_sentences | keyvalue">
-        <h2>{{ item?.key }}</h2>
-        <pre class="data-container">{{ item.value | json }}</pre>
-      </div>
+    <div class="container" *ngIf="list_sentences">
+      <table>
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Positive Count</th>
+            <th>Negative Count</th>
+            <th>Positive Percent</th>
+            <th>Negative Percent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let count of counts">
+            <td>{{ count[0] }}</td>
+            <td class="center">{{ count[1]['pos-count'] }}</td>
+            <td class="center">{{ count[1]['neg-count'] }}</td>
+            <td class="center">{{ count[1]['pos-percent'] }}</td>
+            <td class="center">{{ count[1]['neg-percent'] }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   </div>
@@ -44,55 +61,3 @@
 
 </html> 
 
-
-<!-- <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-  <div class="container">
-
-    <table class="aspect-table">
-      <thead>
-        <tr>
-          <th>Aspect</th>
-          <th>Positive Reviews</th>
-          <th>Negative Reviews</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of items">
-          <td>{{ item[0] }}</td>
-          <td>
-            <ul>
-              <li *ngFor="let value of item[1].Positive" class="positive">{{ value }}</li>
-            </ul>
-          </td>
-          <td>
-            <ul>
-              <li *ngFor="let value of item[1].Negative" class="negative">{{ value }}</li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="chart-section">
-      <div class="bar-chart" [chart]="onePieChart"></div>
-      <div *ngFor="let aspect of aspects" class="bar-chart" [chart]="aspectCharts[aspect]"></div>
-    </div>
-
-    <div class="list-section" *ngIf="list_sentences">
-      <div class="item" *ngFor="let item of list_sentences | keyvalue">
-        <h2>{{ item?.key }}</h2>
-        <pre class="data-container">{{ item.value | json }}</pre>
-      </div>
-    </div>
-
-  </div>
-</body>
-
-</html> -->
