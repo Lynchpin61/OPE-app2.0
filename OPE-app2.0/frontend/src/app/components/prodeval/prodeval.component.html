@@ -17,6 +17,7 @@
 
     <div class="container">
       <div class="bar" [chart]="onePieChart"></div>
+      <div class="bar" [chart]="aspectBreakdownPieChart"></div>
       <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
     </div>
 
