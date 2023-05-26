@@ -29,10 +29,11 @@ export class ProdevalComponent implements OnInit {
   list_sentences: any;
   absa_score: any;
   get_absa: any;
-  
+  aspect_groups: any;
 
   items: [string, { Positive: string[], Negative: string[] }][] = [];
   counts: [string, { 'pos-count': number, 'neg-count': number, 'pos-percent': number, 'neg-percent': number}][] = [];
+  labels: [string, string[]][] = [];
   // aspect_list: { [key: string]: string[] } = { Positive: [], Negative: [] };
   // positive_sens: string[] = [];
   // negative_sens: string[] = [];
@@ -86,6 +87,19 @@ export class ProdevalComponent implements OnInit {
     .then(data => {
         this.absa_score = data.get_absa;
         console.log(this.absa_score);
+
+        //Aspect Labels and Aspects (keywords)
+        this.aspect_groups = data.get_aspect_groups;
+        console.log(this.aspect_groups);
+        this.labels = Object.entries(this.aspect_groups);
+        for (const [key, value] of this.labels) {
+          // console.log(key); // Output: The key
+          // console.log(value); // Output: The value
+          const typedLabel = { key: key, value: value };
+          console.log(typedLabel.key);
+        }
+
+
         this.aspect_list = data.get_list_sentences;
         console.log(this.aspect_list);
         console.log(Object.values(this.aspect_list));
@@ -108,6 +122,8 @@ export class ProdevalComponent implements OnInit {
           // console.log(negArray);
         }
         console.log(this.items)
+
+        //COUNTS TABLE
         this.list_sentences = data.get_count_sentiments;
         console.log(this.list_sentences);
         this.counts = Object.entries(this.list_sentences);

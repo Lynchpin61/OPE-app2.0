@@ -1,27 +1,86 @@
 <div class="container">
 
-      
-  <div class="container" *ngIf="aspect_list">
-    <div *ngFor="let item of items">
-      <h2>{{ item[0] }}</h2>
-      <h3>Positive Reviews:</h3>
-      <div *ngFor="let value of item[1].Positive">
-        <p>{{ value + '\n' }}</p>
-      </div>
-      <h3>Negative Reviews:</h3>
-      <div *ngFor="let value of item[1].Negative">
-        <p>{{ value + '\n' }}</p>
-      </div>
-    </div>
-  </div>
-
-    <div class="container">
+    <div class="container" id="pie_charts">
       <div class="bar" [chart]="onePieChart"></div>
       <div class="bar" [chart]="aspectBreakdownPieChart"></div>
-      <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
+      <div class="container">
+        <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
+        <div *ngIf="list_sentences">
+          <table id="counts-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Positive Count</th>
+                <th>Negative Count</th>
+                <th>Positive Percent</th>
+                <th>Negative Percent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let count of counts">
+                <td>{{ count[0] }}</td>
+                <td class="center">{{ count[1]['pos-count'] }}</td>
+                <td class="center">{{ count[1]['neg-count'] }}</td>
+                <td class="center">{{ count[1]['pos-percent'] }}</td>
+                <td class="center">{{ count[1]['neg-percent'] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <div class="container" *ngIf="list_sentences">
+    <div class="container" *ngIf="aspect_list" id="reviews">
+      <div *ngFor="let item of items" id="label">
+        <h2>{{ item[0] }}</h2>
+        <div *ngFor="let label of labels" id="aspect-labels">
+          <div *ngIf="label[0] == item[0]">
+            <p>Keywords: "{{ label[1].join('", "') }}"</p>
+          </div>
+        </div>
+        <h3>Positive Reviews:</h3>
+        <div *ngFor="let value of item[1].Positive">
+          <p>{{ value + '\n' }}</p>
+        </div>
+        <h3>Negative Reviews:</h3>
+        <div *ngFor="let value of item[1].Negative">
+          <p>{{ value + '\n' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="container" id="counts_bar">
+      <div class="container">
+        <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
+      </div> -->
+      <!-- <div class="container">
+        <div class="container">
+          <div *ngIf="list_sentences">
+            <table id="counts-table">
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Positive Count</th>
+                  <th>Negative Count</th>
+                  <th>Positive Percent</th>
+                  <th>Negative Percent</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let count of counts">
+                  <td>{{ count[0] }}</td>
+                  <td class="center">{{ count[1]['pos-count'] }}</td>
+                  <td class="center">{{ count[1]['neg-count'] }}</td>
+                  <td class="center">{{ count[1]['pos-percent'] }}</td>
+                  <td class="center">{{ count[1]['neg-percent'] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div> -->
+
+    <!-- <div class="container" *ngIf="list_sentences">
       <table>
         <thead>
           <tr>
@@ -43,6 +102,6 @@
         </tbody>
       </table>
     </div>
-    
+     -->
 
   </div>

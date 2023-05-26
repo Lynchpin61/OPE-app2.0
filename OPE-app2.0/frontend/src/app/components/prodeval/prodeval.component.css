@@ -1,15 +1,60 @@
 .container {
-    display: grid;
+    /* display: grid;
     padding: 20px;
     grid-template-columns: repeat(auto-fit, minmax(350px, 500px));
     grid-gap: 20px;
     place-content: center;
     margin-top: 30px;
-  
+     */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     & > * {
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
   }
+
+#reviews {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: flex-start;
+  margin-top: 10px;
+
+  & > * {
+    width: 100%; /* set the width of the child elements to 100% */
+  }
+}
+
+
+#label {
+  margin-top: 12px;
+}
+
+#pie_charts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#counts_bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%; /* set the width of the container to 50% */
+  margin-top: 20px;
+}
+
+#counts-table th,
+#counts-table td {
+  padding: 10px; /* add some padding to the table cells */
+}
+
+.bar {
+  margin-right: 17px;
+}
   
 pre {
   white-space: pre-wrap;
