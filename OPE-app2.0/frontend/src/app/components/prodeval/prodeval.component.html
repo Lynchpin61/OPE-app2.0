@@ -5,7 +5,7 @@
       <div class="bar" [chart]="aspectBreakdownPieChart"></div>
     </div>
     
-    <div class="container">
+    <div class="container center-content">
       <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
       <div *ngIf="list_sentences">
         <table id="counts-table">

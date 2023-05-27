@@ -15,6 +15,9 @@ export const pieChartOptions: Options = {
   credits: {
     enabled: false,
   },
+  legend: {
+    enabled: true,
+  },
   plotOptions: {
     pie: {
       allowPointSelect: true,

@@ -18,12 +18,20 @@ export const aspectScoreChart: Options = {
     visible: false,
   },
   legend: {
-    enabled: false,
+    enabled: true,
   },
   credits: {
     enabled: false,
   },
   plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: false
+      },
+      showInLegend: true
+    },
     series: {
       stacking: 'percent',
       borderRadius: 5,

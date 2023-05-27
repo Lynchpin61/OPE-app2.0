@@ -22,7 +22,7 @@
   margin-top: 10px;
 
   & > * {
-    width: 100%; /* set the width of the child elements to 100% */
+    width: 80%; /* set the width of the child elements to 100% */
   }
 }
 
@@ -98,4 +98,13 @@ th {
 
 tr:nth-child(even) {
   background-color: #f3f3f3;
+}
+
+#reviews > div#label {
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.center-content {
+    place-content: center;
 }
