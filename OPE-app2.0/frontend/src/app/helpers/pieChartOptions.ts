@@ -18,15 +18,5 @@ export const pieChartOptions: Options = {
   legend: {
     enabled: true,
   },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: true,
-        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-      }
-    }
-  },
   
 }

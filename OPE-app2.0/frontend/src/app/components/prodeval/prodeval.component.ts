@@ -35,6 +35,7 @@ export class ProdevalComponent implements OnInit {
   items: [string, { Positive: string[], Negative: string[] }][] = [];
   counts: [string, { 'pos-count': number, 'neg-count': number, 'pos-percent': number, 'neg-percent': number}][] = [];
   labels: [string, string[]][] = [];
+  totalReviews: any = 0;
   // aspect_list: { [key: string]: string[] } = { Positive: [], Negative: [] };
   // positive_sens: string[] = [];
   // negative_sens: string[] = [];
@@ -187,6 +188,17 @@ export class ProdevalComponent implements OnInit {
 
         this.onePieChart = new Chart(
           {...pieChartOptions,
+            plotOptions: {
+              pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                  enabled: true,
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                },
+                showInLegend: true
+              }
+            },
             title: {
               text: 'Overall Sentiment',
               align: 'center'
@@ -205,7 +217,7 @@ export class ProdevalComponent implements OnInit {
         // ASPECT BREAKDOWN CHART
         let aspectBreakdown: {[key: string]: { name: string; y: any; color: string; }} = {};
         for (const aspect in this.list_sentences) {
-          const totalCount = this.list_sentences[aspect]['pos-count'] + this.list_sentences[aspect]['neg-count'];
+          let totalCount = this.list_sentences[aspect]['pos-count'] + this.list_sentences[aspect]['neg-count'];
           const sentiment_label = this.get_absa[aspect]["sentiment_label"];
           let color;
           if (sentiment_label === 'Positive') {
@@ -219,13 +231,36 @@ export class ProdevalComponent implements OnInit {
         }
 
         this.aspectBreakdownPieChart = new Chart(
-          {...pieChartOptions,
+          {
+            ...donutChartOptions,
+            plotOptions: {
+              pie: {
+                innerSize: '99%',
+                borderWidth: 40,
+                borderColor: undefined,
+                slicedOffset: 20,
+                dataLabels: {
+                  enabled: true,
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                },
+              },
+            },
+            subtitle: {
+              useHTML: true,
+              text: `<p style="font-size: 80px; text-align: center;">${this.totalReviews}</p>
+              <span style="font-size: 22px">
+                Total Reviews
+              </span>`,
+              floating: true,
+              verticalAlign: 'middle',
+              y: 30
+            },
             title: {
               text: 'Aspect Breakdown',
               align: 'center'
             },
             series: [{
-              name: 'Aspect',
+              name: 'Review Composition',
               type: 'pie',
               data: Object.values(aspectBreakdown),
             }]
