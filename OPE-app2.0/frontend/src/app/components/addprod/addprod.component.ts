@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./addprod.component.css']
 })
 export class AddprodComponent implements OnInit{
-  reviewText: string = "";
+  urlText: string = "";
   evaluatedText: string = "";
   showResult: boolean = false;
 
@@ -20,8 +20,12 @@ export class AddprodComponent implements OnInit{
 
   submitReview() {
     // Perform evaluation logic here
-    this.evaluatedText = this.reviewText + " has been evaluated!";
+
+    console.log(this.urlText);
+
+    const navigationExtras: NavigationExtras = {state: {url: this.urlText}};
+    this.evaluatedText = this.urlText + " has been evaluated!";
     this.showResult = true;
-    this.router.navigate(['prodeval'])
+    this.router.navigate( ['prodeval'], navigationExtras )
   }
 }

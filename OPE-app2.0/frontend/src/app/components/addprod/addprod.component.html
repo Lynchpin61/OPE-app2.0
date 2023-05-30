@@ -16,7 +16,7 @@
           <h3>Product 1</h3>
           <form>
             <label for="review1">Product Link:</label><br>
-            <textarea id="review1" name="review" maxlength="100" placeholder="Enter product link"></textarea><br><br>
+            <textarea id="review1" [(ngModel)]="urlText" name="review" placeholder="Enter product link" ></textarea><br><br>
             <input type="submit" value="Evaluate" (click)="submitReview()">
           </form>
         </div>

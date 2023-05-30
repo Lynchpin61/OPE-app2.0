@@ -1,4 +1,5 @@
 import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
 import { count } from 'rxjs';
 import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
@@ -40,12 +41,19 @@ export class ProdevalComponent implements OnInit {
   // positive_sens: string[] = [];
   // negative_sens: string[] = [];
 
-  constructor() {}
+  url:string;
 
-  ngOnInit() {
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation()!;
+    const state = navigation.extras.state as {url: string};
+    this.url = state.url;
+    console.log(`${this.url}`);
+  }
+
+  async ngOnInit() {
 
     // Mixed sentiment
-    const sentences = {
+    let sentences = {
       "sentences": [
       "It works well, but sometimes the unit just turns off while in use for no reason. I make sure the unit is charged so its not that. The sound quality is fair but nothing to get excited about. ",
       "The product seems to work as intended and is operating very well but it got a bit glitchy when it was first used but after a couple of minutes it worked pretty much fine after that.",
@@ -76,6 +84,30 @@ export class ProdevalComponent implements OnInit {
     //   ]
     // }
 
+    await fetch('http://127.0.0.1:3000/crawl/url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({url: this.url})
+    })
+    .then(response => response.json())
+    .then(data => {
+      // console.log(data);
+      this.sentences = data;
+      // Map the data to only get the review and not include empty reviews text
+      sentences = { "sentences": []}
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].review != "") {
+          sentences["sentences"].push(data[i].review);
+        }
+      }
+      console.log(sentences)
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
 
     let options = {
       method: 'POST',
@@ -84,7 +116,7 @@ export class ProdevalComponent implements OnInit {
     };
     
 
-    fetch('http://localhost:5000/init-dashboard', options)
+    await fetch('http://localhost:5000/init-dashboard', options)
     .then(response => response.json())
     .then(data => {
         this.absa_score = data.get_absa;
