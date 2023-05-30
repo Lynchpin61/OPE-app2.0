@@ -20,9 +20,6 @@ OPE-app2.0/*/.angular/*
 # Ignore environment files
 /src/environments/*.js
 
-# Ignore compiled TypeScript files
-*.js
-*.js.map
 
 # Ignore editor files
 *.swp
