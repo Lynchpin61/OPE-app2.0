@@ -44,7 +44,7 @@ const scrapeImages = async (url) => {
         // }, 1100);
 
         // navigate to product url
-        await page.goto(url);
+        await page.goto(url, { timeout: 40000 });
         // await page.goto('https://www.lazada.com.ph/products/lenovo-thinkplus-lp19-in-ear-true-wireless-earbuds-bluetooth-51-earphone-with-microphone-enc-noise-cancelling-hifi-sports-waterproof-headphones-bass-i3649062632-s19063103193.html');
         console.log('waiting for the page to load');
         await page.waitForSelector('img');
@@ -60,7 +60,7 @@ const scrapeImages = async (url) => {
         await page.mouse.click(200, 300); // Replace with the desired coordinates
 
         console.log('waiting for the review section to load');
-
+        
         // Wait for the review section to load
         const scrollTo = async (target_review_selector) => {
             const target_review = await page.waitForSelector(target_review_selector);
@@ -68,7 +68,10 @@ const scrapeImages = async (url) => {
             console.log('scrolling...');
         }
 
-        await scrollTo('#module_product_review > div > div');
+        await scrollTo('#module_product_review > div > div').catch(async () => {
+            console.log('scrolling to #module_product_review > div > div failed');
+            throw new Error('Review section not found');
+        });
         // let target_review = await page.waitForSelector('#module_product_review > div > div')
         // await page.evaluate((PageItem) => PageItem.scrollIntoView(), target_review);
         await page.waitForTimeout(900);
@@ -215,7 +218,15 @@ const scrapeImages = async (url) => {
             }
             const starSelector = `div[data-tag=gateway-wrapper] div ul > li:nth-child(${starCalculation})`
             await page.waitForSelector(starSelector)
+            const selectedStar = await page.$(starSelector);
             console.log('filter reviews div loaded');
+            await page.waitForTimeout(100);
+            // check if selector has a class of disabled
+            const isDisabled = await selectedStar.evaluate((el) => el.classList.contains('disabled'));
+            if (isDisabled) {
+                console.log('star filter is disabled');
+                throw new Error('star filter is disabled');
+            }
             await page.waitForTimeout(1000);
             await page.hover(starSelector);
             try {
@@ -312,41 +323,44 @@ const scrapeImages = async (url) => {
         }
 
         // await scrapeAllPages();
+        
+        const scrapeStarReviews = async (star = 0) => {
+            try {
+                await openFilterSection();
+                await page.waitForTimeout(600);
+                await selectStarFiler(star);
+                await page.waitForTimeout(200);
+                await scrapeAllPages();
+                await page.waitForTimeout(600);
+            } catch (error) {
+                if (error.message === 'star filter is disabled') {
+                    // dont leave the FilterSection open; close the FilterSection
+                    await page.screenshot({path: '12.png'});
+                    await page.waitForTimeout(200);
+                    await openFilterSection();
+                    await page.waitForTimeout(200);
+                    await page.screenshot({path: '13.png'});
+                    await page.waitForTimeout(300);
+                    console.log(`There is no page for ${star} star reviews`);
+                } else {
+                    console.log(`Error scraping ${star} star reviews`);
+                }
+            }
+        }
 
-        await openFilterSection();
-        await page.waitForTimeout(600);
-        await selectStarFiler(5);
-        await page.waitForTimeout(200);
-        await scrapeAllPages();
-        await page.waitForTimeout(600);
+        await scrapeStarReviews(5);
 
-        await openFilterSection();
-        await page.waitForTimeout(600);
-        await selectStarFiler(4);
-        await page.waitForTimeout(200);
-        await scrapeAllPages();
-        await page.waitForTimeout(600);
+        await scrapeStarReviews(4);
 
-        await openFilterSection();
-        await page.waitForTimeout(600);
-        await selectStarFiler(3);
-        await page.waitForTimeout(200);
-        await scrapeAllPages();
-        await page.waitForTimeout(600);
+        await scrapeStarReviews(3);
 
-        await openFilterSection();
-        await page.waitForTimeout(600);
-        await selectStarFiler(2);
-        await page.waitForTimeout(200);
-        await scrapeAllPages();
-        await page.waitForTimeout(600);
+        await scrapeStarReviews(2);
 
-        await openFilterSection();
-        await page.waitForTimeout(600);
-        await selectStarFiler(1);
-        await page.waitForTimeout(200);
-        await scrapeAllPages();
-        await page.waitForTimeout(600);
+        await page.screenshot({path: '11.png'});
+
+        await scrapeStarReviews(1);
+
+        await page.screenshot({path: '14.png'});
 
         // await clickNextButton();
 
@@ -365,6 +379,15 @@ const scrapeImages = async (url) => {
 
         // suspend and freeze the page
         await page.waitForTimeout(2000);
+    }
+    catch (err) {
+        // if error is Error('Review section not found') then return empty review list
+        if (err.message === 'Review section not found') {
+            console.warn('Review section not found');
+            return { "error": err.message };
+        } else {
+            console.log(err);
+        }
     }
     finally {
         // close the browser
