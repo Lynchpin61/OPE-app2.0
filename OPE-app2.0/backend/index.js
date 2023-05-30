@@ -1,14 +1,20 @@
 const express = require('express');
 
+const cors = require('cors');
+
 const bodyParser = require('body-parser');
 
 const authRoutes = require('./routes/auth')
+
+const crawlRoutes = require('./routes/crawl')
 
 const errorController = require('./controllers/error')
 
 const app = express();
 
 const ports = process.env.PORT || 3000;
+
+app.use(cors()); // to communicate with Machine Learning API
 
 app.use(bodyParser.json());
 
@@ -27,6 +33,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRoutes);
+
+app.use('/crawl', crawlRoutes);
 
 app.use(errorController.get404);
 
