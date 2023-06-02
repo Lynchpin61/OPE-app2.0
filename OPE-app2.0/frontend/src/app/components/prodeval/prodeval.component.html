@@ -1,4 +1,6 @@
-<div class="container">
+<app-buffer *ngIf="isLoading"></app-buffer>
+
+<div class="container" *ngIf="!isLoading">
 
     <div class="container" id="pie_charts">
       <div class="bar" [chart]="onePieChart"></div>
