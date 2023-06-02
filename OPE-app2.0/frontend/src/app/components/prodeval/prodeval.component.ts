@@ -92,9 +92,12 @@ export class ProdevalComponent implements OnInit {
       body: JSON.stringify({url: this.url})
     })
     .then(response => response.json())
-    .then(data => {
+    .then(async data => {
       // console.log(data);
       this.sentences = data;
+
+      // translate 
+
       // Map the data to only get the review and not include empty reviews text
       sentences = { "sentences": []}
       for (let i = 0; i < data.length; i++) {
@@ -103,6 +106,28 @@ export class ProdevalComponent implements OnInit {
         }
       }
       console.log(sentences)
+
+
+      // Translate the sentences
+      await fetch('http://127.0.0.1:3000/translate/text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "texts": sentences["sentences"] })
+      })
+      .then(response => response.json())
+      .then(data => {        
+        console.log("Translating...")
+        // console.log(data);
+        sentences["sentences"] = data.map( (objTranslate: { translations: { text: any; }[]; }) => objTranslate.translations[0].text );
+        console.log(sentences);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+      // end of translation
+
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -124,6 +149,7 @@ export class ProdevalComponent implements OnInit {
 
         this.sentence_attributes = data.sentence_attributes;
         console.log(this.sentence_attributes);
+        this.totalReviews = this.sentence_attributes.length;
 
         //Aspect Labels and Aspects (keywords)
         this.aspect_groups = data.get_aspect_groups;
@@ -292,7 +318,7 @@ export class ProdevalComponent implements OnInit {
               align: 'center'
             },
             series: [{
-              name: 'Review Composition',
+              name: 'Composition',
               type: 'pie',
               data: Object.values(aspectBreakdown),
             }]

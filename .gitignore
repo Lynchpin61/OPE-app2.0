@@ -20,6 +20,7 @@ OPE-app2.0/*/.angular/*
 # Ignore environment files
 /src/environments/*.js
 
+*.env
 
 # Ignore editor files
 *.swp

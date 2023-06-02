@@ -27,14 +27,13 @@ const scrapeImages = async (url) => {
 
         // await page.goto('https://www.lazada.com.ph/');
 
-        // // // Add Headers 
-        // // await page.setExtraHTTPHeaders({ 
-        // // 	'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 
-        // // 	'upgrade-insecure-requests': '1', 
-        // // 	'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8', 
-        // // 	'accept-encoding': 'gzip, deflate, br', 
-        // // 	'accept-language': 'en-US,en;q=0.9,en;q=0.8' 
-        // // }); 
+        // Add Headers 
+        await page.setExtraHTTPHeaders({ 
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36', 
+            'accept': '*/*',
+            'accept-encoding': 'gzip, deflate, br', 
+            'accept-language': 'en-US,en;q=0.9' 
+        }); 
 
         // await page.screenshot({path: '1.png'});
 
@@ -263,7 +262,7 @@ const scrapeImages = async (url) => {
             // click next button
             try {
                 const nextButtonSelector = 'div.next-pagination button.next' // #module_product_review > div > div > div:nth-child(3) > div.next-pagination.next-pagination-normal.next-pagination-arrow-only.next-pagination-medium.medium.review-pagination > div > button.next-btn.next-btn-normal.next-btn-medium.next-pagination-item.next
-                await page.waitForSelector(nextButtonSelector)
+                await page.waitForSelector(nextButtonSelector, { timeout: 2000 })
                 const nextButton = await page.$(nextButtonSelector);
                 await nextButton.hover(nextButtonSelector);
                 await nextButton.click(nextButtonSelector, {delay: 200}).then(() => {
@@ -378,7 +377,7 @@ const scrapeImages = async (url) => {
 
 
         // suspend and freeze the page
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(1000);
     }
     catch (err) {
         // if error is Error('Review section not found') then return empty review list
