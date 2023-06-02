@@ -16,7 +16,8 @@ import { pieChartOptions } from 'src/app/helpers/pieChartOptions';
 
 
 export class ProdevalComponent implements OnInit {
-
+  
+  isLoading = true;
   aspects: string[] = [];
   aspectCharts: { [key: string]: Chart } = {};
   aspect_labels: string[] = [];
@@ -309,7 +310,7 @@ export class ProdevalComponent implements OnInit {
       //   this.sentence_attributes = data;
       //   console.log(this.sentence_attributes);
       // });
-
+    this.isLoading = false;
 
   }
 }
