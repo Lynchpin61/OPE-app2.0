@@ -18,6 +18,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { FormsModule } from '@angular/forms';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -27,6 +28,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { AddprodComponent } from './components/addprod/addprod.component';
 import { SavedevalComponent } from './components/savedeval/savedeval.component';
 import { ProdevalComponent } from './components/prodeval/prodeval.component';
+import { BufferComponent } from './components/buffer/buffer.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { ProdevalComponent } from './components/prodeval/prodeval.component';
     AddprodComponent,
     SavedevalComponent,
     ProdevalComponent,
+    BufferComponent
   ],
   imports: [
     CommonModule,
@@ -55,6 +58,7 @@ import { ProdevalComponent } from './components/prodeval/prodeval.component';
     MatInputModule,
     MatListModule,
     MatToolbarModule,
+    MatProgressSpinnerModule,
     ChartModule
   ],
   providers: [],
