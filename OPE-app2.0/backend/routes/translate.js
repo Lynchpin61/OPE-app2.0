@@ -31,12 +31,14 @@ router.post('/text', (req, res, next) => {
         if (texts.length > 0) {
             texts.forEach((text) => {
                 if (typeof text !== 'string') {
+                    console.warn('Please provide an array of strings')
                     return res.status(400).json({
                         message: 'Please provide an array of strings'
                     });
                 }
             });
         } else {
+            console.warn('Array is empty. Please provide an array of strings')
             return res.status(400).json({
                 message: 'Array is empty. Please provide an array of strings'
             });
@@ -48,6 +50,7 @@ router.post('/text', (req, res, next) => {
         if (typeof texts == 'string') {
             parsedTexts = [{ 'text': texts }];
         } else {
+            console.warn('Please provide a string')
             return res.status(400).json({
                 message: 'Please provide a string'
             });
@@ -79,7 +82,7 @@ router.post('/text', (req, res, next) => {
         console.log("Translation successful");
     })
     .catch(function (error) {
-        console.log(error);
+        console.warn(error);
     });
 
 });
