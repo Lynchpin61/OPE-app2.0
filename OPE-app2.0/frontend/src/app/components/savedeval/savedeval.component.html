@@ -1,1 +1,27 @@
-<p>savedeval works!</p>
+<div class="background"></div>
+<div class="product-list">
+  <div class="header-row">
+    <div class="cell">ID</div>
+    <div class="cell">Evaluated Product</div>
+    <div class="cell">Product Link</div>
+    <div class="cell">View</div>
+    <div class="cell">Print as CSV</div>
+    <div class="cell">Delete</div>
+  </div>
+  <div class="product-row" *ngFor="let product of products">
+    <div class="cell">{{ product.id }}</div>
+    <div class="cell product-name">{{ product.name }}</div>
+    <div class="cell product-link">
+      <a [href]="product.link" target="_blank" title="{{ product.link }}">{{ product.link }}</a>
+    </div>
+    <div class="cell">
+      <button class="view-button" (click)="viewEvaluation(product.id)">View</button>
+    </div>
+    <div class="cell">
+      <button class="print-button" (click)="printEvaluation(product.id)">Print</button>
+    </div>
+    <div class="cell">
+      <button class="delete-button" (click)="deleteProduct(product.id)">Del</button>
+    </div>
+  </div>
+</div>
