@@ -1,29 +1,21 @@
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Home Page</title>
-</head>
-<body>
-  <header>
-    <h1>Online Product Evaluator</h1>
-  </header>
-  <main>
-    <h2>Welcome to Online Product Evaluator!</h2>
-    <p>Evaluate and share your opinions with others. Use our evaluator and start evaluating products today!</p>
-      <div>
-        <div class="container product">
-          <img src="https://media3.giphy.com/avatars/lazadaid/KNGgeM8aoXs6.gif" alt="Product 1">
-          <h3>Product 1</h3>
-          <form>
-            <label for="review1">Product Link:</label><br>
-            <textarea id="review1" [(ngModel)]="urlText" name="review" placeholder="Enter product link" ></textarea><br><br>
-            <input type="submit" value="Evaluate" (click)="submitReview()">
-          </form>
-        </div>
-      </div>
-  </main>
-  <footer>
-    <p>&copy; 2023 Online Product Evaluator</p>
-  </footer>
-</body>
-</html>
+<div class="background"></div>
+<header>
+  <h1>Online Product Evaluator</h1>
+</header>
+<main>
+  <h2>Welcome to Online Product Evaluator!</h2>
+  <p>Evaluate and share your opinions with others. Use our evaluator and start evaluating products today!</p>
+  <div>
+    <div class="container product">
+      <img id="image" [src]="images[currentImageIndex]" alt="Product">
+      <form>
+        <label for="review1">Product Link:</label><br>
+        <textarea id="review1" [(ngModel)]="urlText" name="review" placeholder="Enter product link" ></textarea><br><br>
+        <input type="submit" value="Evaluate" (click)="submitReview()">
+      </form>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>&copy; 2023 Online Product Evaluator</p>
+</footer>

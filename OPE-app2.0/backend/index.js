@@ -8,6 +8,8 @@ const authRoutes = require('./routes/auth')
 
 const crawlRoutes = require('./routes/crawl')
 
+const translateRoutes = require('./routes/translate')
+
 const errorController = require('./controllers/error')
 
 const app = express();
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
 app.use('/auth', authRoutes);
 
 app.use('/crawl', crawlRoutes);
+
+app.use('/translate', translateRoutes);
 
 app.use(errorController.get404);
 

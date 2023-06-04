@@ -1,32 +1,59 @@
-    /* Typography */
-    body {
-      font-family: 'Arial', sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
-      color: #333;
+      .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('../addprod/img/bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        opacity: 0;
+        z-index: -1;
+        animation: fade-in 2s ease-in-out forwards;
       }
 
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0.5;
+        }
+      }
+
+
+      body {
+        font-family: 'Helvetica Neue', Arial, sans-serif; 
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+      }
+      
       h1, h2 {
-      font-weight: bold;
-      margin-top: 0;
-      margin-bottom: 20px;
+        font-weight: bold;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-family: 'Helvetica Neue', Arial, sans-serif; 
       }
-
+      
       h1 {
-      font-size: 36px;
-      color: #333;
-      text-align: center;
-      margin-top: 50px;
+        font-size: 36px;
+        color: #333;
+        text-align: left;
+        margin-top: -10px;
       }
-
+      
       h2 {
-      font-size: 24px;
-      color: #444;
+        font-size: 24px;
+        color: #444;
+        margin-top: -60px;
       }
-
+      
       p {
-      margin-top: 0;
-      margin-bottom: 20px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        font-family: 'Montserrat', Arial, sans-serif;
       }
 
       a {
@@ -34,88 +61,138 @@
       text-decoration: none;
       }
 
-      /* Layout */
-      header {
-      background-color: #fff;
-      color: #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      label[for="review1"] {
+        font-weight: bold;
+        display: block;
+        margin-top:50px; 
+      }
+
+      header {  
+        color: #333;
+        display: flex;
+        justify-content: left; 
+        padding: 10px;
+        width: 100%;
+      }
+      
+      header .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 30px; 
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
       }
 
 
       main {
       max-width: 800px;
       margin: 50px auto;
-      background-color: #fff;
       padding: 40px;
       border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
       }
 
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 30px;
-      margin: 0 auto; /* Add this line to center the grid */
-      justify-items: center; /* Add this line to center the items inside the grid */
-    }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 30px;
+        margin: 0 auto; 
+        justify-items: center; 
+      }
 
-
-
-    .product {
-      background-color: #eee;
-      padding: 50px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      text-align: center;
-      margin: 0 auto;
-      max-width: 300px;
-    }
+      .product {
+        background-color: #eeeeee00;
+        padding: 80px;
+        border-radius: 5px;
+        text-align: center;
+        max-width: 300px;
+        position: relative;
+      }
 
       .product img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 5px;
+        width: 400%;
+        max-width: 500px;
+        max-height: 500px;
+        object-fit: contain;
+        border-radius: 5px;
+        display: block;
+        margin: -10px auto 20px;
+        transform: translateX(-25%);
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .fade-in {
+        opacity: 1;
+      }
+      
+      .fade-out {
+        opacity: 0;
       }
 
       .product h3 {
       margin-top: 20px;
       margin-bottom: 10px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      }
+      
+      form {
+        max-width: 1000px; 
+        margin: 0 auto;
+      }
+      
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      textarea {
+        width: 300%;
+        height: 100%;
+        padding: 1px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        /* margin-bottom: 10px; */
+        resize:none;
+        transform: translateX(-32%);
       }
 
-    input[type="submit"] {
-      background-color: #3b5998;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #2c437c;
-    }
+      textarea::placeholder {
+        color: #999;
+        font-style: normal;
+      }
+      
+      input[type="submit"] {
+        background-color: #fd0fd0;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      input[type="submit"]:hover {
+        background-color: #f1184e;
+      }
 
       footer {
-      background-color: #eee;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      font-size: 14px;
-      margin-top: 50px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        font-size: 14px;
+        margin-top: 50px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
       }
 
       footer p {
       margin: 0;
       }
-
