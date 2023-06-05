@@ -1,10 +1,13 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
+import jsPDF from 'jspdf';
 import { count } from 'rxjs';
 import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
 import { donutChartOptions } from 'src/app/helpers/donutChartOptions';
 import { pieChartOptions } from 'src/app/helpers/pieChartOptions';
+
+
 
 
 @Component({
@@ -337,6 +340,18 @@ export class ProdevalComponent implements OnInit {
       //   console.log(this.sentence_attributes);
       // });
     this.isLoading = false;
+  }
+    @ViewChild('HTMLpage', { static: false })
+  public HTMLpage!: ElementRef; 
 
+  makePDF() {
+    let pdf = new jsPDF('p', 'in', 'a4');
+
+    pdf.html(this.HTMLpage.nativeElement, {
+      callback: (pdf) => {
+        //save pdf
+        pdf.save('evaluation.pdf');
+      }
+    })
   }
 }
