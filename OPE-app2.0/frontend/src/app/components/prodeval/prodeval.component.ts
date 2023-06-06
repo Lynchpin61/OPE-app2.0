@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
 import jsPDF from 'jspdf';
+import * as htmlToImage from 'html-to-image';
 import { count } from 'rxjs';
 import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
 import { donutChartOptions } from 'src/app/helpers/donutChartOptions';
@@ -27,6 +28,9 @@ export class ProdevalComponent implements OnInit {
 
   onePieChart: Chart = {} as Chart;
   aspectBreakdownPieChart: Chart = {} as Chart;
+
+  lazadaRegex = /lazada/;
+  amazonRegex = /amazon/;
   
   sentences: any;
 
@@ -88,7 +92,8 @@ export class ProdevalComponent implements OnInit {
     //   ]
     // }
 
-    await fetch('http://127.0.0.1:3000/crawl/url', {
+    if (this.lazadaRegex.test(this.url)){
+      await fetch('http://127.0.0.1:3000/crawl/url', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -136,7 +141,6 @@ export class ProdevalComponent implements OnInit {
     .catch((error) => {
       console.error('Error:', error);
     });
-
 
     let options = {
       method: 'POST',
@@ -340,18 +344,216 @@ export class ProdevalComponent implements OnInit {
       //   console.log(this.sentence_attributes);
       // });
     this.isLoading = false;
+  } else if (this.amazonRegex.test(this.url)) {
+      await fetch('http://localhost:5000/scraper_reviews', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({url: this.url})
+      })
+      .then(response => response.json())
+      .then(async data => {
+        this.absa_score = data.get_absa;
+        console.log(this.absa_score);
+
+        this.sentence_attributes = data.sentence_attributes;
+        console.log(this.sentence_attributes);
+        this.totalReviews = this.sentence_attributes.length;
+
+        //Aspect Labels and Aspects (keywords)
+        this.aspect_groups = data.get_aspect_groups;
+        console.log(this.aspect_groups);
+        this.labels = Object.entries(this.aspect_groups);
+        for (const [key, value] of this.labels) {
+          // console.log(key); // Output: The key
+          // console.log(value); // Output: The value
+          const typedLabel = { key: key, value: value };
+          console.log(typedLabel.key);
+        }
+
+
+        this.aspect_list = data.get_list_sentences;
+        console.log(this.aspect_list);
+        console.log(Object.values(this.aspect_list));
+        this.items = Object.entries(this.aspect_list);
+        // const posArray: string[] = [];
+        // const negArray: string[] = [];
+        for (const [key, value] of this.items) {
+          console.log(key); // Output: The key
+          console.log(value); // Output: The value
+
+          const typedValue = value as { Positive: string[], Negative: string[] };
+
+          console.log(typedValue.Positive);
+            // Populate posArray with elements from the Positive array
+            // The (...) part is a spread operator used to push the elements of the array 
+            // rather than the whole array itself
+          // posArray.push(...typedValue.Positive);
+          // negArray.push(...typedValue.Negative);
+          // console.log(posArray);
+          // console.log(negArray);
+        }
+        console.log(this.items)
+
+        //COUNTS TABLE
+        this.list_sentences = data.get_count_sentiments;
+        console.log(this.list_sentences);
+        this.counts = Object.entries(this.list_sentences);
+        for (const [key, value] of this.counts) {
+          console.log(key); // Output: The key
+          console.log(value); // Output: The value
+
+          const countValue = value as { 'pos-count': number, 'neg-count': number, 'pos-percent': number, 'neg-percent': number };
+        }
+        this.get_absa = data.get_absa;
+        console.log(this.get_absa);
+
+        //ASPECTS CHART
+        console.log(this.list_sentences);
+        for (const aspect in this.list_sentences) {
+          this.aspects.push(aspect);
+          const positiveCounts = this.list_sentences[aspect]['pos-count']
+          console.log("Aspect");
+          console.log(this.list_sentences[aspect]['neg-count']);
+          const negativeCounts = this.list_sentences[aspect]['neg-count']
+
+          const chart = new Chart({...aspectScoreChart, 
+            title: {
+              text: aspect.toUpperCase(),
+              style: {
+                color: '#1B9C85',
+                fontWeight: 'bold',
+                fontSize: '14px',
+              },
+            },
+            series: [
+              {
+                name: 'Positive',
+                type: 'bar',
+                color: '#8f8',
+                data: [positiveCounts]
+              },
+              {
+                name: 'Negative',
+                type: 'bar',
+                color: '#f88',
+                data: [negativeCounts]
+              }
+            ],
+          })
+          console.log(`BEFORE `)
+          this.aspectCharts[aspect] = chart;
+        }
+
+        // OVERALL SENTIMENT CHART
+        let totalPositive = 0;
+        let totalNegative = 0;
+        for (const aspect in this.list_sentences) {
+          totalPositive += this.list_sentences[aspect]['pos-count'];
+          totalNegative += this.list_sentences[aspect]['neg-count'];
+        }
+
+        this.onePieChart = new Chart(
+          {...pieChartOptions,
+            plotOptions: {
+              pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                  enabled: true,
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                },
+                showInLegend: true
+              }
+            },
+            title: {
+              text: 'Overall Sentiment',
+              align: 'center'
+            },
+            series: [{
+              name: 'Sentiment',
+              type: 'pie',
+              data: [
+                { name: 'Positive', y: totalPositive, color: '#00FF00' },
+                { name: 'Negative', y: totalNegative, color: '#ff0000' },
+              ],
+            }]
+          }
+        );
+
+        // ASPECT BREAKDOWN CHART
+        let aspectBreakdown: {[key: string]: { name: string; y: any; color: string; }} = {};
+        for (const aspect in this.list_sentences) {
+          let totalCount = this.list_sentences[aspect]['pos-count'] + this.list_sentences[aspect]['neg-count'];
+          const sentiment_label = this.get_absa[aspect]["sentiment_label"];
+          let color;
+          if (sentiment_label === 'Positive') {
+            color = '#00FF00';
+          } else if (sentiment_label === "Neutral") {
+            color = '#FFFF00';
+          } else {
+            color = '#ff0000';
+          }
+          aspectBreakdown[aspect] = { name: aspect, y: totalCount, color: color };
+        }
+
+        this.aspectBreakdownPieChart = new Chart(
+          {
+            ...donutChartOptions,
+            plotOptions: {
+              pie: {
+                innerSize: '99%',
+                borderWidth: 40,
+                borderColor: undefined,
+                slicedOffset: 20,
+                dataLabels: {
+                  enabled: true,
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                },
+              },
+            },
+            subtitle: {
+              useHTML: true,
+              text: `<p style="font-size: 80px; text-align: center;">${this.totalReviews}</p>
+              <span style="font-size: 22px">
+                Total Reviews
+              </span>`,
+              floating: true,
+              verticalAlign: 'middle',
+              y: 30
+            },
+            title: {
+              text: 'Aspect Breakdown',
+              align: 'center'
+            },
+            series: [{
+              name: 'Composition',
+              type: 'pie',
+              data: Object.values(aspectBreakdown),
+            }]
+          }
+        );
+
+
+      });
+      this.isLoading = false;
   }
-    @ViewChild('HTMLpage', { static: false })
-  public HTMLpage!: ElementRef; 
 
-  makePDF() {
-    let pdf = new jsPDF('p', 'in', 'a4');
 
-    pdf.html(this.HTMLpage.nativeElement, {
-      callback: (pdf) => {
-        //save pdf
-        pdf.save('evaluation.pdf');
-      }
-    })
+  }
+   
+  generateImage(){
+    var node:any = document.getElementById('image-section');
+    htmlToImage.toPng(node)
+      .then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        document.body.appendChild(img);
+      })
+      .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+      });
   }
 }
+  

@@ -23,6 +23,7 @@
     "angular-highcharts": "^15.0.1",
     "dom-to-image": "^2.6.0",
     "highcharts": "^11.0.1",
+    "html-to-image": "^1.11.11",
     "html-to-pdfmake": "^2.4.20",
     "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",

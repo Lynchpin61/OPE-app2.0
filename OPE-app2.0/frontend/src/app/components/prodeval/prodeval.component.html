@@ -1,7 +1,7 @@
 <app-buffer *ngIf="isLoading"></app-buffer>
 
-<div class="container" *ngIf="!isLoading" id="HTMLpage" #HTMLpage>
-
+<div class="container" *ngIf="!isLoading">
+  <div  id="image-section">
     <div class="container" id="pie_charts">
       <div class="bar" [chart]="onePieChart"></div>
       <div class="bar" [chart]="aspectBreakdownPieChart"></div>
@@ -71,5 +71,7 @@
       </table>
     </div>
 
-    <button (click)="makePDF()">Save to PDF</button>
+  </div>
+  
+    <button (click)="generateImage()">Save as Image</button>
   </div>

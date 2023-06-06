@@ -43,7 +43,6 @@ export class AddprodComponent implements OnInit{
     // Perform evaluation logic here
 
     console.log(this.urlText);
-
     const navigationExtras: NavigationExtras = {state: {url: this.urlText}};
     this.evaluatedText = this.urlText + " has been evaluated!";
     this.showResult = true;
