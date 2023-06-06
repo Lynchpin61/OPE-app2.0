@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
+import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { count } from 'rxjs';
 import { aspectScoreChart } from 'src/app/helpers/aspectScoreChart';
@@ -112,25 +113,25 @@ export class ProdevalComponent implements OnInit {
       console.log(sentences)
 
 
-      // Translate the sentences
-      await fetch('http://127.0.0.1:3000/translate/text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ "texts": sentences["sentences"] })
-      })
-      .then(response => response.json())
-      .then(data => {        
-        console.log("Translating...")
-        // console.log(data);
-        sentences["sentences"] = data.map( (objTranslate: { translations: { text: any; }[]; }) => objTranslate.translations[0].text );
-        console.log(sentences);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      // end of translation
+      // // Translate the sentences
+      // await fetch('http://127.0.0.1:3000/translate/text', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({ "texts": sentences["sentences"] })
+      // })
+      // .then(response => response.json())
+      // .then(data => {        
+      //   console.log("Translating...")
+      //   // console.log(data);
+      //   sentences["sentences"] = data.map( (objTranslate: { translations: { text: any; }[]; }) => objTranslate.translations[0].text );
+      //   console.log(sentences);
+      // })
+      // .catch((error) => {
+      //   console.error('Error:', error);
+      // })
+      // // end of translation
 
     })
     .catch((error) => {
@@ -341,17 +342,83 @@ export class ProdevalComponent implements OnInit {
       // });
     this.isLoading = false;
   }
-    @ViewChild('HTMLpage', { static: false })
-  public HTMLpage!: ElementRef; 
+  
+  
+  @ViewChild('HTMLpage', { static: false }) HTMLpage!: ElementRef; 
 
   makePDF() {
-    let pdf = new jsPDF('p', 'in', 'a4');
+    html2canvas(this.HTMLpage.nativeElement).then(canvas => {
+      // const imgData = canvas.toDataURL('image/png');
 
-    pdf.html(this.HTMLpage.nativeElement, {
-      callback: (pdf) => {
-        //save pdf
-        pdf.save('evaluation.pdf');
-      }
-    })
+      // let pdf = new jsPDF({
+      //   orientation: 'portrait',
+      // });
+
+      // const imageProps = pdf.getImageProperties(imgData);
+
+      // const pdfWidth = pdf.internal.pageSize.getWidth();
+      // console.log(`WIDTH => ${pdfWidth}`);
+
+      // const pdfHeight = (imageProps.height * pdfWidth) / imageProps.width;
+
+      // pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+      // pdf.save('report.pdf')
+
+
+
+      // const imgWidth = 208;
+      // const pageHeight = 295;
+      // const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      // let heightLeft = imgHeight;
+      // let position = 0;
+      // heightLeft -= pageHeight;
+      // let doc = new jsPDF({
+      //   orientation: 'portrait',
+      // });
+      // doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+      // while (heightLeft >= 0) {
+      //   position = heightLeft - imgHeight;
+      //   doc.addPage();
+      //   doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+      //   heightLeft -= pageHeight;
+      // }
+      // doc.save('Downld.pdf');
+
+
+
+      const imgData = canvas.toDataURL('image/png');
+
+      let pdf = new jsPDF({
+        orientation: 'portrait',
+      });
+
+      const imageProps = pdf.getImageProperties(imgData);
+
+      canvas.getContext('2d');
+			
+			console.log(canvas.height+"  "+canvas.width);
+			
+      let HTML_Width = pdf.internal.pageSize.getWidth();
+      let HTML_Height = (imageProps.height * HTML_Width) / imageProps.width;
+      let top_left_margin = 0;
+      let PDF_Width = HTML_Width+(top_left_margin*2);
+      let PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+      let canvas_image_width = HTML_Width;
+      let canvas_image_height = HTML_Height;
+      
+      let totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+			
+      pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+			
+			
+			for (let i = 1; i <= totalPDFPages; i++) { 
+				pdf.addPage();
+				pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+			}
+			
+      pdf.save("HTML-Document.pdf");
+
+    });
   }
 }
