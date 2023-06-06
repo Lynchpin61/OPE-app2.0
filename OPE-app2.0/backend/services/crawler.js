@@ -156,6 +156,9 @@ const scrapeImages = async (url) => {
                         })
                         .catch(() => {
                             console.log('slider disappeared; maybe it was already taken cared of; if not, then the captcha failed');
+                        })
+                        .finally(async () => {
+                            await page.waitForTimeout(400)
                         });
                 })
                 .catch(() => {
@@ -262,7 +265,7 @@ const scrapeImages = async (url) => {
             // click next button
             try {
                 const nextButtonSelector = 'div.next-pagination button.next' // #module_product_review > div > div > div:nth-child(3) > div.next-pagination.next-pagination-normal.next-pagination-arrow-only.next-pagination-medium.medium.review-pagination > div > button.next-btn.next-btn-normal.next-btn-medium.next-pagination-item.next
-                await page.waitForSelector(nextButtonSelector, { timeout: 2000 })
+                await page.waitForSelector(nextButtonSelector, { timeout: 1000 })
                 const nextButton = await page.$(nextButtonSelector);
                 await nextButton.hover(nextButtonSelector);
                 await nextButton.click(nextButtonSelector, {delay: 200}).then(() => {
@@ -270,7 +273,7 @@ const scrapeImages = async (url) => {
                 }).catch(() => {
                     console.log('next button not clicked');
                 });
-                await page.waitForTimeout(500);
+                await page.waitForTimeout(300);
                 
                 return true; // success
             } catch (error) {
@@ -286,7 +289,7 @@ const scrapeImages = async (url) => {
             // click next button until it is disabled
             let isNextButtonDisabled = false;
 
-            await page.waitForTimeout(200);
+            await page.waitForTimeout(1000);
 
             // get the first page
             reviews = await page.evaluate( scrapeReview )
@@ -295,11 +298,11 @@ const scrapeImages = async (url) => {
             
             // get the succeeding pages
             while ((!isNextButtonDisabled) && (pageNumber < max_pages)) {
-                await page.waitForTimeout(200);
+                await page.waitForTimeout(600);
 
                 if (await clickNextButton()) {
-                    await page.waitForTimeout(600);
-                    isNextButtonDisabled = await page.waitForSelector('div.next-pagination button.next[disabled]', {timeout: 800})
+                    await page.waitForTimeout(100);
+                    isNextButtonDisabled = await page.waitForSelector('div.next-pagination button.next[disabled]', {timeout: 400})
                         .then(() => {
                             console.log('next button disabled');
                             return true;
@@ -318,7 +321,9 @@ const scrapeImages = async (url) => {
                     console.log('next button not clicked; the pagination navigation does not exists');
                     break;
                 }
-            } 
+
+                await page.waitForTimeout(400);
+            }
         }
 
         // await scrapeAllPages();
@@ -326,20 +331,20 @@ const scrapeImages = async (url) => {
         const scrapeStarReviews = async (star = 0) => {
             try {
                 await openFilterSection();
-                await page.waitForTimeout(600);
+                await page.waitForTimeout(100);
                 await selectStarFiler(star);
-                await page.waitForTimeout(200);
+                await page.waitForTimeout(1000);
                 await scrapeAllPages();
-                await page.waitForTimeout(600);
+                await page.waitForTimeout(100);
             } catch (error) {
                 if (error.message === 'star filter is disabled') {
                     // dont leave the FilterSection open; close the FilterSection
                     await page.screenshot({path: '12.png'});
-                    await page.waitForTimeout(200);
+                    await page.waitForTimeout(100);
                     await openFilterSection();
-                    await page.waitForTimeout(200);
+                    await page.waitForTimeout(100);
                     await page.screenshot({path: '13.png'});
-                    await page.waitForTimeout(300);
+                    await page.waitForTimeout(100);
                     console.log(`There is no page for ${star} star reviews`);
                 } else {
                     console.log(`Error scraping ${star} star reviews`);

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
+import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as htmlToImage from 'html-to-image';
 import { count } from 'rxjs';
@@ -117,25 +118,25 @@ export class ProdevalComponent implements OnInit {
       console.log(sentences)
 
 
-      // Translate the sentences
-      await fetch('http://127.0.0.1:3000/translate/text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ "texts": sentences["sentences"] })
-      })
-      .then(response => response.json())
-      .then(data => {        
-        console.log("Translating...")
-        // console.log(data);
-        sentences["sentences"] = data.map( (objTranslate: { translations: { text: any; }[]; }) => objTranslate.translations[0].text );
-        console.log(sentences);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      // end of translation
+      // // Translate the sentences
+      // await fetch('http://127.0.0.1:3000/translate/text', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({ "texts": sentences["sentences"] })
+      // })
+      // .then(response => response.json())
+      // .then(data => {        
+      //   console.log("Translating...")
+      //   // console.log(data);
+      //   sentences["sentences"] = data.map( (objTranslate: { translations: { text: any; }[]; }) => objTranslate.translations[0].text );
+      //   console.log(sentences);
+      // })
+      // .catch((error) => {
+      //   console.error('Error:', error);
+      // })
+      // // end of translation
 
     })
     .catch((error) => {
