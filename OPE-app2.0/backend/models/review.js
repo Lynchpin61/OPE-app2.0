@@ -17,7 +17,7 @@ module.exports = class Review {
 
     static save(review) {
         return db.execute(
-            'INSERT INTO reviews (name, stars, date_reviewed, dateiso_scraped, review, product_url) VALUES (?, ?, STR_TO_DATE(?, \'%d %b %Y\'), STR_TO_DATE(?, \'%Y-%m-%dT%H:%i:%s.%fZ\'), ?, ?)',
+            'INSERT INTO reviews (name, stars, date_reviewed, dateiso_scraped, review, product_url) VALUES (?, ?, ?, STR_TO_DATE(?, \'%Y-%m-%dT%H:%i:%s.%fZ\'), ?, ?)',
             [
                 review.name,
                 review.stars,
@@ -46,7 +46,7 @@ module.exports = class Review {
             (name, stars, date_reviewed, dateiso_scraped, review, product_url) 
             VALUES 
             ${values.map(
-                () => '(?, ?, STR_TO_DATE(?, \'%d %b %Y\'), STR_TO_DATE(?, \'%Y-%m-%dT%H:%i:%s.%fZ\'), ?, ?)'
+                () => '(?, ?, ?, STR_TO_DATE(?, \'%Y-%m-%dT%H:%i:%s.%fZ\'), ?, ?)'
             ).join(', ')}
         `;
     
