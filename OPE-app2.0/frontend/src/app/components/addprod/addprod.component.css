@@ -7,20 +7,9 @@
         background-image: url('../addprod/img/bg.jpg');
         background-repeat: no-repeat;
         background-size: cover;
-        opacity: 0;
+        opacity: 0.5;
         z-index: -1;
-        animation: fade-in 2s ease-in-out forwards;
       }
-
-      @keyframes fade-in {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 0.5;
-        }
-      }
-
 
       body {
         font-family: 'Helvetica Neue', Arial, sans-serif; 
