@@ -6,7 +6,7 @@ import { NavigationExtras, Router } from "@angular/router";
   templateUrl: './addprod.component.html',
   styleUrls: ['./addprod.component.css']
 })
-export class AddprodComponent implements OnInit{
+export class AddprodComponent implements OnInit {
   urlText: string = "";
   evaluatedText: string = "";
   showResult: boolean = false;
@@ -39,6 +39,12 @@ export class AddprodComponent implements OnInit{
     }
   }
 
+  handlePaste() {
+    navigator.clipboard.readText().then((text) => {
+      this.urlText = text;
+    });
+  }
+
   submitReview() {
     // Perform evaluation logic here
 
@@ -46,6 +52,6 @@ export class AddprodComponent implements OnInit{
     const navigationExtras: NavigationExtras = {state: {url: this.urlText}};
     this.evaluatedText = this.urlText + " has been evaluated!";
     this.showResult = true;
-    this.router.navigate( ['prodeval'], navigationExtras )
+    this.router.navigate(['prodeval'], navigationExtras);
   }
 }

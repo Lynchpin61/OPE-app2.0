@@ -1,19 +1,29 @@
 <div class="background"></div>
 <header>
-  <h1>Online Product Evaluator</h1>
+  <!-- <h1>Online Product Evaluator</h1> -->
+  <div class="instruction-card">
+    <div class="instruction-title">Instructions:</div>
+    <ul class="instruction-list">
+      <li>Enter the Lazada or Amazon link of the product you want to evaluate in the "Product Link" field.</li>
+      <li>Click the "Evaluate" button to submit your link.</li>
+      <li>Wait until the evaluation is finished. It might take a while depending on the number of reviews for the requested product.</li>
+      <li>For amazon links, please click the see all reviews link in the page before copying the url of the product page</li>
+    </ul>
+  </div>
 </header>
 <main>
   <h2>Welcome to Online Product Evaluator!</h2>
-  <p>Evaluate and share your opinions with others. Use our evaluator and start evaluating products today!</p>
-  <div>
-    <div class="container product">
-      <img id="image" [src]="images[currentImageIndex]" alt="Product">
-      <form>
-        <label for="review1">Product Link:</label><br>
-        <textarea id="review1" [(ngModel)]="urlText" name="review" placeholder="Enter product link" ></textarea><br><br>
-        <input type="submit" value="Evaluate" (click)="submitReview()">
-      </form>
-    </div>
+  <div class="container product">
+    <img id="image" [src]="images[currentImageIndex]" alt="Product">
+    <form>
+      <label for="review1">Product Link:</label><br>
+      <div class="input-container">
+        <textarea id="review1" [(ngModel)]="urlText" name="review" placeholder="Enter Lazada or Amazon link"></textarea>
+        <span class="icon" (click)="handlePaste()"><i class="fas fa-clipboard"></i></span>
+      </div>
+      <br><br>
+      <input type="submit" value="Evaluate" (click)="submitReview()">
+    </form>
   </div>
 </main>
 <footer>
