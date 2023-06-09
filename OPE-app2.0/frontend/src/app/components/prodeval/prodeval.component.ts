@@ -95,12 +95,18 @@ export class ProdevalComponent implements OnInit {
 
     if (this.lazadaRegex.test(this.url)){
 
-      await fetch(`http://localhost:3000/review/findall?url=${this.url}`, {
-        method: 'GET',
+      let requrl = new URL("http://127.0.0.1:3000/review/findall")
+      let params = {
+          url: this.url
+      }
+      Object.keys(params).forEach((key: string) => requrl.searchParams.append(key, params[key as keyof typeof params]))
+
+      await fetch(requrl, {
+          method: 'GET',
       })
       .then(response => response.json())
       .then(async data => {
-        console.log("INSIDE FINDALL");
+        console.log("CHECKING PRODCT IN DATABASE...");
 
         if (data['data'].length == 0) {
           await fetch('http://127.0.0.1:3000/crawl/url', {
@@ -113,7 +119,7 @@ export class ProdevalComponent implements OnInit {
             .then(response => response.json())
             .then(async data => {
 
-              console.log("INSIDE CRAWL URL");
+              console.log("PRODUCT IS NEW, CRAWLING THE WEB FOR PRODUCT...");
               console.log(data);
 
               // map each data to look like
@@ -141,7 +147,7 @@ export class ProdevalComponent implements OnInit {
                 reviews
               ))
 
-              await fetch('http://localhost:3000/review/savemany', {
+              await fetch('http://127.0.0.1:3000/review/savemany', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -202,11 +208,14 @@ export class ProdevalComponent implements OnInit {
 
         } else {
           // Map the data to only get the review and not include empty reviews text
-          console.log("INSIDE ELSE")
+          console.log("PRODUCT ALREADY SAVED; ACCESSING DATABASE INSTEAD OF SCRAPING")
+          console.log(data)
+          console.log(data['data'].length)
           sentences = { "sentences": []}
           for (let i = 0; i < data['data'].length; i++) {
-            if (data['data'][i].review != "") {
-              sentences["sentences"].push(data[i].review);
+            let record = data['data'][i]
+            if (record.review != "") {
+              sentences["sentences"].push(record.review);
             }
           }
           // console.log(sentences)
