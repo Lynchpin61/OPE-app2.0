@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 
 const authRoutes = require('./routes/auth')
 
+const reviewRoutes = require('./routes/review')
+
 const crawlRoutes = require('./routes/crawl')
 
 const translateRoutes = require('./routes/translate')
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRoutes);
+
+app.use('/review', reviewRoutes);
 
 app.use('/crawl', crawlRoutes);
 

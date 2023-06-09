@@ -1,3 +1,7 @@
+.solid-background {
+  background-color: #fff;
+}
+
 .container {
     /* display: grid; */
     padding: 20px;

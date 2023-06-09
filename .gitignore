@@ -6,7 +6,8 @@ OPE-app2.0/backend/package.json
 OPE-app2.0/backend/config/config.json
 OPE-app2.0/frontend/.angular/*
 
-OPE-app2.0\backend\*.png
+OPE-app2.0/backend/*.png
+OPE-app2.0/backend/reviews.json
 
 # Ignore build output
 /dist

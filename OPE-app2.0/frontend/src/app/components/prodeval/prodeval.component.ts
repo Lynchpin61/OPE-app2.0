@@ -94,54 +94,139 @@ export class ProdevalComponent implements OnInit {
     // }
 
     if (this.lazadaRegex.test(this.url)){
-      await fetch('http://127.0.0.1:3000/crawl/url', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({url: this.url})
-    })
-    .then(response => response.json())
-    .then(async data => {
-      // console.log(data);
-      this.sentences = data;
 
-      // translate 
-
-      // Map the data to only get the review and not include empty reviews text
-      sentences = { "sentences": []}
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].review != "") {
-          sentences["sentences"].push(data[i].review);
-        }
+      let requrl = new URL("http://127.0.0.1:3000/review/findall")
+      let params = {
+          url: this.url
       }
-      console.log(sentences)
+      Object.keys(params).forEach((key: string) => requrl.searchParams.append(key, params[key as keyof typeof params]))
+
+      await fetch(requrl, {
+          method: 'GET',
+      })
+      .then(response => response.json())
+      .then(async data => {
+        console.log("CHECKING PRODCT IN DATABASE...");
+
+        if (data['data'].length == 0) {
+          await fetch('http://127.0.0.1:3000/crawl/url', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({url: this.url})
+            })
+            .then(response => response.json())
+            .then(async data => {
+
+              console.log("PRODUCT IS NEW, CRAWLING THE WEB FOR PRODUCT...");
+              console.log(data);
+
+              // map each data to look like
+              // {
+              //   "name": "by R***.",
+              //   "stars": 5,
+              //   "date_reviewed": "27 Apr 2023",
+              //   "dateiso_scraped": "2023-06-07T05:12:02.473Z",
+              //   "review": "Good ang item.... Maganda... . Maayos  ang packaging.... Mabilis ang shipment.... Thank u sa seller",
+              //   "product_url": "https://example.com/product"
+              // }
+              let reviews = [];
+              for (let i = 0; i < data.length; i++) {
+                reviews.push({
+                  "name": data[i].name,
+                  "stars": data[i].stars,
+                  "date_reviewed": data[i].date,
+                  "dateiso_scraped": data[i].dateiso_scraped,
+                  "review": data[i].review,
+                  "product_url": this.url
+                });
+              }
+
+              console.log(JSON.stringify( 
+                reviews
+              ))
+
+              await fetch('http://127.0.0.1:3000/review/savemany', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( 
+                  reviews
+                )
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log("INSIDE CRAWL SAVEMANY");
+
+                console.log(data);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+
+              // console.log(data);
+              this.sentences = data;
+
+              // translate 
+
+              // Map the data to only get the review and not include empty reviews text
+              sentences = { "sentences": []}
+              for (let i = 0; i < data.length; i++) {
+                if (data[i].review != "") {
+                  sentences["sentences"].push(data[i].review);
+                }
+              }
+              console.log(sentences)
 
 
-      // // Translate the sentences
-      // await fetch('http://127.0.0.1:3000/translate/text', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({ "texts": sentences["sentences"] })
-      // })
-      // .then(response => response.json())
-      // .then(data => {        
-      //   console.log("Translating...")
-      //   // console.log(data);
-      //   sentences["sentences"] = data.map( (objTranslate: { translations: { text: any; }[]; }) => objTranslate.translations[0].text );
-      //   console.log(sentences);
-      // })
-      // .catch((error) => {
-      //   console.error('Error:', error);
-      // })
-      // // end of translation
+            // // Translate the sentences
+            // await fetch('http://127.0.0.1:3000/translate/text', {
+            //   method: 'POST',
+            //   headers: {
+            //     'Content-Type': 'application/json'
+            //   },
+            //   body: JSON.stringify({ "texts": sentences["sentences"] })
+            // })
+            // .then(response => response.json())
+            // .then(data => {        
+            //   console.log("Translating...")
+            //   // console.log(data);
+            //   sentences["sentences"] = data.map( (objTranslate: { translations: { text: any; }[]; }) => objTranslate.translations[0].text );
+            //   console.log(sentences);
+            // })
+            // .catch((error) => {
+            //   console.error('Error:', error);
+            // })
+            // // end of translation
 
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+
+        } else {
+          // Map the data to only get the review and not include empty reviews text
+          console.log("PRODUCT ALREADY SAVED; ACCESSING DATABASE INSTEAD OF SCRAPING")
+          console.log(data)
+          console.log(data['data'].length)
+          sentences = { "sentences": []}
+          for (let i = 0; i < data['data'].length; i++) {
+            let record = data['data'][i]
+            if (record.review != "") {
+              sentences["sentences"].push(record.review);
+            }
+          }
+          // console.log(sentences)
+        }
+
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+      
 
     let options = {
       method: 'POST',

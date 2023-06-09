@@ -11,7 +11,7 @@
     
     <div class="container center-content">
       <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
-      <div *ngIf="list_sentences">
+      <div *ngIf="list_sentences" class="solid-background">
         <table id="counts-table">
           <thead>
             <tr>
@@ -36,25 +36,25 @@
     </div>
     
     <div class="container" *ngIf="aspect_list" id="reviews">
-      <div *ngFor="let item of items" id="label">
+      <div *ngFor="let item of items" class="solid-background" id="label">
         <h2>{{ item[0] }}</h2>
         <div *ngFor="let label of labels" id="aspect-labels">
           <div *ngIf="label[0] == item[0]">
             <p>Keywords: "{{ label[1].join('", "') }}"</p>
           </div>
         </div>
-        <h3>Positive Reviews:</h3>
+        <h3 class="positive">Positive Reviews:</h3>
         <div *ngFor="let value of item[1].Positive">
           <p>{{ value + '\n' }}</p>
         </div>
-        <h3>Negative Reviews:</h3>
+        <h3 class="negative">Negative Reviews:</h3>
         <div *ngFor="let value of item[1].Negative">
           <p>{{ value + '\n' }}</p>
         </div>
       </div>
     </div>
 
-    <div class="container" *ngIf="sentence_attributes">
+    <div class="container solid-background" *ngIf="sentence_attributes">
       <table>
         <thead>
           <tr>
@@ -67,7 +67,10 @@
           <tr *ngFor="let review of sentence_attributes">
             <td>{{review['sentence']}}</td>
             <td class="center">{{review['aspect_group']}}</td>
-            <td class="center">{{review['sentiment']['classification']}}</td>
+            <td class="center" [ngClass]="{
+              'positive': review['sentiment']['classification'] === 'Positive',
+              'negative': review['sentiment']['classification'] === 'Negative'
+            }">{{review['sentiment']['classification']}}</td>
           </tr>
         </tbody>
       </table>
