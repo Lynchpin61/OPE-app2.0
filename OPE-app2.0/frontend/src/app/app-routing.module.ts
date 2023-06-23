@@ -14,9 +14,12 @@ const routes: Routes = [
   { path: "", component: HomepageComponent },
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
-  { path: "savedeval", component: SavedevalComponent, canActivate: [AuthGuard] },
-  { path: "addprod", component: AddprodComponent, canActivate: [AuthGuard] },
-  { path: "prodeval", component: ProdevalComponent, canActivate: [AuthGuard] },
+  // { path: "savedeval", component: SavedevalComponent, canActivate: [AuthGuard] },
+  { path: "savedeval", component: SavedevalComponent},
+  // { path: "addprod", component: AddprodComponent, canActivate: [AuthGuard] },
+  { path: "addprod", component: AddprodComponent },
+  // { path: "prodeval", component: ProdevalComponent, canActivate: [AuthGuard] },
+  { path: "prodeval", component: ProdevalComponent },
   { path: "**", redirectTo: "" },
 ];
 
