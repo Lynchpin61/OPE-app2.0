@@ -9,6 +9,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { AddprodComponent } from './components/addprod/addprod.component';
 import { SavedevalComponent } from './components/savedeval/savedeval.component';
 import { ProdevalComponent } from './components/prodeval/prodeval.component';
+import { AnalysisComponent } from './components/analysis/analysis.component';
 
 const routes: Routes = [
   { path: "", component: HomepageComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: "addprod", component: AddprodComponent },
   // { path: "prodeval", component: ProdevalComponent, canActivate: [AuthGuard] },
   { path: "prodeval", component: ProdevalComponent },
+  { path: "analysis", component: AnalysisComponent },
   { path: "**", redirectTo: "" },
 ];
 

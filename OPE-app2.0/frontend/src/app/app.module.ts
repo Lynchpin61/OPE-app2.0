@@ -36,6 +36,7 @@ import { ProdevalComponent } from './components/prodeval/prodeval.component';
 import { BufferComponent } from './components/buffer/buffer.component';
 
 import { AuthInterceptorService } from "./services/auth-interceptor.service";
+import { AnalysisComponent } from './components/analysis/analysis.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AuthInterceptorService } from "./services/auth-interceptor.service";
     AddprodComponent,
     SavedevalComponent,
     ProdevalComponent,
-    BufferComponent
+    BufferComponent,
+    AnalysisComponent
   ],
   imports: [
     CommonModule,
