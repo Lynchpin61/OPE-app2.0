@@ -24,6 +24,7 @@
     "angular-highcharts": "^15.0.1",
     "dom-to-image": "^2.6.0",
     "highcharts": "^11.0.1",
+    "highcharts-angular": "^3.1.2",
     "html-to-image": "^1.11.11",
     "html-to-pdfmake": "^2.4.20",
     "html2canvas": "^1.4.1",

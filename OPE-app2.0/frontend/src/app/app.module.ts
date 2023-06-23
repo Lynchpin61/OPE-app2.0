@@ -10,6 +10,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChartModule } from 'angular-highcharts';
+import { HighchartsChartModule } from 'highcharts-angular';
+import * as Highcharts from 'highcharts';
+import HC_wordcloud from 'highcharts/modules/wordcloud';
+HC_wordcloud(Highcharts);
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -19,6 +23,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTableModule} from '@angular/material/table';
 
 import { FormsModule } from '@angular/forms';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -61,13 +66,15 @@ import { AuthInterceptorService } from "./services/auth-interceptor.service";
     MatListModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
-    ChartModule
+    ChartModule,
+    MatTableModule
   ],
   providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true,
-  },],
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 
