@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit{
 
   loginForm!: FormGroup;
+  validEmailPassword: any;
   
   constructor(private authService: AuthService, private router: Router){
   }
@@ -40,9 +42,8 @@ export class LoginComponent implements OnInit{
       return;
     }
     
-    this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
-    .subscribe();
-
+    console.log(this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
+    .subscribe((additionalValue) => this.validEmailPassword = additionalValue ))
   }
 
   goToSignup() {
