@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Router } from "@angular/router";
 
-import { Observable, BehaviorSubject } from "rxjs";
+import { Observable, BehaviorSubject, throwError } from "rxjs";
 import { first, catchError, tap } from "rxjs/operators";
 
 import { User } from "../models/user";
@@ -32,7 +32,7 @@ export class AuthService {
       .post<User>(`${this.url}/signup`, user, this.httpOptions)
       .pipe(
         first(),
-        catchError(this.errorHandlerService.handleError<User>("signup"))
+        catchError(this.errorHandlerService.handleError<User>("signup", 'false'))
       );
   }
 
@@ -57,7 +57,7 @@ export class AuthService {
           this.errorHandlerService.handleError<{
             token: string;
             userId: Pick<User, "id">;
-          }>("login")
+          }>("login", 'false')
         )
       );
   }
