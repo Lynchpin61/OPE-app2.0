@@ -20,6 +20,10 @@
         <input matInput type="password" placeholder="Ex. Jon2002" formControlName="password">
       </mat-form-field>
 
+      <div *ngIf="validEmailPassword">
+        Email or password might be incorrect or not yet registered
+      </div>
+
       <div class="form-links">
         <p>Don't have an account? <a routerLink="/signup">Signup now!</a></p>
       </div>
@@ -27,6 +31,7 @@
       <button mat-raised-button type="submit" (click)="addShakeEffect()" [ngClass]="{ shake: loginForm.invalid }">
         <span>Login</span>
       </button>   
+
 
     </form>
   </div>
