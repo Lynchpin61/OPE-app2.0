@@ -10,7 +10,6 @@ exports.signup = async (req, res, next) => {
 
     if (!errors.isEmpty()) return;
 
-    const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
 
@@ -18,7 +17,6 @@ exports.signup = async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const userDetails = {
-            name: name,
             email: email,
             password: hashedPassword
         };
