@@ -11,7 +11,6 @@ const authController = require('../controllers/auth');
 router.post(
   '/signup',
   [
-    body('name').trim().not().isEmpty(),
     body('email')
       .isEmail()
       .withMessage('Please enter a valid email.')
