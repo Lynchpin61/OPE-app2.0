@@ -24,12 +24,14 @@
 }
 
 
+/* Flex Container */
+
 .main-body {
     background-color: white;
     border: 1px solid black;
     padding: 0 50px;
     min-width: 360px;
-    max-width: 620px;
+    max-width: 720px;
 }
 
 .second {
@@ -39,6 +41,8 @@
 main {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    gap: 0 20px;
     min-height: 100vh;
     flex-wrap: wrap;
     width: 100%;

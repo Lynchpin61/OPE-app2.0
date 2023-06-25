@@ -37,7 +37,6 @@ export interface TopAspect {
 })
 export class SavedevalComponent implements OnInit {
 
-  sample = {name:"HelloWorld", list:[1,2,3,4,5], obj:{a:1, b:2, c:3}}
 
   text =
         'Chapter 1. Down the Rabbit-Hole ' +
@@ -74,7 +73,7 @@ export class SavedevalComponent implements OnInit {
 
   async ngOnInit() {
     // post request on https://d2d4cd2e-0867-43f9-9383-c194aeb6f3ba.mock.pstmn.io/absa/analyze
-    await fetch('https://add48e56-2abe-4768-9a81-a77d5c29e607.mock.pstmn.io/absa-dashboard', {
+    await fetch('https://db3f1af8-9011-48a6-a4d5-1e6c9b680ae0.mock.pstmn.io/absa-dashboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -187,8 +186,8 @@ export class SavedevalComponent implements OnInit {
   // Modify the subject for the aspect breakdown everytime clicked
   breakdown_aspect(row: any) {
     this.breakdown = this.normalized_score[row.aspect]
-
-    this.showBreakdown = true
+    // toggle showBreakdown
+    this.showBreakdown = !this.showBreakdown
     console.log(this.breakdown)
     console.log(row)
 

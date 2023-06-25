@@ -11,7 +11,7 @@
     {{ text }}
 
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <table id="aspect-table" mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
       <!-- Position Column -->
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef style="width: 50px;">Top#</th>
@@ -78,14 +78,6 @@
     </ng-container>
   </mat-card>
 
-  <mat-card class="second">
-    Hiasdasdasdasds
-    {{ sample.obj.a }}
-  </mat-card>
-
-  <mat-card class="second">
-    Hiasdasdasdasds
-  </mat-card>
 
 
 </main>
