@@ -20,9 +20,16 @@ export class SignupComponent implements OnInit {
   }
 
   createFormGroup(): FormGroup {
+    const gmailRegex = /^[\w-]+(\.[\w-]+)*@gmail\.com$/i;
+    const yahooRegex = /^[\w-]+(\.[\w-]+)*@yahoo\.com$/i;
+    const feuRegex = /^[\w-]+(\.[\w-]+)*@feualabang\.edu.ph$/i;
+    
     return new FormGroup({
-      name: new FormControl("", [Validators.required, Validators.minLength(4)]),
-      email: new FormControl("", [Validators.required, Validators.email]),
+      email: new FormControl("", [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(`${gmailRegex.source}|${yahooRegex.source}|${feuRegex.source}`)
+      ]),
       password: new FormControl("", [
         Validators.required,
          Validators.minLength(7)
