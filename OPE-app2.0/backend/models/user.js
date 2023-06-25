@@ -2,8 +2,7 @@ const db = require('../util/database');
 
 module.exports = class User {
 
-    constructor(name, email, password){
-        this.name = name;
+    constructor(email, password){
         this.email = email;
         this.password =password;
     }
@@ -14,8 +13,8 @@ module.exports = class User {
 
     static save(user) {
         return db.execute(
-            'INSERT INTO users (name, email, password) VALUES (?, ?, ?)', 
-            [user.name, user.email, user.password]
+            'INSERT INTO users (email, password) VALUES (?, ?)', 
+            [user.email, user.password]
         );
     }
 };
