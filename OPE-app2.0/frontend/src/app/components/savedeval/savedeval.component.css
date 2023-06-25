@@ -1,0 +1,45 @@
+.demo-table {
+    width: 100%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+#aspects-wordcloud {
+    width: 400px;
+    margin: 0 auto;
+    border-radius: 1px;
+    border-width: 1px;
+}
+
+
+.main-body {
+    background-color: white;
+    border: 1px solid black;
+    padding: 0 50px;
+    min-width: 360px;
+    max-width: 620px;
+}
+
+.second {
+    min-width: 300px;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    flex-wrap: wrap;
+    width: 100%;
+}

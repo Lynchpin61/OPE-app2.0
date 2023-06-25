@@ -2,12 +2,42 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
+
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {position: 1, name: 'Hydrogen', weight: 1.0079},
+  {position: 2, name: 'Helium', weight: 4.0026},
+  {position: 3, name: 'Lithium', weight: 6.941},
+  {position: 4, name: 'Beryllium', weight: 9.0122},
+  {position: 5, name: 'Boron', weight: 10.811},
+  {position: 6, name: 'Carbon', weight: 12.0107},
+  {position: 7, name: 'Nitrogen', weight: 14.0067},
+  {position: 8, name: 'Oxygen', weight: 15.9994},
+  {position: 9, name: 'Fluorine', weight: 18.9984},
+  {position: 10, name: 'Neon', weight: 20.1797},
+];
+
+export interface TopAspect {
+  position: number,
+  aspect: string,
+  frequency: number
+}
+
+
 @Component({
   selector: 'app-savedeval',
   templateUrl: './savedeval.component.html',
   styleUrls: ['./savedeval.component.css']
 })
 export class SavedevalComponent implements OnInit {
+
+  sample = {name:"HelloWorld", list:[1,2,3,4,5], obj:{a:1, b:2, c:3}}
 
   text =
         'Chapter 1. Down the Rabbit-Hole ' +
@@ -18,37 +48,6 @@ export class SavedevalComponent implements OnInit {
         'and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking ' +
         'the daisies, when suddenly a White Rabbit with pink eyes ran close by her';
   lines = this.text.replace(/[():'?0-9]+/g, '').split(/[,\. ]+/g);
-  // data = [
-  //     {name: 'Alice', weight: 40},
-  //     {name: 'Rabbit', weight: 30},
-  //     {name: 'Daisy', weight: 25},
-  //     {name: 'Bank', weight: 20},
-  //     {name: 'Book', weight: 15},
-  //     {name: 'Picking', weight: 10},
-  //     {name: 'Conversation', weight: 5},
-  //     {name: 'Sister', weight: 5},
-  //     {name: 'Daisies', weight: 5},
-  //     {name: 'Pictures', weight: 5},
-  //     {name: 'Use', weight: 5},
-  //     {name: 'Pleasure', weight: 5},
-  //     {name: 'Trouble', weight: 5},
-  //     {name: 'Mind', weight: 5},
-  //     {name: 'Stupid', weight: 5},
-  //     {name: 'Hot', weight: 5},
-  //     {name: 'Day', weight: 5},
-  //     {name: 'Sleepy', weight: 5},
-  //     {name: 'Sitting', weight: 5},
-  //     {name: 'Sister', weight: 5},
-  //     {name: 'Book', weight: 5},
-  //     {name: 'Conversations', weight: 5},
-  //     {name: 'Pictures', weight: 5},
-  //     {name: 'Bank', weight: 5},
-  //     {name: 'Daisy', weight: 5},
-  //     {name: 'Rabbit', weight: 5},
-  //     {name: 'Alice', weight: 5},
-  //   ];
-  
-//   
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -62,16 +61,26 @@ export class SavedevalComponent implements OnInit {
   data: any = [];
   wordcloud: Chart = {} as Chart;
 
+  displayedColumns: string[] = ['position', 'aspect', 'frequency'];
+  // dataSource = ELEMENT_DATA;
+  dataSource: TopAspect[] = [];
+  clickedRows = new Set<TopAspect>();
+
+  showBreakdown = false;
+  breakdown = {} as any;
+  
+  onePieChart: Chart = {} as Chart;
+
 
   async ngOnInit() {
     // post request on https://d2d4cd2e-0867-43f9-9383-c194aeb6f3ba.mock.pstmn.io/absa/analyze
-    await fetch('https://d2d4cd2e-0867-43f9-9383-c194aeb6f3ba.mock.pstmn.io/absa/analyze', {
+    await fetch('https://add48e56-2abe-4768-9a81-a77d5c29e607.mock.pstmn.io/absa-dashboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "text": "This is a test text"
+        "url": "https://www.amazon.com/Nikon-COOLPIX-P1000-Digital-Camera/product-reviews/B07F5HPXK4/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews"
       })
     })
       .then(response => response.json())
@@ -100,7 +109,8 @@ export class SavedevalComponent implements OnInit {
         type: 'wordcloud'
       },
       title: {
-        text: 'Wordcloud NI NIGR',
+        text: '',
+        floating: true,
         align: 'left'
       },
       credits: {
@@ -112,12 +122,76 @@ export class SavedevalComponent implements OnInit {
         name: 'Occurrences'
     }],
     });
+
+    // Initialize data for top aspects table
+    const top_aspects_data: TopAspect[] = [];
+    for (const aspect in this.raw_score) {
+      top_aspects_data.push({"position": 0, "aspect": aspect, "frequency": this.raw_score[aspect].Positive + this.raw_score[aspect].Negative});
+    }
+    top_aspects_data.sort((a, b) => (a.frequency > b.frequency) ? -1 : 1);
+    for (let i = 0; i < top_aspects_data.length; i++) {
+      top_aspects_data[i].position = i + 1;
+    }
+    this.dataSource = top_aspects_data;
+    console.log(top_aspects_data)
+    console.log(this.dataSource)
+
+    // Initialize Pie Chart
+    this.onePieChart = new Chart({
+      chart: {
+        type: 'pie'
+      },
+      title: {
+        text: 'Browser market shares in March, 2022',
+        floating: false,
+        align: 'left'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+          name: 'Brands',
+          colorByPoint: true,
+          data: [{
+              name: 'Chrome',
+              y: 74.77,
+              sliced: true,
+              selected: true
+          },  {
+              name: 'Edge',
+              y: 12.82
+          },  {
+              name: 'Firefox',
+              y: 4.63
+          }, {
+              name: 'Safari',
+              y: 2.44
+          }, {
+              name: 'Internet Explorer',
+              y: 2.02
+          }, {
+              name: 'Other',
+              y: 3.28
+          }]
+      }] as any
+    });
+
   }
 
 
   add() {
     this.wordcloud.addPoint(Math.floor(Math.random() * 10));
     console.log(this.data)
+  }
+
+  // Modify the subject for the aspect breakdown everytime clicked
+  breakdown_aspect(row: any) {
+    this.breakdown = this.normalized_score[row.aspect]
+
+    this.showBreakdown = true
+    console.log(this.breakdown)
+    console.log(row)
+
   }
 
 

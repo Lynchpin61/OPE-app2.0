@@ -1,6 +1,94 @@
 <p>savedeval works!</p>
 <button (click)="add()">Add Point!</button>
-<div [chart]="wordcloud"></div>
-<p>Visualizing product reviews on a word cloud is a compelling and intuitive way to gain insights into customer sentiments and identify key themes or trends. 
-    A word cloud is a graphical representation of text data, where the size of each word corresponds to its frequency or importance within the dataset.</p>
-{{ text }}
+
+<main>
+
+  <mat-card class="main-body">
+
+    <div id="aspects-wordcloud" [chart]="wordcloud"></div>
+    <p>Visualizing product reviews on a word cloud is a compelling and intuitive way to gain insights into customer sentiments and identify key themes or trends. 
+        A word cloud is a graphical representation of text data, where the size of each word corresponds to its frequency or importance within the dataset.</p>
+    {{ text }}
+
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef style="width: 50px;">Top#</th>
+        <td mat-cell *matCellDef="let element" style="width: 50px;">{{element.position}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="aspect">
+        <th mat-header-cell *matHeaderCellDef>Aspect</th>
+        <td mat-cell *matCellDef="let element">{{element.aspect}}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="frequency">
+        <th mat-header-cell *matHeaderCellDef>Frequency</th>
+        <td mat-cell *matCellDef="let element">{{element.frequency}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+          mat-row
+          (click)="breakdown_aspect(row)"
+          [class.demo-row-is-clicked]="clickedRows.has(row)"
+          *matRowDef="let row; columns: displayedColumns;"
+      ></tr>
+    </table>
+      
+    <div>
+      <h3>
+        Click Log
+      </h3>
+    </div>
+
+    <div *ngIf="!clickedRows.size">
+      Clicked rows will be logged here
+    </div>
+
+    <ul>
+      <li *ngFor="let clickedRow of clickedRows">
+        Clicked on {{clickedRow.aspect}}
+      </li>
+    </ul>
+
+  </mat-card>
+
+
+  <mat-card class="second main-body" *ngIf="showBreakdown">
+    <h1>Aspect Breakdown</h1>
+    <!-- Render Aspect Breakdown -->
+    <ng-container *ngIf="breakdown">
+      <!-- <div class="bar" [chart]="onePieChart"></div> -->
+      <div class="bar" [chart]="onePieChart"></div>
+
+      <h2>Most Positive Sentiment</h2>
+      {{ breakdown.Most_Positive_Sentence.sentence | json }}
+
+      <h2>Most Negative Sentiment</h2>
+      {{ breakdown.Most_Negative_Sentence.sentence | json }}
+
+      <h2>Positive Words: {{ breakdown.Positive_Words }}</h2>
+      <h2>Negative Words: {{ breakdown.Negative_Words }}</h2>
+      <h2>Normalized Probability: {{ breakdown.Normalized_Proba }}</h2>
+      <h2>Normalized Sentiment: {{ breakdown.Normalized_Sentiment }}</h2>
+    </ng-container>
+  </mat-card>
+
+  <mat-card class="second">
+    Hiasdasdasdasds
+    {{ sample.obj.a }}
+  </mat-card>
+
+  <mat-card class="second">
+    Hiasdasdasdasds
+  </mat-card>
+
+
+</main>
+
+
+
