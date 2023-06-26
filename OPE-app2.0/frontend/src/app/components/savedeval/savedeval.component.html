@@ -66,13 +66,13 @@
       <div class="bar" [chart]="onePieChart"></div>
 
       <h2>Most Positive Sentence</h2>
-      {{ breakdown.Most_Positive_Sentence.sentence | json }}
+      {{ breakdown.Most_Positive_Sentence }}
 
       <h2>Most Negative Sentence</h2>
-      {{ breakdown.Most_Negative_Sentence.sentence | json }}
+      {{ breakdown.Most_Negative_Sentence }}
 
-      <h2>Positive Word: {{ breakdown.Positive_Words }}</h2>
-      <h2>Negative Word: {{ breakdown.Negative_Words }}</h2>
+      <h2>Positive Word: {{ breakdown.Positive_Word }}</h2>
+      <h2>Negative Word: {{ breakdown.Negative_Word }}</h2>
       <h2>Normalized Probability: {{ breakdown.Normalized_Proba }}</h2>
       <h2>Normalized Sentiment: {{ breakdown.Normalized_Sentiment }}</h2>
     </ng-container>

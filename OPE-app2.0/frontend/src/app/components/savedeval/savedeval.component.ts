@@ -72,7 +72,7 @@ export class SavedevalComponent implements OnInit {
 
 
   async ngOnInit() {
-    // post request on https://d2d4cd2e-0867-43f9-9383-c194aeb6f3ba.mock.pstmn.io/absa/analyze
+    // post request on https://db3f1af8-9011-48a6-a4d5-1e6c9b680ae0.mock.pstmn.io/absa-dashboard
     await fetch('http://localhost:8080/absa-dashboard', {
       method: 'POST',
       headers: {
