@@ -4,7 +4,7 @@
 <main>
 
   <mat-card class="main-body">
-
+    <h1>{{ title }}</h1>
     <div id="aspects-wordcloud" [chart]="wordcloud"></div>
     <p>Visualizing product reviews on a word cloud is a compelling and intuitive way to gain insights into customer sentiments and identify key themes or trends. 
         A word cloud is a graphical representation of text data, where the size of each word corresponds to its frequency or importance within the dataset.</p>
@@ -65,14 +65,14 @@
       <!-- <div class="bar" [chart]="onePieChart"></div> -->
       <div class="bar" [chart]="onePieChart"></div>
 
-      <h2>Most Positive Sentiment</h2>
+      <h2>Most Positive Sentence</h2>
       {{ breakdown.Most_Positive_Sentence.sentence | json }}
 
-      <h2>Most Negative Sentiment</h2>
+      <h2>Most Negative Sentence</h2>
       {{ breakdown.Most_Negative_Sentence.sentence | json }}
 
-      <h2>Positive Words: {{ breakdown.Positive_Words }}</h2>
-      <h2>Negative Words: {{ breakdown.Negative_Words }}</h2>
+      <h2>Positive Word: {{ breakdown.Positive_Words }}</h2>
+      <h2>Negative Word: {{ breakdown.Negative_Words }}</h2>
       <h2>Normalized Probability: {{ breakdown.Normalized_Proba }}</h2>
       <h2>Normalized Sentiment: {{ breakdown.Normalized_Sentiment }}</h2>
     </ng-container>
