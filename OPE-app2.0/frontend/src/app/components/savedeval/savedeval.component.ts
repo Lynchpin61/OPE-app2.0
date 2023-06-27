@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+
 
 
 export interface PeriodicElement {
@@ -30,13 +32,14 @@ export interface TopAspect {
 }
 
 
+
 @Component({
   selector: 'app-savedeval',
   templateUrl: './savedeval.component.html',
   styleUrls: ['./savedeval.component.css']
 })
-export class SavedevalComponent implements OnInit {
 
+export class SavedevalComponent implements OnInit {
 
   text =
         'Chapter 1. Down the Rabbit-Hole ' +
@@ -48,6 +51,7 @@ export class SavedevalComponent implements OnInit {
         'the daisies, when suddenly a White Rabbit with pink eyes ran close by her';
   lines = this.text.replace(/[():'?0-9]+/g, '').split(/[,\. ]+/g);
 
+
   constructor(private authService: AuthService, private router: Router) { }
 
 
@@ -58,7 +62,9 @@ export class SavedevalComponent implements OnInit {
   top_aspects: string[] = [];
   title: string = '';
   data: any = [];
+  currentAspect: string = '';
   wordcloud: Chart = {} as Chart;
+  pieCharts: { [key: string]: Chart } = {};
 
   displayedColumns: string[] = ['position', 'aspect', 'frequency'];
   // dataSource = ELEMENT_DATA;
@@ -90,6 +96,7 @@ export class SavedevalComponent implements OnInit {
         this.aspects = data['aspects'];
         this.normalized_score = data['normalized_score'];
         this.raw_score = data['raw_score'];
+        console.log(this.raw_score)
         this.top_aspects = data['top_aspects'];
 
         console.log(data);
@@ -136,45 +143,62 @@ export class SavedevalComponent implements OnInit {
     console.log(top_aspects_data)
     console.log(this.dataSource)
 
-    // Initialize Pie Chart
-    this.onePieChart = new Chart({
-      chart: {
-        type: 'pie'
-      },
-      title: {
-        text: 'Browser market shares in March, 2022',
-        floating: false,
-        align: 'left'
-      },
-      credits: {
-        enabled: false
-      },
-      series: [{
-          name: 'Brands',
-          colorByPoint: true,
-          data: [{
-              name: 'Chrome',
-              y: 74.77,
+    // Initialize data for pie chart
+    let pos_count = 0;
+    let neg_count = 0;
+    for (const aspect in this.raw_score) {
+      pos_count = this.raw_score[aspect]['Positive'];
+      neg_count = this.raw_score[aspect]['Negative'];
+      console.log(pos_count, neg_count);
+      // Initialize Pie Chart
+      let pieChart = new Chart({
+        chart: {
+          type: 'pie',
+        },
+        title: {
+          text: 'Raw Sentiment Score',
+          floating: false,
+          align: 'left'
+        },
+        credits: {
+          enabled: false
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
+        },
+        legend: {
+          labelFormatter: function() {
+            return this.name + ': ' + (this.name === 'Positive' ? 'Number of times aspect appeared in positive reviews' : 'Number of times aspect appeared in negative reviews');
+          }
+        },
+        series: [{
+            name: aspect,
+            colorByPoint: true,
+            data: [{
+              name: 'Positive',
+              y: pos_count,
+              color: 'green',
               sliced: true,
-              selected: true
-          },  {
-              name: 'Edge',
-              y: 12.82
-          },  {
-              name: 'Firefox',
-              y: 4.63
+              selected: false,
           }, {
-              name: 'Safari',
-              y: 2.44
-          }, {
-              name: 'Internet Explorer',
-              y: 2.02
-          }, {
-              name: 'Other',
-              y: 3.28
-          }]
-      }] as any
-    });
+              name: 'Negative',
+              y: neg_count,
+              color: 'red'
+            }]
+          }] as any
+        });
+      this.pieCharts[aspect] = pieChart;
+    }
 
   }
 
@@ -184,9 +208,30 @@ export class SavedevalComponent implements OnInit {
     console.log(this.data)
   }
 
+  isPositiveWord(word: string): boolean {
+    return !!word.match(new RegExp(`^${this.breakdown.Positive_Word}([,.!?]+|$)`, 'i'));
+  }
+
+  isNegativeWord(word: string): boolean {
+    return !!word.match(new RegExp(`^${this.breakdown.Negative_Word}([,.!?]+|$)`, 'i'));
+  }
+
+  splitSentence(sentence: string): string[] {
+    return sentence.split(/\b/);
+  }
+
+
   // Modify the subject for the aspect breakdown everytime clicked
   breakdown_aspect(row: any) {
-    this.breakdown = this.normalized_score[row.aspect]
+    this.breakdown = this.normalized_score[row.aspect];
+    this.currentAspect = row.aspect;
+    // let positiveWord = this.breakdown['Positive_Word'];
+    // let negativeWord = this.breakdown['Negative_Word'];
+    // let regexPositive = new RegExp(`\\b${positiveWord}\\b`, 'gi');
+    // let regexNegative = new RegExp(`\\b${negativeWord}\\b`, 'gi');
+
+    // this.breakdown['Most_Positive_Sentence'] = this.breakdown['Most_Positive_Sentence'].replace(regexPositive, `<span class="positive">${positiveWord}</span>`);
+    // this.breakdown['Most_Negative_Sentence'] = this.breakdown['Most_Negative_Sentence'].replace(regexNegative, `<span class="negative">${negativeWord}</span>`);
     // toggle showBreakdown
     this.showBreakdown = !this.showBreakdown
     console.log(this.breakdown)

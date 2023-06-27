@@ -47,9 +47,10 @@ import { AnalysisComponent } from './components/analysis/analysis.component';
     HomepageComponent,
     AddprodComponent,
     SavedevalComponent,
+    SavedevalComponent,
     ProdevalComponent,
     BufferComponent,
-    AnalysisComponent
+    AnalysisComponent,
   ],
   imports: [
     CommonModule,
