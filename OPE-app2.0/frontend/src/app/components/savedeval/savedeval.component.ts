@@ -112,6 +112,42 @@ export class SavedevalComponent implements OnInit {
     console.log(top_aspects_data)
     console.log(this.dataSource)
 
+
+  }
+
+
+  add() {
+    this.wordcloud.addPoint(Math.floor(Math.random() * 10));
+    console.log(this.data)
+  }
+
+  isPositiveWord(word: string): boolean {
+    return !!word.match(new RegExp(`^${this.breakdown.Positive_Word}([,.!?]+|$)`, 'i'));
+  }
+
+  isNegativeWord(word: string): boolean {
+    return !!word.match(new RegExp(`^${this.breakdown.Negative_Word}([,.!?]+|$)`, 'i'));
+  }
+
+  splitSentence(sentence: string): string[] {
+    return sentence.split(/\b/);
+  }
+
+
+  // Modify the subject for the aspect breakdown everytime clicked
+  breakdown_aspect(row: any) {
+    this.breakdown = this.normalized_score[row.aspect];
+    this.currentAspect = row.aspect;
+    // let positiveWord = this.breakdown['Positive_Word'];
+    // let negativeWord = this.breakdown['Negative_Word'];
+    // let regexPositive = new RegExp(`\\b${positiveWord}\\b`, 'gi');
+    // let regexNegative = new RegExp(`\\b${negativeWord}\\b`, 'gi');
+
+    // this.breakdown['Most_Positive_Sentence'] = this.breakdown['Most_Positive_Sentence'].replace(regexPositive, `<span class="positive">${positiveWord}</span>`);
+    // this.breakdown['Most_Negative_Sentence'] = this.breakdown['Most_Negative_Sentence'].replace(regexNegative, `<span class="negative">${negativeWord}</span>`);
+    // toggle showBreakdown
+
+
     // Initialize data for pie chart
     let pos_count = 0;
     let neg_count = 0;
@@ -169,39 +205,7 @@ export class SavedevalComponent implements OnInit {
       this.pieCharts[aspect] = pieChart;
     }
 
-  }
 
-
-  add() {
-    this.wordcloud.addPoint(Math.floor(Math.random() * 10));
-    console.log(this.data)
-  }
-
-  isPositiveWord(word: string): boolean {
-    return !!word.match(new RegExp(`^${this.breakdown.Positive_Word}([,.!?]+|$)`, 'i'));
-  }
-
-  isNegativeWord(word: string): boolean {
-    return !!word.match(new RegExp(`^${this.breakdown.Negative_Word}([,.!?]+|$)`, 'i'));
-  }
-
-  splitSentence(sentence: string): string[] {
-    return sentence.split(/\b/);
-  }
-
-
-  // Modify the subject for the aspect breakdown everytime clicked
-  breakdown_aspect(row: any) {
-    this.breakdown = this.normalized_score[row.aspect];
-    this.currentAspect = row.aspect;
-    // let positiveWord = this.breakdown['Positive_Word'];
-    // let negativeWord = this.breakdown['Negative_Word'];
-    // let regexPositive = new RegExp(`\\b${positiveWord}\\b`, 'gi');
-    // let regexNegative = new RegExp(`\\b${negativeWord}\\b`, 'gi');
-
-    // this.breakdown['Most_Positive_Sentence'] = this.breakdown['Most_Positive_Sentence'].replace(regexPositive, `<span class="positive">${positiveWord}</span>`);
-    // this.breakdown['Most_Negative_Sentence'] = this.breakdown['Most_Negative_Sentence'].replace(regexNegative, `<span class="negative">${negativeWord}</span>`);
-    // toggle showBreakdown
     this.showBreakdown = !this.showBreakdown
     console.log(this.breakdown)
     console.log(row)
