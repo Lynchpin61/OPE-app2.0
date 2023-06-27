@@ -10,7 +10,7 @@
         A word cloud is a graphical representation of text data, where the size of each word corresponds to its frequency or importance within the dataset.</p>
 
 
-    <table id="aspect-table" mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <table id="aspect-table" mat-table [dataSource]="dataSource" class="demo-table">
       <!-- Position Column -->
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef style="width: 50px;">Top#</th>
@@ -35,24 +35,9 @@
           (click)="breakdown_aspect(row)"
           [class.demo-row-is-clicked]="clickedRows.has(row)"
           *matRowDef="let row; columns: displayedColumns;"
+          title="Click to show more information"
       ></tr>
     </table>
-      
-    <div>
-      <h3>
-        Click Log
-      </h3>
-    </div>
-
-    <div *ngIf="!clickedRows.size">
-      Clicked rows will be logged here
-    </div>
-
-    <ul>
-      <li *ngFor="let clickedRow of clickedRows">
-        Clicked on {{clickedRow.aspect}}
-      </li>
-    </ul>
 
   </mat-card>
 
@@ -61,39 +46,72 @@
     <h1>Aspect "{{ currentAspect }}" Breakdown</h1>
     <!-- Render Aspect Breakdown -->
     <ng-container *ngIf="breakdown">
-      <!-- <div class="bar" [chart]="onePieChart"></div> -->
-      <div *ngFor="let pieChart of pieCharts | keyvalue">
-        <div class="bar" *ngIf="pieChart.key === currentAspect" [chart]="pieChart.value"></div>
+      <div>
+        
+        <mat-card id="raw-sentiment-score">
+          <div *ngFor="let pieChart of pieCharts | keyvalue">
+            <div class="bar" *ngIf="pieChart.key === currentAspect" [chart]="pieChart.value"></div>
+          </div>
+        </mat-card>
+        
+        <div class="section1">
+          <div class="sub-section">
+            <h2>Most Positive Sentence</h2>
+            <p class="sample-review positive-background">
+              <ng-container *ngFor="let word of splitSentence(breakdown.Most_Positive_Sentence)">
+                <!-- <span [ngStyle]="{'background-color': isPositiveWord(word) ? 'green' : 'transparent'}">{{ word }}</span> -->
+                <span [ngClass]="{'block-positive': isPositiveWord(word)}">{{ word }}</span>
+              </ng-container>
+            </p>
+          </div>
+
+          <div class="sub-section">
+            <h2>Most Negative Sentence</h2>
+            <p class="sample-review negative-background">
+              <ng-container *ngFor="let word of splitSentence(breakdown.Most_Negative_Sentence)">
+                <!-- <span [ngStyle]="{'background-color': isNegativeWord(word) ? 'red' : 'transparent'}">{{ word }}</span> -->
+                <span [ngClass]="{'block-negative': isNegativeWord(word)}">{{ word }}</span>
+              </ng-container>
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h2>Word with the highest positive probability:</h2>
+          <h4>"{{ breakdown.Positive_Word }}"</h4>
+          <h2>Word with the highest negative probability:</h2>
+          <h4>"{{ breakdown.Negative_Word }}"</h4>
+          <h2>Normalized Sentiment Score: </h2>
+          <h4>Sentiment: {{ breakdown.Normalized_Sentiment }} | Probability: {{ breakdown.Normalized_Proba }}</h4>
+          <br>
+          <h2>Explanation:</h2>
+          <p>
+            The raw sentiment score is a method for calculating sentiment by counting the frequency of the aspect in positive and negative sentences. On the other hand, the normalized sentiment score is a value between -1 and 1, where -1 is the most negative sentiment and 1 is the most positive sentiment. It is calculated by computing for the average probability of both the positive and negative sentences that contain the aspect. If the average of the positive is greater than the average of the negative, then the aspect is considered positive. Otherwise, it is considered negative.
+          </p>
+          <!-- <h2>Normalized Probability: {{ breakdown.Normalized_Proba }}</h2>
+          <h2>Normalized Sentiment: {{ breakdown.Normalized_Sentiment }}</h2> -->
+        </div>
+        
+        <!-- Table for showing each sentence or phrase for the aspect -->
+        <div>
+          <h2>List of Reviews with {{ currentAspect }} aspect</h2>
+          <div id="aspect-breakdown-list">
+            <table>
+              <tr>
+                <th>#</th>
+                <th>Phrases</th>
+                <th>Sentiment</th>
+              </tr>
+              <tr *ngFor="let phrase of aspect_phrases[currentAspect]; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ phrase }}</td>
+                <td>C=</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
       </div>
-      
-      <h2>Most Positive Sentence</h2>
-      <p>
-        <ng-container *ngFor="let word of splitSentence(breakdown.Most_Positive_Sentence)">
-          <span [ngStyle]="{'background-color': isPositiveWord(word) ? 'green' : 'transparent'}">{{ word }}</span>
-        </ng-container>
-      </p>
-
-      <h2>Most Negative Sentence</h2>
-      <p>
-        <ng-container *ngFor="let word of splitSentence(breakdown.Most_Negative_Sentence)">
-          <span [ngStyle]="{'background-color': isNegativeWord(word) ? 'red' : 'transparent'}">{{ word }}</span>
-        </ng-container>
-      </p>
-
-      <h2>Word with the highest positive probability:</h2>
-      <h4>"{{ breakdown.Positive_Word }}"</h4>
-      <h2>Word with the highest negative probability:</h2>
-      <h4>"{{ breakdown.Negative_Word }}"</h4>
-      <h2>Normalized Sentiment Score: </h2>
-      <h4>Sentiment: {{ breakdown.Normalized_Sentiment }} | Probability: {{ breakdown.Normalized_Proba }}</h4>
-      <br>
-      <br>
-      <h2>Explanation:</h2>
-      <p>
-        The raw sentiment score is a method for calculating sentiment by counting the frequency of the aspect in positive and negative sentences. On the other hand, the normalized sentiment score is a value between -1 and 1, where -1 is the most negative sentiment and 1 is the most positive sentiment. It is calculated by computing for the average probability of both the positive and negative sentences that contain the aspect. If the average of the positive is greater than the average of the negative, then the aspect is considered positive. Otherwise, it is considered negative.
-      </p>
-      <!-- <h2>Normalized Probability: {{ breakdown.Normalized_Proba }}</h2>
-      <h2>Normalized Sentiment: {{ breakdown.Normalized_Sentiment }}</h2> -->
     </ng-container>
   </mat-card>
 

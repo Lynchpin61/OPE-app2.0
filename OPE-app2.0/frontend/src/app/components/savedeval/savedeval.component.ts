@@ -48,7 +48,7 @@ export class SavedevalComponent implements OnInit {
 
   async ngOnInit() {
     // post request on https://db3f1af8-9011-48a6-a4d5-1e6c9b680ae0.mock.pstmn.io/absa-dashboard
-    await fetch('http://localhost:8080/absa-dashboard', {
+    await fetch('https://3ee0a24b-3873-40e2-add9-6046fc00aef6.mock.pstmn.io/absa-dashboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -116,8 +116,34 @@ export class SavedevalComponent implements OnInit {
   }
 
 
+  // THIS FUNCTION IS FOR TESTING ONLY; Delete it soon
   add() {
-    this.wordcloud.addPoint(Math.floor(Math.random() * 10));
+    const randomNumber = Math.round( Math.random() * this.aspects.length )
+    this.data = [
+      ...this.data,
+      {"name": this.aspects[randomNumber], "weight": 100}
+    ]
+    
+    // Reload wordcloud
+    this.wordcloud = new Chart({
+      chart: {
+        type: 'wordcloud'
+      },
+      title: {
+        text: '',
+        floating: true,
+        align: 'left'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        type: 'wordcloud',
+        data: this.data,
+        name: 'Occurrences'
+    }],
+    });
+
     console.log(this.data)
   }
 
@@ -171,12 +197,25 @@ export class SavedevalComponent implements OnInit {
         tooltip: {
           pointFormat: '{series.name}: <b>{point.y}</b>'
         },
+        accessibility: {
+          point: {
+            valueSuffix: '%'
+          }
+        },
         plotOptions: {
           pie: {
             allowPointSelect: true,
             cursor: 'pointer',
+            colors: ['green', 'red'],
             dataLabels: {
-              enabled: false
+              enabled: true,
+              format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
+              distance: -50,
+              filter: {
+                property: 'percentage',
+                operator: '>',
+                value: 4
+              }
             },
             showInLegend: true
           }
@@ -192,13 +231,13 @@ export class SavedevalComponent implements OnInit {
             data: [{
               name: 'Positive',
               y: pos_count,
-              color: 'green',
+              color: '#10BA5C',
               sliced: true,
               selected: false,
           }, {
               name: 'Negative',
               y: neg_count,
-              color: 'red'
+              color: '#FA586C'
             }]
           }] as any
         });
