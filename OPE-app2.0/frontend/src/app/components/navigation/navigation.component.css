@@ -11,9 +11,24 @@ mat-toolbar {
   text-decoration: none;
 }
 
-span.flexExpand {
+/* span.flexExpand {
   flex: 1;
+} */
+
+.link-group {
+  margin-left: auto;
 }
+
+a.navi{
+  transform: translateX(-60%);
+}
+
+.logo{
+  width: 220px;
+  height: auto;
+  transform: translate(-20%,-8%);
+}
+
 
 a {
   display: inline-block;

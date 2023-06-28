@@ -1,11 +1,32 @@
 <mat-toolbar>
-  <span>
-    <a routerLink="/" id="ope"> 
-      <span> MSIC </span>
+  <div class="nav-links">
+    <span>
+      <!-- <a routerLink="/" id="ope">  -->
+        <img src="https://i.imgur.com/Lw8ysKv.png" alt="Logo" class="logo">
+      <!-- </a> -->
+    </span>
+  </div>
+
+  <span *ngIf="!isAuthenticated">
+    <a class="navi" routerLink="/about"> 
+      <span>About</span>
     </a>
   </span>
-  <span class="flexExpand"></span>
-  <div class="nav-links">
+
+  <span *ngIf="!isAuthenticated">
+    <a class="navi" routerLink="/how-it-works"> 
+      <span>How it Works</span>
+    </a>
+  </span>
+
+  <span *ngIf="!isAuthenticated">
+    <a class="navi" routerLink="/contact"> 
+      <span>Contact</span>
+    </a>
+  </span>
+
+  
+    <span class="link-group">
     <!-- <span>
       <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/savedeval"> 
         <span>Saved Product Evaluation</span>
@@ -31,5 +52,5 @@
         <span>Signup</span>
       </a>
     </span>
-  </div>
+    </span>
 </mat-toolbar>

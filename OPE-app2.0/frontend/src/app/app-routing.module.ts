@@ -10,6 +10,9 @@ import { AddprodComponent } from './components/addprod/addprod.component';
 import { SavedevalComponent } from './components/savedeval/savedeval.component';
 import { ProdevalComponent } from './components/prodeval/prodeval.component';
 import { AnalysisComponent } from './components/analysis/analysis.component';
+import { AboutComponent } from './components/about/about.component';
+import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 const routes: Routes = [
   { path: "", component: HomepageComponent },
@@ -22,6 +25,9 @@ const routes: Routes = [
   // { path: "prodeval", component: ProdevalComponent, canActivate: [AuthGuard] },
   { path: "prodeval", component: ProdevalComponent },
   { path: "analysis", component: AnalysisComponent },
+  { path: "about", component: AboutComponent },
+  { path: "how-it-works", component: HowItWorksComponent },
+  { path: "contact", component: ContactComponent },
   { path: "**", redirectTo: "" },
 ];
 

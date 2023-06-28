@@ -26,16 +26,17 @@ mat-icon {
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   animation: fadeIn 0.5s ease-in-out;
+  transform: translateY(20%);
 }
 
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translate3d(0, -20px, 0);
+    transform: translateY(-20px);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translateY(-20);
   }
 }
 

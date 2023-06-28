@@ -36,7 +36,10 @@ import { ProdevalComponent } from './components/prodeval/prodeval.component';
 import { BufferComponent } from './components/buffer/buffer.component';
 
 import { AuthInterceptorService } from "./services/auth-interceptor.service";
-import { AnalysisComponent } from './components/analysis/analysis.component';
+import { AboutComponent } from './components/about/about.component';
+import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
+import { ContactComponent } from './components/contact/contact.component';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +52,9 @@ import { AnalysisComponent } from './components/analysis/analysis.component';
     SavedevalComponent,
     ProdevalComponent,
     BufferComponent,
-    AnalysisComponent
+    AboutComponent,
+    HowItWorksComponent,
+    ContactComponent,
   ],
   imports: [
     CommonModule,

@@ -11,8 +11,8 @@ export class AddprodComponent implements OnInit {
   evaluatedText: string = "";
   showResult: boolean = false;
   images: string[] = [
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Lazada_%282019%29.svg/800px-Lazada_%282019%29.svg.png?20190626132505f",
-    "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" 
+    "https://upload.wikimedia.org/wikipedia/commons/4/4d/Lazada_%282019%29.svg",
+    "https://i.imgur.com/l41VpZx.png" 
   ];
   currentImageIndex: number = 0;
 
@@ -35,7 +35,7 @@ export class AddprodComponent implements OnInit {
         };
         this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
         imageElement.src = this.images[this.currentImageIndex];
-      }, 500);
+      }, 500); 
     }
   }
 
