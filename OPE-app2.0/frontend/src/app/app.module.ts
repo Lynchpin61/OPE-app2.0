@@ -53,10 +53,9 @@ import { ContactComponent } from './components/contact/contact.component';
     SavedevalComponent,
     ProdevalComponent,
     BufferComponent,
-    AnalysisComponent,
     AboutComponent,
     HowItWorksComponent,
-    ContactComponent,
+    ContactComponent
   ],
   imports: [
     CommonModule,
