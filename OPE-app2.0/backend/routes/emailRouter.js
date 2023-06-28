@@ -33,8 +33,11 @@ console.log(randomNumber);
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'nodemailerope@gmail.com',//replace with your email
-      pass: 'nodemailer123'//replace with your password
+      user: 'pengriffey630@gmail.com',//replace with your email
+      clientId: '107858425212-450u81mgeiksk5fjj2lmhnake65k0t36.apps.googleusercontent.com',
+      clientSecret: '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',
+      refreshToken: '1//04SZUyjGPGqQiCgYIARAAGAQSNwF-L9IrSVL3hrVUgIxzLhtBuNq0q4RUyCTn4kehxVIeXn-dKfoqk1rhwA5lxncC4ZaAZbWwEGY',
+      accessToken: 'ya29.a0AWY7CkkexzPfH2RwTp657lhXijCkC4TTu3wOPo5SCY-_z0n42fYwO2Po1xOnW-60nCCwSvbl0S074CcqgXoSmnGulDyZ2FYEnLhApgsrSfvHuDtly_j8pKg4nOpeAEznxgT3Yfkc5zh4Y4H0m9uRHKcQBkbiaCgYKAdESARESFQG1tDrpplYRpsIlPAJiWAH0WcRcoQ0163',
     }
   }); 
 
@@ -45,7 +48,7 @@ console.log(randomNumber);
     html is our form details which we parsed using bodyParser.
   */
   var mailOptions = {
-    from: 'nodemailerope@gmail.com',//replace with your email
+    from: 'pengriffey630@gmail.com',//replace with your email
     to: req.body.email,//replace with your email
     subject: `NodeMail Testing`,
     html:`Node Mail Testing Sucessful`
