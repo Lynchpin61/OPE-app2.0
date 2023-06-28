@@ -50,11 +50,12 @@ import { ContactComponent } from './components/contact/contact.component';
     HomepageComponent,
     AddprodComponent,
     SavedevalComponent,
+    SavedevalComponent,
     ProdevalComponent,
     BufferComponent,
     AboutComponent,
     HowItWorksComponent,
-    ContactComponent,
+    ContactComponent
   ],
   imports: [
     CommonModule,
