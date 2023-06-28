@@ -159,6 +159,16 @@ export class SavedevalComponent implements OnInit {
     return sentence.split(/\b/);
   }
 
+  
+  // Smooth Scroll to #more-details
+  scrollToDetails() {
+    // add delay to show animation of the scroll
+    setTimeout(() => {
+      const details = document.querySelector('#more-details');
+      details?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
+
 
   // Modify the subject for the aspect breakdown everytime clicked
   breakdown_aspect(row: any) {
@@ -242,6 +252,12 @@ export class SavedevalComponent implements OnInit {
           }] as any
         });
       this.pieCharts[aspect] = pieChart;
+
+      // apply class more-details to secondary card for transition effects
+      setTimeout(() => {
+        const secondElement = document.querySelector('.second');
+        secondElement?.classList.add('show');
+      }, 100);
     }
 
 

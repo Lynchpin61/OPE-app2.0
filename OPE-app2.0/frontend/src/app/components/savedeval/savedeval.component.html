@@ -1,3 +1,5 @@
+<div class="background"></div>
+
 <p>savedeval works!</p>
 <button (click)="add()">Add Point!</button>
 
@@ -32,7 +34,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
           mat-row
-          (click)="breakdown_aspect(row)"
+          (click)="breakdown_aspect(row); scrollToDetails()"
           [class.demo-row-is-clicked]="clickedRows.has(row)"
           *matRowDef="let row; columns: displayedColumns;"
           title="Click to show more information"
@@ -42,7 +44,7 @@
   </mat-card>
 
 
-  <mat-card class="second main-body" *ngIf="showBreakdown">
+  <mat-card id="more-details" class="second main-body" *ngIf="showBreakdown">
     <h1>Aspect "{{ currentAspect }}" Breakdown</h1>
     <!-- Render Aspect Breakdown -->
     <ng-container *ngIf="breakdown">
