@@ -14,6 +14,8 @@ const translateRoutes = require('./routes/translate')
 
 const errorController = require('./controllers/error')
 
+var emailRouter = require('./routes/emailRouter');
+
 const app = express();
 
 const ports = process.env.PORT || 3000;
@@ -43,6 +45,8 @@ app.use('/review', reviewRoutes);
 app.use('/crawl', crawlRoutes);
 
 app.use('/translate', translateRoutes);
+
+app.use('/email',emailRouter);
 
 app.use(errorController.get404);
 
