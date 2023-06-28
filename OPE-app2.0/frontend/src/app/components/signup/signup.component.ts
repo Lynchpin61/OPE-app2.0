@@ -75,6 +75,10 @@ export class SignupComponent implements OnInit {
       }
       if(this.emailService.sendMessage(reqObj).subscribe((data: any)=>{
         console.log(data);
+        let otp = data.otp;
+        let my_mail = data.email;
+        console.log(otp);
+        console.log(my_mail);
       })
       ){
         emailSent = this.backendMsg;

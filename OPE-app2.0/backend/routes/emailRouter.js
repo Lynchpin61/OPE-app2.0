@@ -57,6 +57,11 @@ transporter.verify().then(console.log).catch(console.error);
     subject: `NodeMail Testing`,
     html:`Your OTP is <h2>${randomNumber}</h2>`
   };
+
+  res.json({
+    otp: randomNumber,
+    email: req.body.email
+});
   
   /* Here comes the important part, sendMail is the method which actually sends email, it takes mail options and
    call back as parameter 
