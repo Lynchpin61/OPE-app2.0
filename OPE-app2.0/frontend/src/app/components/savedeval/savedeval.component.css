@@ -18,32 +18,130 @@
 
 #aspects-wordcloud {
     width: 400px;
+    height: 250px;
     margin: 0 auto;
     border-radius: 1px;
     border-width: 1px;
 }
 
 
+/* Aspect List */
+
+#aspect-table tr[mat-row]:hover {
+    mix-blend-mode: color-dodge;
+}
+
+
+
 /* Flex Container */
 
 .main-body {
     background-color: white;
-    border: 1px solid black;
-    padding: 0 50px;
+    padding: 20px 50px;
     min-width: 360px;
     max-width: 720px;
 }
 
 .second {
     min-width: 300px;
+
+    display: flex;
+}
+
+.second > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 main {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 0 20px;
+    gap: 40px 30px;
     min-height: 100vh;
     flex-wrap: wrap;
     width: 100%;
+}
+
+
+/* Raw Sentiment Score Pie Chart */
+#raw-sentiment-score {
+    width: 300px;
+}
+
+
+/* Section 1 of Popup Aspect Breakdown, Most Positive and Negative Sentence */
+
+.second .section1 {
+    width: 300px;
+}
+
+.second .sub-section h2 {
+    margin-bottom: 8px;
+}
+
+
+.sample-review{
+    background-color: #6d6d6d;
+    padding: 16px;
+    color: black;
+    margin-left: 12px;
+    border-radius: 16px;
+}
+
+.sample-review.positive-background {
+    background-image: linear-gradient(#b6f4ff, #e1fff0);
+}
+.sample-review.negative-background {
+    background-image: linear-gradient(#b6f4ff, #ffeffb);
+}
+
+
+.sub-section h2 {
+    letter-spacing: -1px;
+}
+
+
+/* Keyword Blocks Positive and Negative */
+.block-positive{
+    background-color: #E7F8F0;
+    padding: 4px;
+    border-radius: 4px;
+
+    color: #299B5E;
+}
+
+.block-negative {
+    background-color: #FFEEF2;
+    padding: 4px;
+    border-radius: 4px;
+
+    color: #BB6570;
+}
+
+
+/* Aspect Breakdown List */
+
+#aspect-breakdown-list table {
+    height: 400px;
+    overflow-y: scroll;
+    display: block;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+
+    background-color: #fff;
+}
+
+#aspect-breakdown-list th, td {
+    text-align: left;
+    padding: 8px 16px;
+}
+
+#aspect-breakdown-list tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
