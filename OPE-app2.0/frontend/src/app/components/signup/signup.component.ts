@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from 'src/app/services/auth.service';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,8 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SignupComponent implements OnInit {
 
   signupForm!: FormGroup;
+  emailExists = true;
+  backendMsg = true;
 
-  constructor(private authService: AuthService, private router: Router){
+  constructor(private authService: AuthService, private router: Router, private emailService:EmailService){
   }
 
   ngOnInit(): void {
@@ -43,8 +46,17 @@ export class SignupComponent implements OnInit {
       return;
     }
 
-    this.authService.signup(this.signupForm.value).subscribe((msg) => console.log(msg));
-    this.router.navigate(["login"]);
+    let email: string = this.signupForm.value.email;
+    console.log(email);
+
+    if(!this.sendMail(email)){
+
+    }
+    else{
+      this.authService.signup(this.signupForm.value).subscribe((msg) => console.log(msg));
+      this.router.navigate(["login"]);
+    }
+
   }
 
   addShakeEffect() {
@@ -53,5 +65,25 @@ export class SignupComponent implements OnInit {
       button.classList.add('shake');
       setTimeout(() => button.classList.remove('shake'), 820);
     }
+  }
+
+  sendMail(email: string): boolean{
+      alert("sending email test");
+      let emailSent = false;
+      let reqObj = {
+        email:email
+      }
+      if(this.emailService.sendMessage(reqObj).subscribe((data: any)=>{
+        console.log(data);
+      })
+      ){
+        emailSent = this.backendMsg;
+      }
+
+      else{
+        console.log('failed signup')
+      }
+
+      return emailSent;
   }
 }
