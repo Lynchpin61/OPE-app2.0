@@ -4,6 +4,9 @@ var cors = require('./../cors');
 const emailRouter = express.Router();
 var nodemailer = require('nodemailer');//importing node mailer
 
+
+// const accessToken = oauth2Client.getAccessToken();
+
 emailRouter.route('/email')
 .options(cors.cors,(req,res)=>{
     console.log("Coming email here");
@@ -31,15 +34,16 @@ console.log(randomNumber);
     In Auth object , we specify our email and password
   */
   var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
     auth: {
-      user: 'pengriffey630@gmail.com',//replace with your email
-      clientId: '107858425212-450u81mgeiksk5fjj2lmhnake65k0t36.apps.googleusercontent.com',
-      clientSecret: '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',
-      refreshToken: '1//04SZUyjGPGqQiCgYIARAAGAQSNwF-L9IrSVL3hrVUgIxzLhtBuNq0q4RUyCTn4kehxVIeXn-dKfoqk1rhwA5lxncC4ZaAZbWwEGY',
-      accessToken: 'ya29.a0AWY7CkkexzPfH2RwTp657lhXijCkC4TTu3wOPo5SCY-_z0n42fYwO2Po1xOnW-60nCCwSvbl0S074CcqgXoSmnGulDyZ2FYEnLhApgsrSfvHuDtly_j8pKg4nOpeAEznxgT3Yfkc5zh4Y4H0m9uRHKcQBkbiaCgYKAdESARESFQG1tDrpplYRpsIlPAJiWAH0WcRcoQ0163',
-    }
-  }); 
+      user: 'teddymcdonald630@gmail.com',
+      pass: '', // put app password here
+  },
+});
+transporter.verify().then(console.log).catch(console.error);
 
   /*
     In mail options we specify from and to address, subject and HTML content.
@@ -48,10 +52,10 @@ console.log(randomNumber);
     html is our form details which we parsed using bodyParser.
   */
   var mailOptions = {
-    from: 'pengriffey630@gmail.com',//replace with your email
+    from: 'teddymcdonald630@gmail.com',//replace with your email
     to: req.body.email,//replace with your email
     subject: `NodeMail Testing`,
-    html:`Node Mail Testing Sucessful`
+    html:`Your OTP is <h2>${randomNumber}</h2>`
   };
   
   /* Here comes the important part, sendMail is the method which actually sends email, it takes mail options and

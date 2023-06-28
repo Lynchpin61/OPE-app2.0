@@ -19,8 +19,10 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
+    "googleapis": "^118.0.0",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.2.4",
+    "nodemailer": "^6.9.3",
     "puppeteer": "^20.4.0",
     "uuid": "^9.0.0"
   },
