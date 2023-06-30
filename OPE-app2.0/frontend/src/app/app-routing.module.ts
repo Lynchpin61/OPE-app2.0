@@ -13,8 +13,10 @@ import { AnalysisComponent } from './components/analysis/analysis.component';
 import { AboutComponent } from './components/about/about.component';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { OtpComponent } from './components/otp/otp.component';
 
 const routes: Routes = [
+
   { path: "", component: HomepageComponent },
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
@@ -28,6 +30,7 @@ const routes: Routes = [
   { path: "about", component: AboutComponent },
   { path: "how-it-works", component: HowItWorksComponent },
   { path: "contact", component: ContactComponent },
+  { path: "otp", component: OtpComponent },
   { path: "**", redirectTo: "" },
 ];
 
