@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from 'src/app/services/auth.service';
 import { EmailService } from 'src/app/services/email.service';
+import { SharingService } from 'src/app/services/sharing.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,8 +16,12 @@ export class SignupComponent implements OnInit {
   emailExists = true;
   backendMsg = true;
 
-  constructor(private authService: AuthService, private router: Router, private emailService:EmailService){
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private emailService:EmailService,
+    private sharingService: SharingService
+  ){}
 
   ngOnInit(): void {
     this.signupForm = this.createFormGroup();
@@ -41,6 +46,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup(): void {
+
     if (this.signupForm.invalid) {
       this.addShakeEffect();
       return;
@@ -49,13 +55,20 @@ export class SignupComponent implements OnInit {
     let email: string = this.signupForm.value.email;
     console.log(email);
 
-    if(!this.sendMail(email)){
+    let reqObj = {
+      email:email
+    }
 
-    }
-    else{
-      this.authService.signup(this.signupForm.value).subscribe((msg) => console.log(msg));
-      this.router.navigate(["login"]);
-    }
+    let otp = 0;
+
+    this.emailService.sendMessage(reqObj).subscribe((data: any)=>{
+      console.log(data);
+      otp = data.otp;
+      console.log(otp)
+      this.updateData(this.signupForm, otp)
+    });
+
+    this.router.navigate(["otpenter"]);
 
   }
 
@@ -67,27 +80,9 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  sendMail(email: string): boolean{
-      alert("sending email test");
-      let emailSent = false;
-      let reqObj = {
-        email:email
-      }
-      if(this.emailService.sendMessage(reqObj).subscribe((data: any)=>{
-        console.log(data);
-        let otp = data.otp;
-        let my_mail = data.email;
-        console.log(otp);
-        console.log(my_mail);
-      })
-      ){
-        emailSent = this.backendMsg;
-      }
+  updateData(formvalue: FormGroup, OTP: number) {
 
-      else{
-        console.log('failed signup')
-      }
-
-      return emailSent;
+    this.sharingService.updateSharedData(formvalue, OTP);
   }
+  
 }

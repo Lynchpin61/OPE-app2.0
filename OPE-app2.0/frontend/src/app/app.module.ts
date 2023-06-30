@@ -39,6 +39,8 @@ import { AuthInterceptorService } from "./services/auth-interceptor.service";
 import { AboutComponent } from './components/about/about.component';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { OtpEnterComponent } from './components/otp-enter/otp-enter.component';
+import { OtpSuccessComponent } from './components/otp-success/otp-success.component';
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { ContactComponent } from './components/contact/contact.component';
     BufferComponent,
     AboutComponent,
     HowItWorksComponent,
-    ContactComponent
+    ContactComponent,
+    OtpEnterComponent,
+    OtpSuccessComponent
   ],
   imports: [
     CommonModule,

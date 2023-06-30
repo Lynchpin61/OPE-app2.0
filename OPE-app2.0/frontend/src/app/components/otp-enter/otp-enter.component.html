@@ -1,0 +1,28 @@
+<body>
+    <div class="background"></div>
+    <div class="form-container">
+      <form [formGroup]="otpForm" (ngSubmit)="otpconfirm()" novalidate>
+        <label>OTP email verification</label>
+  
+        <mat-form-field>
+          <mat-label>
+            OTP code:
+          </mat-label>
+          <input matInput placeholder="6-digit OTP number" formControlName="OTP">
+        </mat-form-field>
+  
+        <div *ngIf="invalidOTP">
+          Wrong OTP, Please recheck the sent OTP code to your email or resend another one.
+        </div>
+  
+        <button mat-raised-button type="submit" (click)="addShakeEffect()" [ngClass]="{ shake: otpForm.invalid }">
+          <span>Confirm OTP</span>
+        </button>   
+  
+        <button mat-raised-button type="button" (click)="resendOTP()">
+          <span>resendOTP OTP</span>
+        </button>  
+
+      </form>
+    </div>
+  </body>

@@ -1,6 +1,6 @@
 var express=require('express');
 var bodyParser = require('body-parser')// importing body parser middleware to parse form content from HTML
-var cors = require('./../cors');
+var cors = require('../corsemail');
 const emailRouter = express.Router();
 var nodemailer = require('nodemailer');//importing node mailer
 
@@ -27,7 +27,8 @@ emailRouter.route('/email')
 
 // Example usage
 var randomNumber = generateRandomNumber();
-console.log(randomNumber);
+const otpnum = randomNumber;
+console.log(otpnum);
 
   /*Transport service is used by node mailer to send emails, it takes service and auth object as parameters.
     here we are using gmail as our service 
@@ -36,12 +37,16 @@ console.log(randomNumber);
   var transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
-    port: 587,
+    port: 465,
     secure: false,
     auth: {
-      user: 'teddymcdonald630@gmail.com',
-      pass: '', // put app password here
+      user: 'nodemailerope@gmail.com',
+      pass: 'wpctuaslnepjwags', // put app password here
   },
+  tls: {
+    rejectUnauthorized: false
+}
+    
 });
 transporter.verify().then(console.log).catch(console.error);
 
@@ -52,14 +57,14 @@ transporter.verify().then(console.log).catch(console.error);
     html is our form details which we parsed using bodyParser.
   */
   var mailOptions = {
-    from: 'teddymcdonald630@gmail.com',//replace with your email
+    from: 'nodemailerope@gmail.com',//replace with your email
     to: req.body.email,//replace with your email
     subject: `NodeMail Testing`,
-    html:`Your OTP is <h2>${randomNumber}</h2>`
+    html:`Your OTP is <h2>${otpnum}</h2>`
   };
 
   res.json({
-    otp: randomNumber,
+    otp: otpnum,
     email: req.body.email
 });
   
