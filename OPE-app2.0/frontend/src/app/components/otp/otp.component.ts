@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { AuthService } from "src/app/services/auth.service";
+import { Router } from "@angular/router";
+
+import { SharingService } from "src/app/services/sharing.service";
+import { EmailService } from "src/app/services/email.service";
 
 @Component({
   selector: 'app-otp',
@@ -6,9 +12,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./otp.component.css']
 })
 export class OtpComponent implements OnInit {
+  otpForm!: FormGroup;
+
+  recipient!: string;
+  password!: string;
+  OTP!: number;
+
+  invalidOTP: boolean = false;
+
+  inputs!: HTMLInputElement[];
+
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private emailService: EmailService,
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as {
+      "email": string, 
+      "password": string,
+      "otp": number
+    };
+    if (state) {
+      this.OTP = state.otp;
+      this.recipient = state.email;
+      this.password = state.password;
+      console.log(`ACCESS SESSION CREDENTIALS ${this.recipient} ${this.password} ${this.OTP}`)
+    } else {
+      console.log("NO SESSION CREDENTIALS; Access invalid; If you see this message, it probably is because you accessed this route directly via URL.")
+    }
+  }
+
 
   ngOnInit() {
+    this.otpForm = this.createFormGroup();
     const inputs = Array.from(document.querySelectorAll("input")) as HTMLInputElement[];
+    this.inputs = inputs;
     const button = document.querySelector("button");
 
     if (!button) {
@@ -50,19 +90,78 @@ export class OtpComponent implements OnInit {
             }
           });
         }
+        // ! Buggy in Angular but not in vanilla JS
         // if all input fields are filled and do not have the disabled attribute
         // add the active class to the button; otherwise, remove the active class.
-        const isAllFieldsFilled = inputs.every((input) => input.value !== "");
-        if (isAllFieldsFilled) {
-          button.classList.add("active");
-        } else {
-          button.classList.remove("active");
-        }
+        // const isAllFieldsFilled = inputs.every((input) => input.value !== "");
+        // if (isAllFieldsFilled) {
+        //   button.classList.add("active");
+        // } else {
+        //   button.classList.remove("active");
+        // }
       });
     });
 
     // focus the first input (which index is 0) on window load
     window.addEventListener("load", () => inputs[0].focus());
+  }
+
+
+  createFormGroup(): FormGroup {
+    return new FormGroup({
+      OTP: new FormControl("", [Validators.required]),
+      rememberMe: new FormControl(false),
+    });
+  }
+
+  otpconfirm() {
+    let reqOTP: number;
+    const inputs = this.inputs;
+    let parseOTP: string = "";
+    inputs.forEach((input, index1) => {
+      parseOTP += input.value;
+    });
+    reqOTP = Number(parseOTP);
+
+    if (reqOTP === this.OTP) {
+      console.log("OTP confirmed");
+      this.authService
+        .signup(
+          {
+            "email": this.recipient, "password": this.password,
+          },
+        )
+        .subscribe((msg) => console.log("msg"));
+      this.router.navigate(["otpsuccess"]);
+    } else {
+      console.log(`Invalid OTP: ${reqOTP}`);
+      this.invalidOTP = true;
+    }
+  }
+
+  addShakeEffect() {
+    const button = document.querySelector('button[type="submit"]');
+    if (button && this.otpForm.invalid) {
+      button.classList.add("shake");
+      setTimeout(() => button.classList.remove("shake"), 820);
+    }
+  }
+
+  resendOTP() {
+    let email: string = this.recipient;
+    console.log(email);
+
+    let reqObj = {
+      email: email,
+    };
+
+    let otp = 0;
+
+    this.emailService.sendMessage(reqObj).subscribe((data: any) => {
+      console.log(data);
+      otp = data.otp;
+      this.OTP = otp;
+    });
   }
 
 }

@@ -75,7 +75,7 @@ export class SignupComponent implements OnInit {
 
       console.log(this.signupForm.value)
 
-      this.router.navigate(["otpenter"], navigationExtras);
+      this.router.navigate(["otp"], navigationExtras);
 
     });
   }

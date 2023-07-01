@@ -10,20 +10,23 @@
     </header>
     <h4>OTP VERIFICATION</h4>
     <p>Enter the verification code we sent to your email</p>
-    <form action="#">
+    <form [formGroup]="otpForm" (ngSubmit)="otpconfirm()" novalidate>
       <div class="input-field">
-        <input type="number" />
-        <input type="number" disabled />
-        <input type="number" disabled />
-        <input type="number" disabled />
-        <input type="number" disabled />
-        <input type="number" disabled />
+        <input type="number" [ngClass]='{ "invalid-border": invalidOTP}' />
+        <input type="number" [ngClass]='{ "invalid-border": invalidOTP}' disabled />
+        <input type="number" [ngClass]='{ "invalid-border": invalidOTP}' disabled />
+        <input type="number" [ngClass]='{ "invalid-border": invalidOTP}' disabled />
+        <input type="number" [ngClass]='{ "invalid-border": invalidOTP}' disabled />
+        <input type="number" [ngClass]='{ "invalid-border": invalidOTP}' disabled />
       </div>
       <small>
         Didn't get the OTP?
-        <a href="#" class="text-decoration-none">Resend</a>
+        <a class="text-decoration-none" type="button" (click)="resendOTP()">Resend</a>
       </small>
-      <button>Verify OTP</button>
+      <button type="submit" (click)="addShakeEffect()" class="active" [ngClass]="{ shake: otpForm.invalid, invalid: invalidOTP }">Verify OTP</button>
     </form>
+    <div *ngIf="invalidOTP">
+      Wrong OTP, Please recheck the sent OTP code to your email or resend another one.
+    </div>
   </div>
 </body>

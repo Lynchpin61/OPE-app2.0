@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
@@ -17,7 +17,6 @@ export class OtpEnterComponent implements OnInit {
   recipient!: string;
   password!: string;
   OTP!: number;
-  form!: FormGroup;
 
   invalidOTP: boolean = false;
 
@@ -58,7 +57,6 @@ export class OtpEnterComponent implements OnInit {
 
     console.log(reqOTP);
     console.log(this.OTP);
-    // console.log(this.form.value);
     if (reqOTP == this.OTP) {
       console.log("OTP confirmed");
       this.authService
