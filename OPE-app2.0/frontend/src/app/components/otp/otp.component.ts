@@ -47,7 +47,7 @@ export class OtpComponent implements OnInit {
 
   ngOnInit() {
     this.otpForm = this.createFormGroup();
-    const inputs = Array.from(document.querySelectorAll("input")) as HTMLInputElement[];
+    const inputs = Array.from(document.querySelectorAll('input[type="number"]')) as HTMLInputElement[];
     this.inputs = inputs;
     const button = document.querySelector("button");
 
@@ -121,6 +121,7 @@ export class OtpComponent implements OnInit {
     inputs.forEach((input, index1) => {
       parseOTP += input.value;
     });
+    console.log(parseOTP);
     reqOTP = Number(parseOTP);
 
     if (reqOTP === this.OTP) {
