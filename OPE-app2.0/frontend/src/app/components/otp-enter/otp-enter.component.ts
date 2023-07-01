@@ -1,62 +1,76 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { AuthService } from "src/app/services/auth.service";
+import { Router } from "@angular/router";
 
-import { SharingService } from 'src/app/services/sharing.service';
-import { EmailService } from 'src/app/services/email.service';
+import { SharingService } from "src/app/services/sharing.service";
+import { EmailService } from "src/app/services/email.service";
 
 @Component({
-  selector: 'app-otp-enter',
-  templateUrl: './otp-enter.component.html',
-  styleUrls: ['./otp-enter.component.css']
+  selector: "app-otp-enter",
+  templateUrl: "./otp-enter.component.html",
+  styleUrls: ["./otp-enter.component.css"],
 })
-export class OtpEnterComponent implements OnInit{
-
+export class OtpEnterComponent implements OnInit {
   otpForm!: FormGroup;
-  
+
+  recipient!: string;
+  password!: string;
   OTP!: number;
   form!: FormGroup;
 
   invalidOTP: boolean = false;
 
-  
   constructor(
     private authService: AuthService,
     private router: Router,
-    private emailService:EmailService,
-    private sharingService: SharingService
-    ){
+    private emailService: EmailService,
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as {
+      "email": string, 
+      "password": string,
+      "otp": number
+    };
+    if (state) {
+      this.OTP = state.otp;
+      this.recipient = state.email;
+      this.password = state.password;
+      console.log(`ACCESS SESSION CREDENTIALS ${this.recipient} ${this.password} ${this.OTP}`)
+    } else {
+      console.log("NO SESSION CREDENTIALS; Access invalid; If you see this message, it probably is because you accessed this route directly via URL.")
+    }
   }
-
 
   ngOnInit(): void {
     this.otpForm = this.createFormGroup();
-    this.OTP = this.sharingService.getSharedData2();
-    this.form = this.sharingService.getSharedData1();
   }
-  
-  createFormGroup(): FormGroup{
+
+  createFormGroup(): FormGroup {
     return new FormGroup({
-      OTP: new FormControl("", [
-        Validators.required
-        ]),
-      rememberMe: new FormControl(false)
+      OTP: new FormControl("", [Validators.required]),
+      rememberMe: new FormControl(false),
     });
   }
 
-  otpconfirm(){
-    let reqOTP: number = this.otpForm.value.OTP
-    
-    console.log(reqOTP)
-    console.log(this.OTP)
-    console.log(this.form.value)
-    if(reqOTP = this.OTP){
-      this.authService.signup(this.form.value).subscribe((msg) => console.log(msg));
-      this.router.navigate(["otpenter"]);
-      
-    }
-    else{
+  otpconfirm() {
+    let reqOTP: number = this.otpForm.value.OTP;
+
+    console.log(reqOTP);
+    console.log(this.OTP);
+    // console.log(this.form.value);
+    if (reqOTP == this.OTP) {
+      console.log("OTP confirmed");
+      this.authService
+        .signup(
+          {
+            "email": this.recipient, "password": this.password,
+          },
+        )
+        .subscribe((msg) => console.log("msg"));
+      this.router.navigate(["otpsuccess"]);
+    } else {
+      console.log("Invalid OTP");
       this.invalidOTP = true;
     }
   }
@@ -64,30 +78,25 @@ export class OtpEnterComponent implements OnInit{
   addShakeEffect() {
     const button = document.querySelector('button[type="submit"]');
     if (button && this.otpForm.invalid) {
-      button.classList.add('shake');
-      setTimeout(() => button.classList.remove('shake'), 820);
+      button.classList.add("shake");
+      setTimeout(() => button.classList.remove("shake"), 820);
     }
   }
 
-  resendOTP(){
-    let email: string = this.form.value.email;
+  resendOTP() {
+    let email: string = this.recipient;
     console.log(email);
 
     let reqObj = {
-      email:email
-    }
+      email: email,
+    };
 
     let otp = 0;
 
-    this.emailService.sendMessage(reqObj).subscribe((data: any)=>{
+    this.emailService.sendMessage(reqObj).subscribe((data: any) => {
       console.log(data);
       otp = data.otp;
-      this.updateData(this.form, otp)
+      this.OTP = otp;
     });
-  }
-
-  updateData(formvalue: FormGroup, OTP: number) {
-
-    this.sharingService.updateSharedData(formvalue, OTP);
   }
 }

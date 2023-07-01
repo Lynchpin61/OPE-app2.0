@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 import { AuthService } from 'src/app/services/auth.service';
 import { EmailService } from 'src/app/services/email.service';
 import { SharingService } from 'src/app/services/sharing.service';
@@ -20,7 +20,6 @@ export class SignupComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private emailService:EmailService,
-    private sharingService: SharingService
   ){}
 
   ngOnInit(): void {
@@ -65,11 +64,20 @@ export class SignupComponent implements OnInit {
       console.log(data);
       otp = data.otp;
       console.log(otp)
-      this.updateData(this.signupForm, otp)
+
+      const navigationExtras: NavigationExtras = {
+        state: {
+          "email": this.signupForm.value.email, 
+          "password": this.signupForm.value.password,
+          "otp": data.otp
+        }
+      };
+
+      console.log(this.signupForm.value)
+
+      this.router.navigate(["otpenter"], navigationExtras);
+
     });
-
-    this.router.navigate(["otpenter"]);
-
   }
 
   addShakeEffect() {
@@ -79,10 +87,4 @@ export class SignupComponent implements OnInit {
       setTimeout(() => button.classList.remove('shake'), 820);
     }
   }
-
-  updateData(formvalue: FormGroup, OTP: number) {
-
-    this.sharingService.updateSharedData(formvalue, OTP);
-  }
-  
 }
