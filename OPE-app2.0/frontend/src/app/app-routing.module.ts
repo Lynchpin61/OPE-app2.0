@@ -17,7 +17,7 @@ import { OtpComponent } from './components/otp/otp.component';
 
 const routes: Routes = [
 
-  { path: "", component: HomepageComponent },
+  { path: "", component: AboutComponent },
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
   // { path: "savedeval", component: SavedevalComponent, canActivate: [AuthGuard] },
