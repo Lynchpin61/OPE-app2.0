@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
 import { AuthService } from 'src/app/services/auth.service';
 import { EmailService } from 'src/app/services/email.service';
+import { SharingService } from 'src/app/services/sharing.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,8 +16,11 @@ export class SignupComponent implements OnInit {
   emailExists = true;
   backendMsg = true;
 
-  constructor(private authService: AuthService, private router: Router, private emailService:EmailService){
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private emailService:EmailService,
+  ){}
 
   ngOnInit(): void {
     this.signupForm = this.createFormGroup();
@@ -41,6 +45,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup(): void {
+
     if (this.signupForm.invalid) {
       this.addShakeEffect();
       return;
@@ -49,14 +54,30 @@ export class SignupComponent implements OnInit {
     let email: string = this.signupForm.value.email;
     console.log(email);
 
-    if(!this.sendMail(email)){
-
-    }
-    else{
-      this.authService.signup(this.signupForm.value).subscribe((msg) => console.log(msg));
-      this.router.navigate(["login"]);
+    let reqObj = {
+      email:email
     }
 
+    let otp = 0;
+
+    this.emailService.sendMessage(reqObj).subscribe((data: any)=>{
+      console.log(data);
+      otp = data.otp;
+      console.log(otp)
+
+      const navigationExtras: NavigationExtras = {
+        state: {
+          "email": this.signupForm.value.email, 
+          "password": this.signupForm.value.password,
+          "otp": data.otp
+        }
+      };
+
+      console.log(this.signupForm.value)
+
+      this.router.navigate(["otpenter"], navigationExtras);
+
+    });
   }
 
   addShakeEffect() {
@@ -65,25 +86,5 @@ export class SignupComponent implements OnInit {
       button.classList.add('shake');
       setTimeout(() => button.classList.remove('shake'), 820);
     }
-  }
-
-  sendMail(email: string): boolean{
-      alert("sending email test");
-      let emailSent = false;
-      let reqObj = {
-        email:email
-      }
-      if(this.emailService.sendMessage(reqObj).subscribe((data: any)=>{
-        console.log(data);
-      })
-      ){
-        emailSent = this.backendMsg;
-      }
-
-      else{
-        console.log('failed signup')
-      }
-
-      return emailSent;
   }
 }

@@ -14,6 +14,8 @@ import { AboutComponent } from './components/about/about.component';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { OtpComponent } from './components/otp/otp.component';
+import { OtpEnterComponent } from './components/otp-enter/otp-enter.component';
+import { OtpSuccessComponent } from './components/otp-success/otp-success.component';
 
 const routes: Routes = [
 
@@ -31,6 +33,8 @@ const routes: Routes = [
   { path: "how-it-works", component: HowItWorksComponent },
   { path: "contact", component: ContactComponent },
   { path: "otp", component: OtpComponent },
+  { path: "otpenter", component: OtpEnterComponent },
+  { path: "otpsuccess", component: OtpSuccessComponent },
   { path: "**", redirectTo: "" },
 ];
 

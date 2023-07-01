@@ -1,8 +1,11 @@
 var express=require('express');
 var bodyParser = require('body-parser')// importing body parser middleware to parse form content from HTML
-var cors = require('./../cors');
+var cors = require('../corsemail');
 const emailRouter = express.Router();
 var nodemailer = require('nodemailer');//importing node mailer
+
+
+// const accessToken = oauth2Client.getAccessToken();
 
 emailRouter.route('/email')
 .options(cors.cors,(req,res)=>{
@@ -24,19 +27,28 @@ emailRouter.route('/email')
 
 // Example usage
 var randomNumber = generateRandomNumber();
-console.log(randomNumber);
+const otpnum = randomNumber;
+console.log(otpnum);
 
   /*Transport service is used by node mailer to send emails, it takes service and auth object as parameters.
     here we are using gmail as our service 
     In Auth object , we specify our email and password
   */
   var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: false,
     auth: {
-      user: 'nodemailerope@gmail.com',//replace with your email
-      pass: 'nodemailer123'//replace with your password
-    }
-  }); 
+      user: 'nodemailerope@gmail.com',
+      pass: 'wpctuaslnepjwags', // put app password here
+  },
+  tls: {
+    rejectUnauthorized: false
+}
+    
+});
+transporter.verify().then(console.log).catch(console.error);
 
   /*
     In mail options we specify from and to address, subject and HTML content.
@@ -48,8 +60,13 @@ console.log(randomNumber);
     from: 'nodemailerope@gmail.com',//replace with your email
     to: req.body.email,//replace with your email
     subject: `NodeMail Testing`,
-    html:`Node Mail Testing Sucessful`
+    html:`Your OTP is <h2>${otpnum}</h2>`
   };
+
+  res.json({
+    otp: otpnum,
+    email: req.body.email
+});
   
   /* Here comes the important part, sendMail is the method which actually sends email, it takes mail options and
    call back as parameter 

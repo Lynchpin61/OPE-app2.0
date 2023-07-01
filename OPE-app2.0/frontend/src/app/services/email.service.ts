@@ -5,7 +5,7 @@ import {HttpClient,HttpHeaders} from '@angular/common/http';
 })
 export class EmailService {
 
-  private url = "http://localhost:3000/email";
+  private url = "http://localhost:3000/email/email";
   constructor(private httpreq:HttpClient) { }
 
   sendMessage(body: any){

@@ -40,6 +40,8 @@ import { AboutComponent } from './components/about/about.component';
 import { HowItWorksComponent } from './components/how-it-works/how-it-works.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { OtpComponent } from './components/otp/otp.component';
+import { OtpEnterComponent } from './components/otp-enter/otp-enter.component';
+import { OtpSuccessComponent } from './components/otp-success/otp-success.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import { OtpComponent } from './components/otp/otp.component';
     AboutComponent,
     HowItWorksComponent,
     ContactComponent,
-    OtpComponent
+    OtpComponent,
+    OtpEnterComponent,
+    OtpSuccessComponent
   ],
   imports: [
     CommonModule,
