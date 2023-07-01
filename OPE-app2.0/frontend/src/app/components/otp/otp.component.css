@@ -72,6 +72,33 @@ form .input-field {
 .input-field input::-webkit-outer-spin-button {
   display: none;
 }
+
+.container p {
+  color: gray;
+  font-family: Arial, sans-serif;
+  margin-top: -25px;
+}
+
+small {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 0.875rem;
+  color: #333;
+  margin-top: 10px;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+  color: #4070f4;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+.text-decoration-none:hover {
+  text-decoration: underline;
+}
+
+
 form button {
   margin-top: 25px;
   width: 100%;
