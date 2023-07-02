@@ -1,82 +1,85 @@
 <div class="background"></div>
 
-<app-buffer *ngIf="isLoading"></app-buffer>
-
-<div class="container" *ngIf="!isLoading">
-  <div  id="image-section">
-    <div class="container" id="pie_charts">
-      <div class="bar" [chart]="onePieChart"></div>
-      <div class="bar" [chart]="aspectBreakdownPieChart"></div>
-    </div>
-    
-    <div class="container center-content">
-      <div *ngFor="let aspect of aspects" class="bar" [chart]="aspectCharts[aspect]"></div>
-      <div *ngIf="list_sentences" class="solid-background">
-        <table id="counts-table">
-          <thead>
+<div id="main">
+  <div id="prod-title">
+      <h1>{{title}}</h1>
+  </div>
+  <div class="navbar">
+    <h1 id="top-aspects-title">6 Most Mentioned Keywords:</h1>
+    <nav>
+      <ul>
+        <li *ngFor="let aspect of top_aspects" (click)="onAspectClick(aspect)" [class.active]="currentAspect === aspect">{{aspect}}</li>
+      </ul>
+    </nav>
+  </div>
+  <div id="raw-sentiment-score" *ngIf="currentAspect">
+    <div id="chart-section">
+      <h1>{{ currentAspect | uppercase }}</h1>
+      <h2>Summary of Product Reviews</h2>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla quae blanditiis facere laborum atque. Odit, porro mollitia cum cumque sequi repudiandae velit est accusantium, expedita sint quidem et numquam consequatur.</p>
+      <div id="chart-breakdown">
+        <div *ngFor="let pieChart of pieCharts | keyvalue">
+          <div class="bar" *ngIf="pieChart.key === currentAspect" [chart]="pieChart.value"></div>
+        </div>
+        <div id="chart-frequency">
+          <h2>How did we calculate the ratio?</h2>
+          <p>
+            We calculated the ratio by counting the number of times <span class="highlight">{{currentAspect}}</span> appeared in the positive reviews and negative reviews over the total number of reviews it appeared on. </p>
+            <p>The number of times camera appeared on positive reviews is <span class="highlight">{{ posCount }}</span> and the number of times it appeared on negative reviews is <span class="highlight">{{ negCount }}</span> resulting in a total of <span class="highlight">{{ frequency }}</span>.
+          </p>
+          
+          <!-- <table id="frequency-table">
             <tr>
-              <th>Aspect</th>
-              <th>Positive Count</th>
-              <th>Negative Count</th>
-              <th>Positive Percent</th>
-              <th>Negative Percent</th>
+              <td>Positive Reviews</td>
+              <td>{{posCount}}</td>
             </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let count of counts">
-              <td>{{ count[0] }}</td>
-              <td class="center">{{ count[1]['pos-count'] }}</td>
-              <td class="center">{{ count[1]['neg-count'] }}</td>
-              <td class="center">{{ count[1]['pos-percent'] }}</td>
-              <td class="center">{{ count[1]['neg-percent'] }}</td>
+            <tr>
+              <td>Negative Reviews</td>
+              <td>{{negCount}}</td>
             </tr>
-          </tbody>
-        </table>
+            <tr>
+              <td>Total</td>
+              <td>{{frequency}}</td>
+            </tr>
+          </table> -->
+
+          <h2>( {{posCount}} / {{frequency}} ) * 100 = {{posPercent}}</h2>
+          <h2>( {{negCount}} / {{frequency}} ) * 100 = {{negPercent}}</h2>
+        </div>
       </div>
-    </div>
-    
-    <div class="container" *ngIf="aspect_list" id="reviews">
-      <div *ngFor="let item of items" class="solid-background" id="label">
-        <h2>{{ item[0] }}</h2>
-        <div *ngFor="let label of labels" id="aspect-labels">
-          <div *ngIf="label[0] == item[0]">
-            <p>Keywords: "{{ label[1].join('", "') }}"</p>
+      <div id="review_list" style="display: flex;">
+        <div style="flex: 1; margin-right: 10px;">
+          <h2>List of Positive Sentences</h2>
+          <div id="aspect-breakdown-list">
+            <table>
+              <tr>
+                <th>Sentence</th>
+                <th>Sentiment</th>
+              </tr>
+              <tr *ngFor="let pos_aspect_phrase of pos_aspect_phrases">
+                <td>{{ pos_aspect_phrase.sentence }}</td>
+                <td>{{ pos_aspect_phrase.label }}</td>
+              </tr>
+            </table>
           </div>
         </div>
-        <h3 class="positive">Positive Reviews:</h3>
-        <div *ngFor="let value of item[1].Positive">
-          <p>{{ value + '\n' }}</p>
-        </div>
-        <h3 class="negative">Negative Reviews:</h3>
-        <div *ngFor="let value of item[1].Negative">
-          <p>{{ value + '\n' }}</p>
+        <div style="flex: 1; margin-left: 10px;">
+          <h2>List of Negative Sentences</h2>
+          <div id="aspect-breakdown-list">
+            <table>
+              <tr>
+                <th>Sentence</th>
+                <th>Sentiment</th>
+              </tr>
+              <tr *ngFor="let neg_aspect_phrase of neg_aspect_phrases">
+                <td>{{ neg_aspect_phrase.sentence }}</td>
+                <td>{{ neg_aspect_phrase.label }}</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="container solid-background" *ngIf="sentence_attributes">
-      <table>
-        <thead>
-          <tr>
-            <th>Review</th>
-            <th>Keywords</th>
-            <th>Sentiment</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let review of sentence_attributes">
-            <td>{{review['sentence']}}</td>
-            <td class="center">{{review['aspect_group']}}</td>
-            <td class="center" [ngClass]="{
-              'positive': review['sentiment']['classification'] === 'Positive',
-              'negative': review['sentiment']['classification'] === 'Negative'
-            }">{{review['sentiment']['classification']}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+      
+      
   </div>
-  
-    <button (click)="generateImage()">Save as Image</button>
-  </div>
+</div>

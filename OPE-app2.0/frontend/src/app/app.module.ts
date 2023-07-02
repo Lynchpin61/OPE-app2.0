@@ -65,6 +65,7 @@ import { OtpSuccessComponent } from './components/otp-success/otp-success.compon
   ],
   imports: [
     CommonModule,
+    ChartModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
