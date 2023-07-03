@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
+import { DecimalPipe } from '@angular/common';
 import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 
 
@@ -14,14 +15,19 @@ import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 @Component({
   selector: 'app-prodeval',
   templateUrl: './prodeval.component.html',
-  styleUrls: ['./prodeval.component.css']
+  styleUrls: ['./prodeval.component.css'],
+  providers: [DecimalPipe],
 })
 
 
 export class ProdevalComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private decimalPipe: DecimalPipe) { }
 
+  formatProbability(probability: number): string {
+    return this.decimalPipe.transform(probability * 100, '1.2-2') + '%';
+  }
+  
   aspect_phrases: Record<string, any> = {};
   aspects: string[] = [];
   normalized_score: Record<string, any> = {};
@@ -35,36 +41,49 @@ export class ProdevalComponent implements OnInit {
   frequency: number = 0;
   posCount: number = 0;
   negCount: number = 0;
+  positiveCount: number = 0;
+  negativeCount: number = 0;
   posPercent: number = 0;
   negPercent: number = 0;
   phrases_analysis: Record<string,any> = {};
+  total_count: Record<string,any> = {};
   pos_aspect_phrases: any[] = [];
   neg_aspect_phrases: any[] = [];
-  highlight_word: string = '';
+  // pos_word_probas: any[] = [];
+  // neg_word_probas: any[] = [];
 
   displayedColumns: string[] = ['position', 'aspect', 'frequency'];
   // dataSource = ELEMENT_DATA;
   // dataSource: TopAspect[] = [];
   // clickedRows = new Set<TopAspect>();
+  
   onAspectClick = (aspect: string) => {
     this.currentAspect = aspect;
     this.posCount = this.raw_score[aspect]['Positive'] || 0;
     this.negCount = this.raw_score[aspect]['Negative'] || 0;
     this.frequency = this.posCount + this.negCount;
-    this.posPercent = this.posCount / this.frequency * 100;
-    this.negPercent = this.negCount / this.frequency * 100;
+    this.posPercent = this.posCount / this.frequency;
+    this.negPercent = this.negCount / this.frequency;
     this.pos_aspect_phrases = this.phrases_analysis[this.currentAspect]['Positive'];
     this.neg_aspect_phrases = this.phrases_analysis[this.currentAspect]['Negative'];
-    this.highlight_word = this.phrases_analysis[this.currentAspect]['Positive'][0]['word_proba'];
-    console.log(this.highlight_word)
+    // Call the getWords function for each positive sentence and store the result in a new property
+    this.pos_aspect_phrases.forEach(phrase => {
+      phrase.words = this.getWords(phrase.sentence, phrase.word_proba, true);
+    });
+
+    // Call the getWords function for each negative sentence and store the result in a new property
+    this.neg_aspect_phrases.forEach(phrase => {
+      phrase.words = this.getWords(phrase.sentence, phrase.word_proba, true);
+    });
+
   }
-  
   // onePieChart: Chart = {} as Chart;
 
 
   async ngOnInit() {
     // post request on https://db3f1af8-9011-48a6-a4d5-1e6c9b680ae0.mock.pstmn.io/absa-dashboard
-    await fetch('https://779d6a2b-7fc0-4ea4-804f-ac11ac4df044.mock.pstmn.io/absa-dashboard', {
+    // https://779d6a2b-7fc0-4ea4-804f-ac11ac4df044.mock.pstmn.io/absa-dashboard // craig mock server
+    await fetch('https://8934e47d-9593-47a5-8137-0446d73e2dae.mock.pstmn.io/absa-dashboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -84,6 +103,12 @@ export class ProdevalComponent implements OnInit {
         console.log(this.raw_score)
         this.top_aspects = data['top_aspects'];
         this.phrases_analysis = data['phrases_analysis'];
+        this.total_count = data['total_count'];
+        this.positiveCount = this.total_count['Positive'];
+        this.negativeCount = this.total_count['Negative'];
+        console.log(this.total_count)
+        console.log(this.positiveCount)
+        console.log(this.negativeCount)
         console.log(this.phrases_analysis)
 
         console.log(data);
@@ -92,14 +117,22 @@ export class ProdevalComponent implements OnInit {
         this.posCount = this.raw_score[this.currentAspect]['Positive'] || 0;
         this.negCount = this.raw_score[this.currentAspect]['Negative'] || 0;
         this.frequency = this.posCount + this.negCount;
-        this.posPercent = this.posCount / this.frequency * 100;
-        this.negPercent = this.negCount / this.frequency * 100;
+        this.posPercent = this.posCount / this.frequency;
+        this.negPercent = this.negCount / this.frequency;
         this.pos_aspect_phrases = this.phrases_analysis[this.currentAspect]['Positive'];
         this.neg_aspect_phrases = this.phrases_analysis[this.currentAspect]['Negative'];
-        console.log(this.pos_aspect_phrases)
-        console.log(this.pos_aspect_phrases[0]);
-        console.log(this.neg_aspect_phrases)
-        
+        // Call the getWords function for each positive sentence and store the result in a new property
+        this.pos_aspect_phrases.forEach(phrase => {
+          phrase.words = this.getWords(phrase.sentence, phrase.word_proba, true);
+        });
+
+        // Call the getWords function for each negative sentence and store the result in a new property
+        this.neg_aspect_phrases.forEach(phrase => {
+          phrase.words = this.getWords(phrase.sentence, phrase.word_proba, true);
+        });
+
+        // console.log(this.pos_word_probas);
+        // console.log(this.neg_word_probas);
 
         // Initialize data for pie chart
         let pos_count = 0;
@@ -181,5 +214,18 @@ export class ProdevalComponent implements OnInit {
       
 
     }
+
+    getWords(sentence: string, word: string, highlight: boolean): { text: string; highlight: boolean }[] {
+      const words = sentence.split(/(\W+)/);
+      return words.map(w => ({
+        text: w,
+        highlight: highlight && w.toLowerCase() === word.toLowerCase()
+      }));
+    }
+    
+    
+    
+    
+    
     
 }

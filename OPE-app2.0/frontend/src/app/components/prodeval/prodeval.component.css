@@ -147,3 +147,22 @@ li {
 #review_list {
   display: flex;
 }
+
+.wordhighlight {
+  background-color: #E7F8F0;
+  padding: 4px;
+  border-radius: 4px;
+
+  color: #299B5E;
+}
+
+.wordlowlight {
+  background-color: #FFEEF2;
+  padding: 4px;
+  border-radius: 4px;
+
+  color: #BB6570;
+}
+
+
+

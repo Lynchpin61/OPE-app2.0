@@ -4,6 +4,9 @@
   <div id="prod-title">
       <h1>{{title}}</h1>
   </div>
+  <!-- <div>
+    <h1>{{positiveCount}}</h1>
+  </div> -->
   <div class="navbar">
     <h1 id="top-aspects-title">6 Most Mentioned Keywords:</h1>
     <nav>
@@ -43,10 +46,11 @@
             </tr>
           </table> -->
 
-          <h2>( {{posCount}} / {{frequency}} ) * 100 = {{posPercent}}</h2>
-          <h2>( {{negCount}} / {{frequency}} ) * 100 = {{negPercent}}</h2>
+          <h2>( {{posCount}} / {{frequency}} ) * 100 = {{formatProbability(posPercent)}}</h2>
+          <h2>( {{negCount}} / {{frequency}} ) * 100 = {{formatProbability(negPercent)}}</h2>
         </div>
       </div>
+      <br>
       <div id="review_list" style="display: flex;">
         <div style="flex: 1; margin-right: 10px;">
           <h2>List of Positive Sentences</h2>
@@ -54,12 +58,19 @@
             <table>
               <tr>
                 <th>Sentence</th>
-                <th>Sentiment</th>
+                <th>Label</th>
+                <th>Score</th>
               </tr>
               <tr *ngFor="let pos_aspect_phrase of pos_aspect_phrases">
-                <td>{{ pos_aspect_phrase.sentence }}</td>
+                <td>
+                  <ng-container *ngFor="let word of pos_aspect_phrase.words">
+                    <span [ngClass]="{ 'wordhighlight': word.highlight }">{{ word.text }}</span>
+                  </ng-container>
+                </td>
                 <td>{{ pos_aspect_phrase.label }}</td>
+                <td>{{ formatProbability(pos_aspect_phrase.probability) }}</td>
               </tr>
+              
             </table>
           </div>
         </div>
@@ -69,11 +80,17 @@
             <table>
               <tr>
                 <th>Sentence</th>
-                <th>Sentiment</th>
+                <th>Label</th>
+                <th>Score</th>
               </tr>
               <tr *ngFor="let neg_aspect_phrase of neg_aspect_phrases">
-                <td>{{ neg_aspect_phrase.sentence }}</td>
+                <td>
+                  <ng-container *ngFor="let word of neg_aspect_phrase.words">
+                    <span [ngClass]="{ 'wordlowlight': word.highlight }">{{ word.text }}</span>
+                  </ng-container>
+                </td>
                 <td>{{ neg_aspect_phrase.label }}</td>
+                <td>{{ formatProbability(neg_aspect_phrase.probability) }}</td>
               </tr>
             </table>
           </div>
