@@ -33,6 +33,7 @@
   
   .box {
     background-color: rgba(255, 255, 255, 0);
+    transform: translateX(-8%);
     padding: 20px;
     border-radius: 10px;
     font-family: 'Montserrat', sans-serif;
@@ -51,9 +52,6 @@
     }
   }
   
-  .msic {
-  }
-  
   .image1 {
     width: 500px;
     height: auto;
@@ -69,8 +67,6 @@
     }
   }
   
-  .ope {
-  }
   
   .image2 {
     width: 500px;
@@ -181,12 +177,13 @@
   }
   
   .container {
-    width: 100%;
+    width: 350%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
   }
+  
   
   .section-title {
     font-size: 42px;
@@ -264,7 +261,7 @@
   }
   
   .team .team-content h4 {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 300;
     letter-spacing: 1px;
     font-style: italic;

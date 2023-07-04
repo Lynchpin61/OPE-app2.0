@@ -1,6 +1,6 @@
 <div class="background"></div>
 <head>
-  <title>OTP Verification Form</title>
+  <title>Email Verification Form</title>
 </head>
 
 <body>
@@ -8,7 +8,7 @@
     <header>
       <i class="bx bxs-check-shield"></i>
     </header>
-    <h4>OTP VERIFICATION</h4>
+    <h4>Verification</h4>
     <p>Enter the verification code we sent to your email</p>
     <form [formGroup]="otpForm" (ngSubmit)="otpconfirm()" novalidate>
       <div class="input-field">
@@ -20,13 +20,13 @@
         <input type="number" [ngClass]='{ "invalid-border": invalidOTP}' disabled />
       </div>
       <small>
-        Didn't get the OTP?
+        Didn't get the verification code?
         <a class="text-decoration-none" type="button" (click)="resendOTP()">Resend</a>
       </small>
-      <button type="submit" (click)="addShakeEffect()" class="active" [ngClass]="{ shake: otpForm.invalid, invalid: invalidOTP }">Verify OTP</button>
+      <button type="submit" (click)="addShakeEffect()" class="active" [ngClass]="{ shake: otpForm.invalid, invalid: invalidOTP }">Verify</button>
     </form>
     <div *ngIf="invalidOTP">
-      Wrong OTP, Please recheck the sent OTP code to your email or resend another one.
+      Wrong verification code, please recheck the code sent to your email or request another one.
     </div>
   </div>
 </body>
