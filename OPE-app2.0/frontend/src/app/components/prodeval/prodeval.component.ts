@@ -41,8 +41,10 @@ export class ProdevalComponent implements OnInit {
   frequency: number = 0;
   posCount: number = 0;
   negCount: number = 0;
+  totalCount: number = 0;
   positiveCount: number = 0;
   negativeCount: number = 0;
+  positivePercent: number = 0;
   posPercent: number = 0;
   negPercent: number = 0;
   phrases_analysis: Record<string,any> = {};
@@ -51,7 +53,8 @@ export class ProdevalComponent implements OnInit {
   neg_aspect_phrases: any[] = [];
   // pos_word_probas: any[] = [];
   // neg_word_probas: any[] = [];
-
+  summarized_phrases: Record<string,any> = {};
+  summary: string = '';
   displayedColumns: string[] = ['position', 'aspect', 'frequency'];
   // dataSource = ELEMENT_DATA;
   // dataSource: TopAspect[] = [];
@@ -61,6 +64,10 @@ export class ProdevalComponent implements OnInit {
     this.currentAspect = aspect;
     this.posCount = this.raw_score[aspect]['Positive'] || 0;
     this.negCount = this.raw_score[aspect]['Negative'] || 0;
+    this.positiveCount = this.total_count['Positive'];
+    this.negativeCount = this.total_count['Negative'];
+    // this.totalCount = this.positiveCount + this.negativeCount;
+    // this.positivePercent = (this.positiveCount / this.totalCount) * 100;
     this.frequency = this.posCount + this.negCount;
     this.posPercent = this.posCount / this.frequency;
     this.negPercent = this.negCount / this.frequency;
@@ -75,6 +82,8 @@ export class ProdevalComponent implements OnInit {
     this.neg_aspect_phrases.forEach(phrase => {
       phrase.words = this.getWords(phrase.sentence, phrase.word_proba, true);
     });
+    this.summary = this.summarized_phrases[this.currentAspect];
+    // console.log(this.summary)
 
   }
   // onePieChart: Chart = {} as Chart;
@@ -83,7 +92,7 @@ export class ProdevalComponent implements OnInit {
   async ngOnInit() {
     // post request on https://db3f1af8-9011-48a6-a4d5-1e6c9b680ae0.mock.pstmn.io/absa-dashboard
     // https://779d6a2b-7fc0-4ea4-804f-ac11ac4df044.mock.pstmn.io/absa-dashboard // craig mock server
-    await fetch('https://8934e47d-9593-47a5-8137-0446d73e2dae.mock.pstmn.io/absa-dashboard', {
+    await fetch('https://abb03457-0831-433b-adc9-edda95bf51e5.mock.pstmn.io/absa-dashboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -98,6 +107,7 @@ export class ProdevalComponent implements OnInit {
         this.title = data['title'];
         this.aspect_phrases = data['aspect_phrases'];
         this.aspects = data['aspects'];
+        this.summarized_phrases = data['summarized_phrases'];
         this.normalized_score = data['normalized_score'];
         this.raw_score = data['raw_score'];
         console.log(this.raw_score)
@@ -106,11 +116,13 @@ export class ProdevalComponent implements OnInit {
         this.total_count = data['total_count'];
         this.positiveCount = this.total_count['Positive'];
         this.negativeCount = this.total_count['Negative'];
+        this.totalCount = this.positiveCount + this.negativeCount;
+        this.positivePercent = (this.positiveCount / this.totalCount);
         console.log(this.total_count)
         console.log(this.positiveCount)
         console.log(this.negativeCount)
         console.log(this.phrases_analysis)
-
+        console.log(this.summarized_phrases)
         console.log(data);
 
         this.currentAspect = this.top_aspects[0];
@@ -130,7 +142,10 @@ export class ProdevalComponent implements OnInit {
         this.neg_aspect_phrases.forEach(phrase => {
           phrase.words = this.getWords(phrase.sentence, phrase.word_proba, true);
         });
-
+        this.summary = this.summarized_phrases[this.currentAspect];
+        // this.totalCount = this.positiveCount + this.negativeCount;
+        // this.positivePercent = this.positiveCount / this.totalCount;
+        // console.log(this.summary)
         // console.log(this.pos_word_probas);
         // console.log(this.neg_word_probas);
 
