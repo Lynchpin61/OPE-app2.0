@@ -162,11 +162,12 @@ export class ProdevalComponent implements OnInit {
           let pieChart = new Chart({
             chart: {
               // renderTo: 'pieChart',
+              backgroundColor: 'rgba(255, 255, 255, 0.0)',
               type: 'pie',
             },
             title: {
-              text: 'Ratio of Positive and Negative Reviews',
-              floating: false,
+              text: '',
+              floating: true,
               align: 'left'
             },
             credits: {
