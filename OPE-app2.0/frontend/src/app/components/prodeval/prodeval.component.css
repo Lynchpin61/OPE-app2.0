@@ -12,9 +12,12 @@
 }
 
 p {
-  font-size: 1.2em;
+  font-size: 17px;
   width: 88%;
   font-weight: 100;
+  font-family: 'Palatino LT Light', sans-serif;
+  
+  
 }
 
 #top-section {
@@ -30,6 +33,7 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 
   color: #90c1d7;
   font: bold;
@@ -39,7 +43,9 @@ p {
   font-size: xx-large;
   font-weight: 900;
   letter-spacing: .1rem;
-  background: -webkit-linear-gradient(#00ffff, #00a1ff);
+  font-family: 'Amazon Ember V2', sans-serif;
+   font-size: 30px;
+  background: -webkit-linear-gradient(#1A1919, #B5D9F5);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -52,6 +58,7 @@ p {
 
 #verdict_text {
   font-size: 1.5em;
+  font-family: "Amazon Ember",Verdana,Arial,Helvetica,sans-serif;
 }
 
 #main {
@@ -79,7 +86,7 @@ p {
 ul {
   display: flex;
   list-style: none;
-  margin: 0;
+  margin-left: 10px;
   padding: 0;
 }
 
@@ -87,13 +94,29 @@ li {
   background-color: #f3f6fc;
   padding: 10px;
   margin-right: 10px;
-  width: 47px;
+  width: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   cursor: pointer;
-  border-radius: 7px;
+  border-radius: 4px;
+  border: none;
+  transition: all 0.2s ease;
+
+}
+
+li:hover{
+  background-color:  #A7CCFC ;
+}
+
+li:active{
+  transform: scale(0.96);
+}
+
+td{
+font-family: "Amazon Ember",Verdana,Arial,Helvetica,sans-serif;
+
 }
 
 .active::after {
@@ -108,7 +131,10 @@ li {
 
 #top-aspects-title {
   margin-bottom: 7px;
+  margin-left: 11px;
 }
+
+
 
 #raw-sentiment-score {
   margin-right: 30px;
