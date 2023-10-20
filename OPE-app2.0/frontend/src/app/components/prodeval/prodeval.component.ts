@@ -112,15 +112,15 @@ export class ProdevalComponent implements OnInit {
     });
     // post request on https://db3f1af8-9011-48a6-a4d5-1e6c9b680ae0.mock.pstmn.io/absa-dashboard
     // https://779d6a2b-7fc0-4ea4-804f-ac11ac4df044.mock.pstmn.io/absa-dashboard // craig mock server
-    // await fetch('https://abb03457-0831-433b-adc9-edda95bf51e5.mock.pstmn.io/absa-dashboard', {
-    await fetch('http://localhost:8080/absa-dashboard', {
+    await fetch('https://abb03457-0831-433b-adc9-edda95bf51e5.mock.pstmn.io/absa-dashboard', {
+    // await fetch('http://localhost:8080/absa-dashboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // "url": "https://www.amazon.com/Nikon-COOLPIX-P1000-Digital-Camera/product-reviews/B07F5HPXK4/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews"
-        "url": this.passedURL
+        "url": "https://www.amazon.com/Nikon-COOLPIX-P1000-Digital-Camera/product-reviews/B07F5HPXK4/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews"
+        // "url": this.passedURL
       })
     })
       .then(response => response.json())
