@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
 import { DecimalPipe } from '@angular/common';
 import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 // export interface TopAspect {
@@ -22,7 +23,7 @@ import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 
 export class ProdevalComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private decimalPipe: DecimalPipe) { }
+  constructor(private authService: AuthService, private router: ActivatedRoute, private decimalPipe: DecimalPipe) { }
 
   formatProbability(probability: number): string {
     return this.decimalPipe.transform(probability * 100, '1.2-2') + '%';
@@ -59,6 +60,9 @@ export class ProdevalComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   // dataSource: TopAspect[] = [];
   // clickedRows = new Set<TopAspect>();
+
+  passedURL = ""
+
   
   onAspectClick = (aspect: string) => {
     this.currentAspect = aspect;
@@ -90,15 +94,33 @@ export class ProdevalComponent implements OnInit {
 
 
   async ngOnInit() {
+
+    this.router.paramMap.subscribe(params => {
+      // Get state data from the route
+      const state = window.history.state;
+
+      // Check if 'url' property exists in the state object
+      if (state && state.url) {
+        const receivedUrl = state.url;
+        this.passedURL = receivedUrl;
+        console.log('Received URL:', receivedUrl);
+
+        // Do whatever you want with the received URL
+      } else {
+        console.error('URL not found in state.');
+      }
+    });
     // post request on https://db3f1af8-9011-48a6-a4d5-1e6c9b680ae0.mock.pstmn.io/absa-dashboard
     // https://779d6a2b-7fc0-4ea4-804f-ac11ac4df044.mock.pstmn.io/absa-dashboard // craig mock server
-    await fetch('https://abb03457-0831-433b-adc9-edda95bf51e5.mock.pstmn.io/absa-dashboard', {
+    // await fetch('https://abb03457-0831-433b-adc9-edda95bf51e5.mock.pstmn.io/absa-dashboard', {
+    await fetch('http://localhost:8080/absa-dashboard', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "url": "https://www.amazon.com/Nikon-COOLPIX-P1000-Digital-Camera/product-reviews/B07F5HPXK4/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews"
+        // "url": "https://www.amazon.com/Nikon-COOLPIX-P1000-Digital-Camera/product-reviews/B07F5HPXK4/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews"
+        "url": this.passedURL
       })
     })
       .then(response => response.json())
