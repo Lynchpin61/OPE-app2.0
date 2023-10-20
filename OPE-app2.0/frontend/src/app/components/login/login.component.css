@@ -1,3 +1,9 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .background {
   position: fixed;
   top: 0;
@@ -21,14 +27,14 @@ mat-icon {
 
 .form-container {
   width: 400px;
-  margin: 0 auto;
-  margin-top: 100px;
+  height: fit-content;
+  max-width: 400px;
+  margin: 0 10px 10vh;
   background-color: #FFFFFF;
   padding: 50px;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   animation: fadeIn 0.5s ease-in-out;
-  transform: translateY(20%);
 }
 
 @keyframes fadeIn {
@@ -45,6 +51,7 @@ mat-icon {
 form {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 label {

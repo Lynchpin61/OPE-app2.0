@@ -1,32 +1,30 @@
-<mat-toolbar>
-  <div class="nav-links">
-    <span>
+<div class="grid-container">
+  <div id="logo-box" class="nav-links">
       <!-- <a routerLink="/" id="ope">  -->
         <img src="https://i.imgur.com/Lw8ysKv.png" alt="Logo" class="logo">
       <!-- </a> -->
-    </span>
   </div>
 
-  <span *ngIf="!isAuthenticated">
-    <a class="navi" routerLink="/about"> 
+  <div id="menu" class="menu">
+    <a class="navi about" routerLink="/about"> 
       <span>About</span>
     </a>
-  </span>
 
-  <span *ngIf="!isAuthenticated">
-    <a class="navi" routerLink="/how-it-works"> 
+    <a class="navi how-it-works" routerLink="/how-it-works"> 
       <span>How it Works</span>
     </a>
-  </span>
 
-  <span *ngIf="!isAuthenticated">
-    <a class="navi" routerLink="/contact"> 
+    <a class="navi contact" routerLink="/contact"> 
       <span>Contact</span>
     </a>
-  </span>
+
+    <a *ngIf="isAuthenticated" class="navi addprod" routerLink="/addprod"> 
+      <span>Analyze</span>
+    </a>
+  </div>
 
   
-    <span class="link-group">
+  <div class="link-group">
     <!-- <span>
       <a *ngIf="isAuthenticated" routerLinkActive="active-link" routerLink="/savedeval"> 
         <span>Saved Product Evaluation</span>
@@ -37,20 +35,15 @@
         <span>Add New Product Eval</span>
       </a>
     </span> -->
-    <span>
-      <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/login"> 
-        <span>Login</span>
-      </a>
-    </span>
-    <span>
-      <a *ngIf="isAuthenticated" (click)="logout()" routerLinkActive="active-link" routerLink="/login"> 
-        <span>Logout</span>
-      </a>
-    </span>
-    <span>
-      <a *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/signup"> 
-        <span>Signup</span>
-      </a>
-    </span>
-    </span>
-</mat-toolbar>
+
+    <a class="login" *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/login"> 
+      <span>Login</span>
+    </a>
+    <a class="logout" *ngIf="isAuthenticated" (click)="logout()" routerLinkActive="active-link" routerLink="/login"> 
+      <span>Logout</span>
+    </a>
+    <a class="signup" *ngIf="!isAuthenticated" routerLinkActive="active-link" routerLink="/signup"> 
+      <span>Signup</span>
+    </a>
+  </div>
+</div>

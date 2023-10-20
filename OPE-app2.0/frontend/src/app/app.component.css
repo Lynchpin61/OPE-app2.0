@@ -1,3 +1,4 @@
 .container {
-    margin: 50px 5%
+    /* margin: 50px 5% */
+    height: calc(100vh - 79px);
 }

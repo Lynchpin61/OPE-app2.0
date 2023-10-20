@@ -1,7 +1,14 @@
 <div class="background"></div>
 
-<div id="main">
-  <div>
+
+<div id="loading" *ngIf="!currentAspect">
+  <mat-progress-spinner
+    mode="indeterminate">
+  </mat-progress-spinner>
+  <div style="display: block; height: 10vh;"></div>
+</div>
+<div id="main" *ngIf="currentAspect">
+  <div class="product-header" *ngIf="currentAspect">
     <div id="prod-title">
         <h1>{{title}}</h1>
     </div>
@@ -11,9 +18,9 @@
       </h2>
     </div>
   </div>
-  <div class="navbar">
+  <div class="navbar" *ngIf="currentAspect">
     <h1 id="top-aspects-title">6 Most Mentioned Keywords:</h1>
-    <nav>
+    <nav class="nav-list-aspects">
       <ul>
         <li *ngFor="let aspect of top_aspects" (click)="onAspectClick(aspect)" [class.active]="currentAspect === aspect">{{aspect}}</li>
       </ul>
@@ -27,7 +34,7 @@
       <br>
       <div id="chart-breakdown">
         <div id="chart-figure">
-          <h2>Ratio of Positive and Negative Reviews</h2>
+          <h2 class="ratio-pos-to-neg-title">Ratio of Positive and Negative Reviews</h2>
           <div>
             <div *ngFor="let pieChart of pieCharts | keyvalue">
               <div class="bar" *ngIf="pieChart.key === currentAspect" [chart]="pieChart.value"></div>
@@ -61,8 +68,8 @@
         </div>
       </div>
       <br>
-      <div id="review_list" style="display: flex;">
-        <div style="flex: 1; margin-right: 10px;">
+      <div id="review_list">
+        <div>
           <h2>List of Positive Reviews</h2>
           <div id="aspect-breakdown-list">
             <table>
@@ -84,7 +91,7 @@
             </table>
           </div>
         </div>
-        <div style="flex: 1; margin-left: 10px;">
+        <div>
           <h2>List of Negative Reviews</h2>
           <div id="aspect-breakdown-list">
             <table>
@@ -111,4 +118,4 @@
   </div>
 </div> 
 
-<div style="display: block; height: 100px;"></div>
+<!-- <div style="display: block; height: 100px;"></div> -->

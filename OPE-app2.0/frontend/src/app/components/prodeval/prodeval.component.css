@@ -1,3 +1,35 @@
+@media screen and (max-width: 425px) {
+  #chart-breakdown {
+    flex-direction: column !important;
+  }
+
+  .ratio-pos-to-neg-title {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .navbar {
+    margin-top: initial !important;
+    margin-bottom: initial !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  #raw-sentiment-score {
+    margin: unset !important;
+  }
+
+  #aspect-breakdown-list {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  #chart-section {
+    padding: 8px;
+  }
+} 
+
 .background {
   position: fixed;
   top: 0;
@@ -24,12 +56,14 @@ p {
   padding-top: 24px;
 }
 
+.product-header {
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
 #prod-title {
-  margin-left: 30px;
   border-radius: 5px;
-  margin-right: 30px;
   padding-top: 10px;
-  padding-left: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,6 +92,7 @@ p {
 
 #verdict_text {
   font-size: 1.5em;
+  font-weight: 300;
   font-family: "Amazon Ember",Verdana,Arial,Helvetica,sans-serif;
 }
 
@@ -73,6 +108,14 @@ p {
   padding-top: 32px;
 }
 
+#loading {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 /* .active {
   text-decoration: underline;
 } */
@@ -81,6 +124,11 @@ p {
   margin-left: 30px;
   margin-bottom: 15px;
   margin-top: 24px;
+}
+
+.nav-list-aspects {
+  width: 100%;
+  overflow-x: auto;
 }
 
 ul {
@@ -156,6 +204,7 @@ font-family: "Amazon Ember",Verdana,Arial,Helvetica,sans-serif;
 
 #chart-figure {
   min-width: 50%;
+  max-width: 100%;
 }
 
 .highlight {
@@ -183,6 +232,8 @@ font-family: "Amazon Ember",Verdana,Arial,Helvetica,sans-serif;
   align-items: flex-start;
 }
 
+
+
 #aspect-breakdown-list table {
   height: 400px;
   overflow-y: scroll;
@@ -207,6 +258,14 @@ font-family: "Amazon Ember",Verdana,Arial,Helvetica,sans-serif;
 
 #review_list {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+#review_list > div {
+  width: 100%;
+  max-width: 610px;
 }
 
 .wordhighlight {
